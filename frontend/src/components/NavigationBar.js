@@ -6,6 +6,7 @@ import { ReactComponent as ScalerLogo } from '../assets/scaler-logo.svg';
 import { useProfile } from '../context/ProfileContext';
 import { useRequestCallback } from '../app/context/RequestCallbackContext';
 import tracker from '../utils/tracker';
+import { getPathWithQueryParams } from '../utils/url';
 
 const NavContainer = styled.nav`
   background: white;
@@ -346,7 +347,7 @@ const NavigationBar = ({
   const showProgress =
     location.pathname === '/quiz' || location.pathname === '/goals';
   const showModeToggle = location.pathname === '/quiz';
-  const isResultsPage = ['/results/', '/results'].includes(location.pathname);
+  const isResultsPage = ['/results/', '/results', '/mba-results', '/career-profile-tool/mba-results', '/career-profile-tool/results'].includes(location.pathname);
 
   const [showCSATBanner, setShowCSATBanner] = useState(true);
   const lastScrollYRef = useRef(0);
@@ -420,7 +421,7 @@ const NavigationBar = ({
       }
     });
     resetProfile?.();
-    navigate?.('/quiz');
+    navigate?.(getPathWithQueryParams('/quiz'));
   }, [resetProfile, navigate]);
 
   return (
@@ -483,7 +484,7 @@ const NavigationBar = ({
             </SegmentedControl>
           )}
           <NavActions>
-            {isResultsPage && evaluationResults && (
+            {isResultsPage && (
               <>
                 <TextReEvaluateButton onClick={handleReEvaluate}>
                   Re-evaluate

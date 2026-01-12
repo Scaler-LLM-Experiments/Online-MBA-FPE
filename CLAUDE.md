@@ -4,9 +4,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Free Profile Evaluation is a full-stack application that provides AI-powered career profile evaluations for tech professionals in the Indian market. It uses ChatGPT (GPT-4) to generate personalized career assessments, recommendations, and roadmaps based on user input.
+Business x AI Free Profile Evaluator is a dual-purpose full-stack application that provides:
+1. **Tech Career Evaluations**: AI-powered career profile evaluations for tech professionals using GPT-4 with intelligent caching
+2. **MBA Readiness Evaluations**: Mapping-based MBA readiness assessments for business professionals (no OpenAI, purely deterministic)
 
-**Key Innovation**: PostgreSQL-based intelligent caching layer that uses SHA256 hash-based deduplication to reduce OpenAI API costs by 50-99%.
+**Key Innovation**: PostgreSQL-based intelligent caching layer (for tech evaluations) that uses SHA256 hash-based deduplication to reduce OpenAI API costs by 50-99%.
 
 ### Tech Stack
 - **Backend**: FastAPI (Python 3.13+), PostgreSQL, OpenAI API (GPT-4)
@@ -33,25 +35,41 @@ Database (PostgreSQL)
 ### Backend Structure (`backend/src/`)
 
 - **`api/main.py`**: FastAPI application with API routes under `/career-profile-tool/api` prefix
-  - `/evaluate` - Main profile evaluation endpoint
-  - `/health` - Health check endpoint
-  - `/admin/view/response/{cache_key}` - Admin endpoint to view cached responses (requires auth)
-  - `/crt/store` - Store Career Roadmap Tool quiz responses (returns MD5 hash)
-  - `/crt/admin/view/{hash_key}` - Admin endpoint to view CRT responses (requires auth)
+  - **Tech Career Evaluation**:
+    - `/evaluate` - Tech profile evaluation endpoint (uses OpenAI + caching)
+  - **MBA Readiness Evaluation**:
+    - `/mba/evaluate` - MBA readiness evaluation endpoint (pure mapping-based, no OpenAI)
+  - **Career Roadmap Tool**:
+    - `/crt/store` - Store Career Roadmap Tool quiz responses (returns MD5 hash)
+    - `/crt/admin/view/{hash_key}` - Admin endpoint to view CRT responses (requires auth)
+  - **System**:
+    - `/health` - Health check endpoint
+    - `/admin/view/response/{cache_key}` - Admin endpoint to view cached tech evaluation responses (requires auth)
 - **`services/`**: Business logic modules
-  - `run_poc.py` - Main orchestrator, calls OpenAI API (only place that calls OpenAI)
-  - `scoring_logic.py` - Profile strength and skill scoring
-  - `quick_wins_logic.py` - Generates actionable quick wins
-  - `interview_readiness_logic.py` - Interview preparation assessment
-  - `peer_comparison_logic.py` - Percentile ranking logic
-  - `persona_matcher.py` - Matches user to predefined personas
-  - `timeline_logic.py` - Timeline generation for career goals
-  - `tools_logic.py` - Tool recommendations for target roles
-  - `job_descriptions.py` - Job description templates
-  - `profile_notes_logic.py` - Profile notes generation
-  - `current_profile_summary.py` - Current profile summarization
+  - **Tech Career Evaluation** (uses OpenAI):
+    - `run_poc.py` - Main orchestrator, calls OpenAI API (only place that calls OpenAI)
+    - `scoring_logic.py` - Profile strength and skill scoring
+    - `quick_wins_logic.py` - Generates actionable quick wins
+    - `interview_readiness_logic.py` - Interview preparation assessment
+    - `peer_comparison_logic.py` - Percentile ranking logic
+    - `persona_matcher.py` - Matches user to predefined personas
+    - `timeline_logic.py` - Timeline generation for career goals
+    - `tools_logic.py` - Tool recommendations for target roles
+    - `job_descriptions.py` - Job description templates
+    - `profile_notes_logic.py` - Profile notes generation
+    - `current_profile_summary.py` - Current profile summarization
+  - **MBA Readiness Evaluation** (pure mapping-based, no OpenAI):
+    - `mba_evaluator.py` - Main orchestrator for MBA evaluation
+    - `mba_scoring_orchestrator.py` - MBA readiness score calculation
+    - `mba_skill_inference.py` - Skill level inference from quiz responses
+    - `mba_quick_wins.py` - MBA-specific quick wins generation
+    - `mba_ai_tools.py` - AI tool recommendations for business roles
+    - `mba_industry_data.py` - Industry statistics and transformation insights
 - **`repositories/`**: Data access - `cache_repository.py` for PostgreSQL cache operations
-- **`models/`**: Pydantic schemas - `models.py` (validated), `models_raw.py` (raw OpenAI)
+- **`models/`**: Pydantic schemas
+  - `models.py` - Tech career evaluation schemas (validated)
+  - `models_raw.py` - Raw OpenAI response schemas
+  - `mba_models.py` - MBA readiness evaluation schemas
 - **`config/`**: Configuration - `settings.py`, `exceptions.py`, `logging_config.py`
 - **`utils/`**: Helpers - `label_mappings.py`, `validate_response.py`
 
@@ -64,6 +82,18 @@ Database (PostgreSQL)
 5. Cache MISS: Call OpenAI API, store response with hash, return result
 
 **Critical**: JSONB returns as dict from psycopg2, must convert to JSON string before validation.
+
+### MBA Evaluation System
+
+The MBA readiness evaluation uses a **deterministic mapping-based approach** with no OpenAI API calls:
+
+1. User submits quiz responses (role, experience, career goals, role-specific questions)
+2. Backend calculates MBA readiness score using weighted scoring logic
+3. Skills are inferred from quiz responses using predefined mappings
+4. Quick wins, AI tools, and industry insights are generated based on role and gaps
+5. Complete evaluation returned instantly (no API calls = zero cost + instant results)
+
+**Key Difference from Tech Evaluation**: MBA evaluation is 100% rule-based and deterministic, while tech career evaluation uses GPT-4 for personalized responses.
 
 ### Database Schema
 
@@ -256,13 +286,20 @@ api_key = settings.openai_api_key
 
 ### OpenAI API Calls
 
-**Only one place calls OpenAI**: `src/services/run_poc.py` in `call_openai_structured()`.
+**Critical Distinction**: Only the **tech career evaluation** uses OpenAI API. The **MBA readiness evaluation** uses pure mapping-based logic.
 
-Always follow this pattern:
-1. Generate cache key: `cache_repo.generate_cache_key(payload, model)`
-2. Check cache: `cache_repo.get(cache_key, model)`
-3. If cached, return immediately
-4. If not cached, call OpenAI, then store result
+**For Tech Career Evaluation Only**:
+- **Only one place calls OpenAI**: `src/services/run_poc.py` in `call_openai_structured()`
+- Always follow this pattern:
+  1. Generate cache key: `cache_repo.generate_cache_key(payload, model)`
+  2. Check cache: `cache_repo.get(cache_key, model)`
+  3. If cached, return immediately
+  4. If not cached, call OpenAI, then store result
+
+**For MBA Readiness Evaluation**:
+- No OpenAI calls - uses `src/services/mba_evaluator.py`
+- Deterministic scoring based on quiz responses
+- Zero API costs, instant results
 
 ### Error Handling
 
@@ -303,9 +340,11 @@ Component structure:
 ## Common Issues
 
 - **Import errors**: Ensure all use `src.*` absolute paths, rebuild containers
-- **Cache not working**: Check database logs, look for "Cache HIT/MISS" in backend logs
+- **Cache not working** (tech evaluation): Check database logs, look for "Cache HIT/MISS" in backend logs
 - **JSONB validation errors**: PostgreSQL JSONB returns dict, convert to JSON string before validation
 - **Backend won't start**: Check `OPENAI_API_KEY` and `DATABASE_URL` in `.env`
+- **MBA evaluation fails**: Check that all role-specific quiz questions are included in the request
+- **Wrong evaluation endpoint**: Use `/evaluate` for tech careers (OpenAI), `/mba/evaluate` for MBA readiness (no OpenAI)
 
 ## Production
 

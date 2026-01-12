@@ -86,6 +86,8 @@ class SkillLevel(BaseModel):
     """Individual skill level"""
     level: int = Field(..., ge=1, le=5)
     label: str
+    title: str = ""  # Display name for frontend
+    description: str = ""  # Tooltip text for frontend
 
 
 class SkillsAnalysis(BaseModel):
@@ -145,13 +147,66 @@ class MetaData(BaseModel):
     career_goal: str
 
 
+class PersonaInfo(BaseModel):
+    """Role-based persona information"""
+    persona_id: str
+    persona_label: str
+    role_context: str
+    maturity_variant: str
+    badge_label: str
+    variant_description: str
+    persona_tags: List[str]
+    key_strengths: List[str]
+    mba_fit: str
+    ideal_profile: str = ""
+
+
+class OpenAIQuickWin(BaseModel):
+    """OpenAI-generated personalized quick win"""
+    title: str
+    description: str
+    impact: str
+    timeframe: str
+    reasoning: str  # Why this matters for this user
+
+
+class OpenAITransformationStory(BaseModel):
+    """OpenAI-generated transformation story"""
+    company: str
+    industry: str
+    transformation_narrative: str
+    relevance_to_user: str
+    skill_connection: List[str]
+
+
+class OpenAIToolDescription(BaseModel):
+    """OpenAI-generated personalized tool description"""
+    name: str
+    category: str
+    priority: str
+    personalized_use_case: str
+    personalized_impact: str
+    learning_path: str
+
+
+class OpenAIContent(BaseModel):
+    """Container for all OpenAI-generated content"""
+    quick_wins: List[OpenAIQuickWin]
+    transformation_stories: List[OpenAITransformationStory]
+    tool_descriptions: List[OpenAIToolDescription]
+    generation_metadata: Dict[str, Any]
+
+
 class MBAEvaluationResponse(BaseModel):
     """Complete MBA evaluation response"""
     readiness: ReadinessScore
+    persona: PersonaInfo  # NEW: Role-based persona information
     skills: SkillsAnalysis
     quick_wins: List[QuickWin]
     ai_tools: List[AITool]
     industry_stats: List[IndustryStat]
     transformation_insights: List[TransformationInsight]
     peer_comparison: PeerComparison
+    openai_content: Optional[OpenAIContent] = None  # NEW: OpenAI-generated personalized content
+    cache_status: Optional[str] = None  # NEW: 'mock' | 'hit' | 'miss' | 'disabled'
     meta: MetaData

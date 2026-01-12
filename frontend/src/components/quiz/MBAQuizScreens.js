@@ -7,8 +7,6 @@ import {
   MegaphoneSimple,
   Package,
   Lightbulb,
-  GraduationCap,
-  UserCircle,
   Clock,
   Timer,
   Trophy,
@@ -45,9 +43,7 @@ export const MBA_INTAKE_SCREEN_1 = {
         { value: 'sales', label: 'Sales / Growth / Revenue roles', icon: <TrendUp size={24} weight="duotone" /> },
         { value: 'marketing', label: 'Marketing / Brand / Performance Marketing', icon: <MegaphoneSimple size={24} weight="duotone" /> },
         { value: 'operations', label: 'Operations / Supply Chain / Strategy', icon: <Package size={24} weight="duotone" /> },
-        { value: 'founder', label: 'Startup Founder / Entrepreneur', icon: <Lightbulb size={24} weight="duotone" /> },
-        { value: 'student', label: 'Student / Fresh Graduate', icon: <GraduationCap size={24} weight="duotone" /> },
-        { value: 'other', label: 'Other Business Role', icon: <UserCircle size={24} weight="duotone" /> }
+        { value: 'founder', label: 'Startup Founder / Entrepreneur', icon: <Lightbulb size={24} weight="duotone" /> }
       ]
     }
   ],
@@ -58,9 +54,7 @@ export const MBA_INTAKE_SCREEN_1 = {
       'sales': 'Perfect! Sales and growth leaders who understand AI are revolutionizing revenue operations.',
       'marketing': 'Awesome! Marketing professionals leveraging AI are seeing unprecedented ROI and scale.',
       'operations': 'Fantastic! Operations and strategy roles are being redefined by AI and automation.',
-      'founder': 'Impressive! Founders who master AI have a massive competitive advantage in building and scaling.',
-      'student': 'Welcome! Perfect timing to build business + AI skills before entering the workforce.',
-      'other': 'Great! Business professionals from all backgrounds can leverage AI to accelerate their careers.'
+      'founder': 'Impressive! Founders who master AI have a massive competitive advantage in building and scaling.'
     }
   }
 };
@@ -650,9 +644,7 @@ export const MBA_ROLE_SPECIFIC_SCREENS = {
         }
       ]
     }
-  ],
-  'student': [],
-  'other': []
+  ]
 };
 
 // Helper to check if all questions in a screen are answered

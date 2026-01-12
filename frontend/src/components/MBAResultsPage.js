@@ -45,7 +45,7 @@ const PrintStyles = createGlobalStyle`
 `;
 
 const ResultsContainer = styled.div`
-  min-height: calc(100vh - 70px);
+  min-height: 100vh;
   background: #f8fafc;
   padding: 40px 20px;
 
@@ -169,12 +169,12 @@ const HeroContainer = styled.div`
 
 const LeftPanel = styled.div`
   background: ${(props) => {
-    if (props.score >= 60) return '#059669';
+    if (props.score > 55) return '#059669';
     return '#0F2B48';
   }};
   color: #ffffff;
   padding: ${(props) =>
-    props.score >= 60 ? '48px 120px 48px 60px' : '48px 80px 48px 40px'};
+    props.score > 55 ? '48px 120px 48px 60px' : '48px 80px 48px 40px'};
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -185,7 +185,7 @@ const LeftPanel = styled.div`
   overflow-y: visible;
   border-right: none;
   border-bottom: 2px solid
-    ${(props) => (props.score >= 60 ? '#065f46' : '#1a3a52')};
+    ${(props) => (props.score > 55 ? '#065f46' : '#1a3a52')};
 
   @media (max-width: 1024px) {
     position: relative;
@@ -235,6 +235,26 @@ const GreetingSubtext = styled.div`
   @media (max-width: 768px) {
     font-size: 0.875rem;
   }
+`;
+
+const TagsContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+  max-width: 550px;
+`;
+
+const Tag = styled.span`
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 6px 16px;
+  border-radius: 0;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.95);
+  white-space: nowrap;
 `;
 
 const ScoreSection = styled.div`
@@ -609,6 +629,51 @@ const SkillSummaryLevel = styled.div`
   }
 `;
 
+const SkillLevelTag = styled.span`
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+
+  ${props => {
+    switch(props.level) {
+      case 'needs-improvement':
+        return `
+          background-color: #fee2e2;
+          color: #991b1b;
+        `;
+      case 'developing':
+        return `
+          background-color: #fef3c7;
+          color: #92400e;
+        `;
+      case 'proficient':
+        return `
+          background-color: #dbeafe;
+          color: #1e40af;
+        `;
+      case 'advanced':
+        return `
+          background-color: #d1fae5;
+          color: #065f46;
+        `;
+      case 'expert':
+        return `
+          background-color: #d1fae5;
+          color: #065f46;
+        `;
+      default:
+        return `
+          background-color: #f1f5f9;
+          color: #475569;
+        `;
+    }
+  }}
+`;
+
 // TRANSFORMATION STORIES - styled to match
 const TransformationGrid = styled.div`
   display: grid;
@@ -891,35 +956,9 @@ const CustomTooltip = ({ active, payload, position }) => {
   if (active && payload && payload.length) {
     const dataPoint = payload[0].payload;
 
-    // Skill descriptions for MBA skills
-    const skillDescriptions = {
-      'business_acumen': {
-        title: 'Business Acumen',
-        description: 'Your understanding of business models, market dynamics, and strategic thinking. Essential for making data-driven business decisions.'
-      },
-      'data_analytics': {
-        title: 'Data Analytics',
-        description: 'Your ability to analyze data and derive actionable insights. Critical for informed decision-making and strategy formulation.'
-      },
-      'ai_literacy': {
-        title: 'AI Literacy',
-        description: 'Your proficiency in understanding and applying AI tools and concepts. Key to leveraging AI for business transformation.'
-      },
-      'strategic_thinking': {
-        title: 'Strategic Thinking',
-        description: 'Your capacity for long-term planning and systems thinking. Vital for leadership roles and organizational growth.'
-      },
-      'leadership': {
-        title: 'Leadership',
-        description: 'Your ownership, accountability, and ability to influence teams. Essential for driving change and managing complex projects.'
-      },
-      'problem_solving': {
-        title: 'Problem Solving',
-        description: 'Your analytical approach to challenges and structured problem-solving skills. Crucial for navigating complex business scenarios.'
-      }
-    };
-
-    const skillInfo = skillDescriptions[dataPoint.category];
+    // Use dynamic skill metadata from backend
+    const skillTitle = dataPoint.categoryDisplay;
+    const skillDescription = dataPoint.description;
 
     const tooltipX = position?.x || 0;
     const tooltipY = position?.y || 0;
@@ -937,12 +976,25 @@ const CustomTooltip = ({ active, payload, position }) => {
           pointerEvents: 'none'
         }}
       >
-        <TooltipTitle>{skillInfo?.title}</TooltipTitle>
-        <TooltipDescription>{skillInfo?.description}</TooltipDescription>
+        <TooltipTitle>{skillTitle}</TooltipTitle>
+        <TooltipDescription>{skillDescription}</TooltipDescription>
       </TooltipBox>
     );
   }
   return null;
+};
+
+// Helper function to get skill level tag info
+const getSkillLevelTag = (level) => {
+  if (level <= 2) {
+    return { label: 'Needs Improvement', type: 'needs-improvement' };
+  } else if (level === 3) {
+    return { label: 'Proficient', type: 'proficient' };
+  } else if (level === 4) {
+    return { label: 'Advanced', type: 'advanced' };
+  } else {
+    return { label: 'Expert', type: 'expert' };
+  }
 };
 
 const MBAResultsPage = () => {
@@ -1127,8 +1179,8 @@ const MBAResultsPage = () => {
 
   if (!results) return null;
 
-  const { readiness, skills, quick_wins, ai_tools, industry_stats } = results;
-  const hasOliveBranches = readiness.overall_score >= 60;
+  const { readiness, persona, skills, quick_wins, ai_tools, industry_stats, openai_content, cache_status } = results;
+  const hasOliveBranches = readiness.overall_score > 55;
 
   const iconColors = ['#D90065', '#D77C00', '#C32841', '#1D925B', '#0052FF', '#016DD9'];
   const iconMap = {
@@ -1139,12 +1191,14 @@ const MBAResultsPage = () => {
     4: <ChartLine size={24} weight="fill" />
   };
 
-  // Prepare data for Recharts RadarChart
+  // Prepare data for Recharts RadarChart with dynamic skill metadata
   const radarData = Object.entries(skills.skills).map(([skillName, skillData]) => ({
     category: skillName,
+    categoryDisplay: skillData.title || skillName.replace(/_/g, ' '),  // Use title from backend
     user: skillData.level * 20, // Convert 1-5 scale to 0-100
     average: 60, // Average MBA baseline at 60%
-    fullMark: 100
+    fullMark: 100,
+    description: skillData.description || ''  // Use description from backend
   }));
 
   return (
@@ -1155,26 +1209,31 @@ const MBAResultsPage = () => {
           <LeftPanel score={readiness.overall_score}>
             <GreetingSection>
               <HeroGreeting>
-                {readiness.overall_score >= 60
+                {readiness.overall_score > 55
                   ? `Hey There,\nYour Profile Has Potential`
-                  : `Let's Build Your\nMBA Readiness`}
+                  : `Let's Build your\nAI <> Business Readiness`}
               </HeroGreeting>
               <GreetingSubtext>
-                {readiness.overall_score >= 60
-                  ? 'Your path to 100% career readiness starts here.'
-                  : 'You have room to grow. Follow the personalized action items below to boost your readiness.'}
+                {persona?.variant_description ||
+                  (readiness.overall_score > 55
+                    ? 'Your path to 100% career readiness starts here.'
+                    : 'You have room to grow. Follow the personalized action items below to boost your readiness.')}
               </GreetingSubtext>
+              {persona?.persona_tags && persona.persona_tags.length > 0 && (
+                <TagsContainer>
+                  {persona.persona_tags.map((tag, index) => (
+                    <Tag key={index}>{tag}</Tag>
+                  ))}
+                </TagsContainer>
+              )}
             </GreetingSection>
 
             <ScoreSection hasOliveBranches={hasOliveBranches}>
               {hasOliveBranches && (
                 <OliveBranch position="left" src={oliveBranchLeft} alt="" />
               )}
-              <ScoreDisplay>{readiness.overall_score}</ScoreDisplay>
-              <ScoreLabel>MBA Readiness Score</ScoreLabel>
-              <MaturityLevel>
-                {readiness.maturity_level.replace('_', ' ')}
-              </MaturityLevel>
+              <ScoreDisplay>{readiness.overall_score}%</ScoreDisplay>
+              <ScoreLabel>Your Readiness Score</ScoreLabel>
               {hasOliveBranches && (
                 <OliveBranch position="right" src={oliveBranchRight} alt="" />
               )}
@@ -1185,7 +1244,6 @@ const MBAResultsPage = () => {
             {/* Skills Analysis with Recharts Radar */}
             <SectionBlock>
               <SectionHeading>
-                <ChartLine size={18} weight="regular" />
                 See Where You Stand Today
               </SectionHeading>
               <SectionSubtitle>
@@ -1205,7 +1263,7 @@ const MBAResultsPage = () => {
                     >
                       <PolarGrid stroke="#e2e8f0" />
                       <PolarAngleAxis
-                        dataKey="category"
+                        dataKey="categoryDisplay"
                         tick={{ fill: '#475569', fontSize: 14, fontWeight: 600 }}
                       />
                       <PolarRadiusAxis
@@ -1217,7 +1275,7 @@ const MBAResultsPage = () => {
 
                       {/* Average learner (dotted outline) */}
                       <Radar
-                        name="Avg. MBA Candidate"
+                        name="Avg. Candidate"
                         dataKey="average"
                         stroke="#94a3b8"
                         fill="#94a3b8"
@@ -1274,23 +1332,25 @@ const MBAResultsPage = () => {
                       {Object.values(skills.skills).filter((s) => s.level <= 2).length}{' '}
                       areas for growth
                     </strong>
-                    . The chart above compares your current skills against the average MBA
+                    . The chart above compares your current skills against the average
                     candidate profile.
                   </DescriptionText>
 
                   <SkillsSummaryList>
                     {Object.entries(skills.skills)
-                      .slice(0, 4)
-                      .map(([skillName, skillData]) => (
-                        <SkillSummaryItem key={skillName}>
-                          <SkillSummaryName>
-                            {skillName.replace('_', ' ')}
-                          </SkillSummaryName>
-                          <SkillSummaryLevel>
-                            {skillData.label}<span>{skillData.level}/5</span>
-                          </SkillSummaryLevel>
-                        </SkillSummaryItem>
-                      ))}
+                      .map(([skillName, skillData]) => {
+                        const tagInfo = getSkillLevelTag(skillData.level);
+                        return (
+                          <SkillSummaryItem key={skillName}>
+                            <SkillSummaryName>
+                              {skillData.title || skillName.replace(/_/g, ' ')}
+                            </SkillSummaryName>
+                            <SkillLevelTag level={tagInfo.type}>
+                              {tagInfo.label}
+                            </SkillLevelTag>
+                          </SkillSummaryItem>
+                        );
+                      })}
                   </SkillsSummaryList>
                 </ChartDescription>
               </RadialChartWrapper>
@@ -1332,7 +1392,6 @@ const MBAResultsPage = () => {
             {/* Industry Transformation Stories */}
             <SectionBlock>
               <SectionHeading>
-                <Sparkle size={18} weight="regular" />
                 How Companies Are Transforming with AI
               </SectionHeading>
               <SectionSubtitle>
@@ -1385,7 +1444,6 @@ const MBAResultsPage = () => {
             {ai_tools && ai_tools.length > 0 && (
               <SectionBlock>
                 <SectionHeading>
-                  <Rocket size={18} weight="regular" />
                   AI Tools & Technologies to Learn
                 </SectionHeading>
                 <SectionSubtitle>
@@ -1409,7 +1467,6 @@ const MBAResultsPage = () => {
             {industry_stats && industry_stats.length > 0 && (
               <SectionBlock>
                 <SectionHeading>
-                  <TrendUp size={18} weight="regular" />
                   Why Business x AI Matters Now
                 </SectionHeading>
                 <SectionSubtitle>

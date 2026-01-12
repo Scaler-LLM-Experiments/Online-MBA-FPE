@@ -11,6 +11,11 @@ from src.services.mba_industry_data import (
     get_industry_stats_for_role,
     get_transformation_insights_for_role
 )
+from src.services.mba_persona_matcher import match_persona
+from src.services.mba_openai_mock import generate_mock_openai_content
+from src.config.logging_config import get_logger
+
+logger = get_logger(__name__)
 
 
 def evaluate_mba_readiness(quiz_responses: Dict[str, Any]) -> Dict[str, Any]:
@@ -37,43 +42,60 @@ def evaluate_mba_readiness(quiz_responses: Dict[str, Any]) -> Dict[str, Any]:
         - Transformation insights
     """
     role = quiz_responses.get('role')
+    logger.info(f"Starting MBA evaluation for role={role}")
 
     # 1. Calculate MBA Readiness Score
     readiness = calculate_mba_readiness_score(quiz_responses)
 
-    # 2. Infer skill levels
+    # 2. Match persona based on role + AI maturity
+    persona_info = match_persona(role, readiness)
+    logger.info(f"Matched persona: {persona_info['badge_label']}")
+
+    # 3. Infer skill levels (role-specific skills)
     skills_analysis = infer_skills_from_responses(role, quiz_responses)
 
-    # 3. Generate quick wins based on gaps
+    # 4. Generate quick wins based on gaps
     quick_wins = generate_quick_wins(
         role=role,
         skill_gaps=skills_analysis['gaps'],
         responses=quiz_responses
     )
 
-    # 4. Get AI tools recommendations
+    # 5. Get AI tools recommendations
     ai_tools = get_ai_tools_for_role(
         role=role,
         skill_gaps=skills_analysis['gaps']
     )
 
-    # 5. Get industry stats
+    # 6. Get industry stats
     industry_stats = get_industry_stats_for_role(role)
 
-    # 6. Get transformation insights
+    # 7. Get transformation insights
     transformation_insights = get_transformation_insights_for_role(role)
 
-    # 7. Generate peer comparison message
+    # 8. Generate peer comparison message
     peer_comparison = _generate_peer_comparison(readiness)
+
+    # 9. Generate mock OpenAI personalized content (Phase 1 placeholder)
+    openai_content = generate_mock_openai_content(
+        role=role,
+        quiz_responses=quiz_responses,
+        skill_gaps=skills_analysis['gaps'],
+        readiness_score=readiness['overall_score']
+    )
+    logger.info("Generated mock OpenAI content")
 
     return {
         'readiness': readiness,
+        'persona': persona_info,  # NEW: Role-based persona
         'skills': skills_analysis,
         'quick_wins': quick_wins,
         'ai_tools': ai_tools,
         'industry_stats': industry_stats,
         'transformation_insights': transformation_insights,
         'peer_comparison': peer_comparison,
+        'openai_content': openai_content,  # NEW: Mock OpenAI content
+        'cache_status': 'mock',  # NEW: Indicates mock content
         'meta': {
             'role': role,
             'experience': quiz_responses.get('experience'),
