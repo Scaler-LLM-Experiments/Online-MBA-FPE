@@ -3,6 +3,7 @@ import { Navigate, Route, Routes, useSearchParams } from 'react-router-dom';
 
 import QuizPage from '../../components/QuizPage';
 import ResultsPage from '../../components/ResultsPage';
+import MBAResultsPage from '../../components/MBAResultsPage';
 import { getPathWithQueryParams, hasNudgeBeenShown } from '../../utils/url';
 import tracker from '../../utils/tracker';
 
@@ -37,6 +38,7 @@ const AppRoutes = ({ quizMode, onQuizProgressChange }) => {
         }
       />
       <Route path="/results" element={<ResultsPage />} />
+      <Route path="/mba-results" element={<MBAResultsPage />} />
       <Route path="/admin/view/response/:response_id" element={<AdminViewPage />} />
     </Routes>
   );

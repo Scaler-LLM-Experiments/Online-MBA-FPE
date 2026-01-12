@@ -588,7 +588,7 @@ const MBAQuiz = ({ onProgressChange }) => {
 
   useEffect(() => {
     if (evaluationResults) {
-      navigate(getPathWithQueryParams('/results'), { replace: true });
+      navigate(getPathWithQueryParams('/mba-results'), { replace: true });
     }
   }, [evaluationResults, navigate]);
 
@@ -655,7 +655,7 @@ const MBAQuiz = ({ onProgressChange }) => {
         click_type: 'mba_quiz_submit_button_clicked',
         custom: { source: 'mba_quiz' }
       });
-      navigate(getPathWithQueryParams('/results'));
+      navigate(getPathWithQueryParams('/mba-results'));
     }
   }, [currentStep, totalSteps, navigate]);
 
