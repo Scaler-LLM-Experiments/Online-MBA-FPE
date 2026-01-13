@@ -19,9 +19,7 @@ import {
   Books,
   ChartLine,
   Sparkle,
-  TrendUp,
-  Phone,
-  ArrowRight
+  Phone
 } from 'phosphor-react';
 import { useNavigate } from 'react-router-dom';
 import { useProfile } from '../context/ProfileContext';
@@ -31,6 +29,7 @@ import { getPathWithQueryParams } from '../utils/url';
 import tracker from '../utils/tracker';
 import oliveBranchLeft from '../assets/Left-Olive-Branch.png';
 import oliveBranchRight from '../assets/Right-Olive-branch.png';
+import transformationCompaniesData from '../data/transformation_companies.json';
 
 const PrintStyles = createGlobalStyle`
   @media print {
@@ -169,7 +168,7 @@ const HeroContainer = styled.div`
 
 const LeftPanel = styled.div`
   background: ${(props) => {
-    if (props.score > 55) return '#059669';
+    if (props.score > 55) return '#065f46';
     return '#0F2B48';
   }};
   color: #ffffff;
@@ -217,11 +216,14 @@ const HeroGreeting = styled.div`
   font-weight: 700;
   line-height: 1.2;
   color: #ffffff;
-  white-space: pre-line;
 
   @media (max-width: 768px) {
     font-size: 1.75rem;
     text-align: left;
+
+    br {
+      display: none;
+    }
   }
 `;
 
@@ -320,12 +322,16 @@ const ScoreDisplay = styled.div`
 `;
 
 const ScoreLabel = styled.div`
-  font-size: 1rem;
+  font-size: 0.875rem;
   font-weight: 600;
   margin-bottom: 16px;
   color: #cbd5e1;
   text-transform: uppercase;
   letter-spacing: 1px;
+
+  @media (max-width: 768px) {
+    font-size: 0.75rem;
+  }
 `;
 
 const MaturityLevel = styled.div`
@@ -363,13 +369,19 @@ const SectionBlock = styled.div`
     margin-bottom: 0;
   }
 
+  &:first-child {
+    @media (max-width: 768px) {
+      padding-top: 32px;
+    }
+  }
+
   @media (max-width: 768px) {
-    margin-bottom: 40px;
+    margin-bottom: 56px;
   }
 `;
 
 const SectionHeading = styled.h4`
-  font-size: 1rem;
+  font-size: ${props => props.smaller ? '0.875rem' : '1rem'};
   font-weight: 700;
   color: #1e293b;
   margin-bottom: 8px;
@@ -506,41 +518,54 @@ const QuickWinDescription = styled.div`
   line-height: 1.5;
 `;
 
-// TOOLS GRID - Exact copy from ProfileMatchHeroV2
+// TOOLS GRID
 const ToolsGrid = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 const Tool = styled.div`
   background: white;
   border: 1px solid #e2e8f0;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 12px;
   border-radius: 0;
-  padding: 12px 16px;
+  padding: 16px;
 `;
 
-const ToolLogoPlaceholder = styled.div`
-  width: 32px;
-  height: 32px;
+const ToolLogo = styled.img`
+  width: 40px;
+  height: 40px;
   border-radius: 4px;
-  background: #f8fafc;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1rem;
-  font-weight: 600;
-  color: #64748b;
+  object-fit: contain;
   flex-shrink: 0;
+  background: #f8fafc;
+  padding: 6px;
+`;
+
+const ToolContent = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 `;
 
 const ToolName = styled.div`
   font-size: 0.875rem;
-  font-weight: 500;
+  font-weight: 600;
   color: #1e293b;
+`;
+
+const ToolDescription = styled.div`
+  font-size: 0.8125rem;
+  color: #64748b;
+  line-height: 1.4;
 `;
 
 // RADIAL CHART SECTION - styled to match SkillMapNew
@@ -573,9 +598,10 @@ const ChartContainer = styled.div`
 
   @media (max-width: 768px) {
     width: 100%;
-    height: 400px;
-    overflow-x: auto;
-    padding: 24px 0 10px 0;
+    height: 350px;
+    overflow: hidden;
+    padding: 10px 0 10px 0;
+    transform: translateY(-50px);
   }
 `;
 
@@ -632,11 +658,16 @@ const SkillSummaryLevel = styled.div`
 const SkillLevelTag = styled.span`
   display: inline-block;
   padding: 4px 12px;
-  border-radius: 12px;
-  font-size: 0.75rem;
+  border-radius: 0;
+  font-size: 0.6875rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+
+  @media (max-width: 768px) {
+    font-size: 0.625rem;
+    padding: 3px 10px;
+  }
 
   ${props => {
     switch(props.level) {
@@ -645,22 +676,12 @@ const SkillLevelTag = styled.span`
           background-color: #fee2e2;
           color: #991b1b;
         `;
-      case 'developing':
-        return `
-          background-color: #fef3c7;
-          color: #92400e;
-        `;
       case 'proficient':
         return `
           background-color: #dbeafe;
           color: #1e40af;
         `;
-      case 'advanced':
-        return `
-          background-color: #d1fae5;
-          color: #065f46;
-        `;
-      case 'expert':
+      case 'strong':
         return `
           background-color: #d1fae5;
           color: #065f46;
@@ -693,36 +714,20 @@ const TransformationCard = styled.div`
 `;
 
 const TransformationHeader = styled.div`
-  background: #1e3a52;
+  background: ${props => props.brandColor || '#F8F8F8'};
   padding: 24px;
   text-align: center;
 `;
 
-const CompanyLogo = styled.div`
-  width: 64px;
-  height: 64px;
-  background: white;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 12px auto;
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #1e3a52;
+const CompanyLogo = styled.img`
+  width: 100%;
+  max-width: 180px;
+  height: 60px;
+  object-fit: contain;
+  margin: 0 auto;
+  display: block;
 `;
 
-const CompanyName = styled.div`
-  font-size: 1.125rem;
-  font-weight: 700;
-  color: white;
-  margin-bottom: 4px;
-`;
-
-const CompanyIndustry = styled.div`
-  font-size: 0.8125rem;
-  color: rgba(255, 255, 255, 0.7);
-`;
 
 const TransformationBody = styled.div`
   padding: 20px;
@@ -740,107 +745,115 @@ const TransformationLabel = styled.div`
 const TransformationText = styled.div`
   font-size: 0.875rem;
   color: #1e293b;
-  line-height: 1.5;
+  line-height: 1.6;
   margin-bottom: 16px;
 `;
 
-const LookingForBox = styled.div`
-  background: #fefce8;
-  border: 2px solid #fde047;
+const RelevanceBox = styled.div`
+  background: #FFF6ED;
+  border: 1px solid #FED7AA;
   border-radius: 0;
-  padding: 12px;
+  padding: 16px;
   margin-top: 20px;
 `;
 
-const LookingForTitle = styled.div`
-  font-size: 0.75rem;
+const RelevanceTitle = styled.div`
+  font-size: 0.6875rem;
   font-weight: 700;
-  color: #854d0e;
+  color: #C2410D;
   text-transform: uppercase;
-  margin-bottom: 6px;
-`;
-
-const LookingForText = styled.div`
-  font-size: 0.8125rem;
-  color: #713f12;
-  line-height: 1.4;
-`;
-
-const UpskillBanner = styled.div`
-  background: linear-gradient(135deg, #c71f69 0%, #a01855 100%);
-  color: white;
-  padding: 20px 24px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  margin-top: 24px;
-  border-radius: 0;
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-    text-align: center;
-  }
-`;
-
-const UpskillText = styled.div`
-  font-size: 0.9375rem;
-  font-weight: 600;
-  flex: 1;
-`;
-
-const UpskillCTA = styled.button`
-  background: white;
-  color: #c71f69;
-  border: none;
-  padding: 10px 20px;
-  font-size: 0.8125rem;
-  font-weight: 700;
+  margin-bottom: 12px;
   letter-spacing: 0.5px;
-  text-transform: uppercase;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  transition: all 0.2s ease;
+`;
 
-  &:hover {
-    transform: translateX(4px);
+const RelevanceList = styled.ul`
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+`;
+
+const RelevanceItem = styled.li`
+  font-size: 0.8125rem;
+  color: #1e293b;
+  line-height: 1.5;
+  padding-left: 16px;
+  position: relative;
+
+  &::before {
+    content: '•';
+    position: absolute;
+    left: 4px;
+    color: #C2410D;
+    font-size: 0.75rem;
   }
 `;
+
 
 // INDUSTRY STATS - styled to match
 const StatsGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 16px;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 const StatCard = styled.div`
-  background: #f8fafc;
+  background: white;
   border: 1px solid #e2e8f0;
   border-radius: 0;
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 
 const StatValue = styled.div`
   font-size: 1.5rem;
   font-weight: 700;
-  color: #c71f69;
-  margin-bottom: 8px;
+  color: #1e293b;
+  margin-bottom: 12px;
 `;
 
 const StatDescription = styled.div`
   font-size: 0.875rem;
   color: #475569;
   line-height: 1.5;
-  margin-bottom: 8px;
+  margin-bottom: 16px;
 `;
 
-const StatSource = styled.div`
+const StatSourceContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 16px;
+  margin-top: 16px;
+  border-top: 1px solid #e2e8f0;
+`;
+
+const StatSourceLogo = styled.img`
+  height: 32px;
+  width: auto;
+  object-fit: contain;
+  flex-shrink: 0;
+  padding-right: 12px;
+  border-right: 1px solid #e2e8f0;
+`;
+
+const StatSourceText = styled.div`
   font-size: 0.75rem;
-  color: #94a3b8;
-  font-style: italic;
+  color: #64748b;
+  line-height: 1.3;
+  flex: 1;
 `;
 
 // FLOATING CTA - Exact copy from ProfileMatchHeroV2
@@ -984,16 +997,15 @@ const CustomTooltip = ({ active, payload, position }) => {
   return null;
 };
 
-// Helper function to get skill level tag info
+// Helper function to get skill level tag info (3-level system)
 const getSkillLevelTag = (level) => {
-  if (level <= 2) {
+  if (level === 1) {
     return { label: 'Needs Improvement', type: 'needs-improvement' };
-  } else if (level === 3) {
+  } else if (level === 2) {
     return { label: 'Proficient', type: 'proficient' };
-  } else if (level === 4) {
-    return { label: 'Advanced', type: 'advanced' };
   } else {
-    return { label: 'Expert', type: 'expert' };
+    // level === 3
+    return { label: 'Strong', type: 'strong' };
   }
 };
 
@@ -1030,39 +1042,97 @@ const MBAResultsPage = () => {
   ];
 
   const [loadingStep, setLoadingStep] = useState(0);
+  const [transformationStories, setTransformationStories] = useState([]);
 
-  const transformationStories = [
-    {
-      company: 'Netflix',
-      industry: 'Entertainment',
-      preAI:
-        'Manual content categorization and basic recommendation system based on genre matching.',
-      postAI:
-        'AI-powered recommendation engine analyzing viewing patterns, resulting in 80% of watched content coming from recommendations.',
-      lookingFor:
-        'Data Scientists, ML Engineers, AI Product Managers who can build and scale recommendation systems'
-    },
-    {
-      company: 'Zomato',
-      industry: 'Food Tech',
-      preAI:
-        'Static delivery time estimates and manual restaurant ranking based on ratings.',
-      postAI:
-        'Dynamic AI-driven delivery routing and personalized restaurant recommendations, reducing delivery time by 30%.',
-      lookingFor:
-        'AI Engineers, Operations Analysts with ML knowledge, Product Managers with data expertise'
-    },
-    {
-      company: 'HDFC Bank',
-      industry: 'Banking & Finance',
-      preAI:
-        'Manual fraud detection processes with high false positive rates and delayed responses.',
-      postAI:
-        'Real-time AI fraud detection system processing millions of transactions, reducing fraud by 60%.',
-      lookingFor:
-        'Risk Analysts with ML skills, AI Security Specialists, Fintech Product Managers'
-    }
-  ];
+  // Select 3 random companies based on user's role and use OpenAI content if available
+  useEffect(() => {
+    if (!results) return;
+
+    // Map quiz role values to JSON keys
+    const roleMapping = {
+      'pm': 'product-manager',
+      'finance': 'finance',
+      'sales': 'sales',
+      'marketing': 'marketing',
+      'operations': 'operations',
+      'founder': 'founder'
+    };
+
+    const userRole = results.meta?.role || 'pm';
+    const mappedRole = roleMapping[userRole] || 'product-manager';
+    const roleCompanies = transformationCompaniesData[mappedRole] || [];
+
+    console.log('User role:', userRole, '→ Mapped role:', mappedRole, '→ Companies found:', roleCompanies.length);
+
+    // Pick 3 random companies
+    const shuffled = [...roleCompanies].sort(() => Math.random() - 0.5);
+    const selectedCompanies = shuffled.slice(0, 3);
+
+    // Get OpenAI transformation stories if available
+    const openAIStories = results.openai_content?.transformation_stories || [];
+
+    // Only use OpenAI stories if we have them - match by company name/domain
+    const stories = selectedCompanies.map((company) => {
+      // Try to find matching OpenAI story by company name
+      const openAIStory = openAIStories.find(story =>
+        story.company_name?.toLowerCase().includes(company.name.toLowerCase()) ||
+        company.name.toLowerCase().includes(story.company_name?.toLowerCase())
+      );
+
+      // Generate role-based fallback content
+      const getRoleBasedFallback = (role) => {
+        const fallbacks = {
+          'product-manager': {
+            preAI: 'Traditional product development with manual user research, static roadmaps, and quarterly release cycles.',
+            postAI: 'AI-powered product insights, dynamic prioritization, and data-driven decision making enable 2x faster feature delivery.',
+            lookingFor: 'Product roles now require AI fluency to design intelligent features. Companies seek PMs who understand ML capabilities and can translate AI into product value.'
+          },
+          'finance': {
+            preAI: 'Manual financial analysis, spreadsheet-based forecasting, and monthly reporting cycles with limited predictive insights.',
+            postAI: 'Real-time financial intelligence with AI-powered forecasting, automated reporting, and predictive analytics for strategic planning.',
+            lookingFor: 'Finance professionals need AI skills for predictive modeling and automation. Organizations prioritize candidates who can leverage AI for strategic financial decisions.'
+          },
+          'sales': {
+            preAI: 'Generic outreach, manual lead scoring, intuition-based forecasting, and limited personalization at scale.',
+            postAI: 'AI-driven lead intelligence, predictive deal scoring, and hyper-personalized outreach enable 3x higher conversion rates.',
+            lookingFor: 'Sales roles increasingly require data fluency and AI tool proficiency. Top performers use AI for deal intelligence and personalized engagement at scale.'
+          },
+          'marketing': {
+            preAI: 'Manual campaign management, limited A/B testing, generic messaging, and unclear attribution across channels.',
+            postAI: 'AI-powered content generation, real-time optimization, predictive targeting, and full-funnel attribution drive 10x ROI.',
+            lookingFor: 'Marketing requires AI skills for audience targeting and campaign optimization. Companies seek marketers who master AI tools for content and analytics.'
+          },
+          'operations': {
+            preAI: 'Reactive problem-solving, manual process management, and limited visibility into operational bottlenecks.',
+            postAI: 'Predictive operations with AI-driven optimization, automated workflows, and self-improving systems reduce costs by 20%.',
+            lookingFor: 'Operations roles need AI for predictive analytics and process automation. Organizations value professionals who design self-optimizing systems.'
+          },
+          'founder': {
+            preAI: 'Building products required large teams, slow iteration cycles, and significant capital investment.',
+            postAI: 'AI enables solo founders to build at scale, iterate daily, and compete with well-funded teams using AI-native approaches.',
+            lookingFor: 'Founders need AI fluency to build efficiently and compete. The biggest opportunities are in AI-first businesses with speed as a competitive moat.'
+          }
+        };
+        return fallbacks[role] || fallbacks['founder'];
+      };
+
+      const fallback = getRoleBasedFallback(mappedRole);
+
+      return {
+        company: company.name,
+        industry: company.industry,
+        domain: company.domain,
+        logo: company.logoUrl,
+        brandColor: company.backgroundColor,
+        preAI: openAIStory?.transformation_narrative?.split('After AI:')?.[0]?.replace('Before AI:', '')?.trim() || fallback.preAI,
+        postAI: openAIStory?.transformation_narrative?.split('After AI:')?.[1]?.trim() || fallback.postAI,
+        lookingFor: openAIStory?.relevance_to_user || fallback.lookingFor
+      };
+    });
+
+    console.log('Transformation stories generated:', stories.length, stories);
+    setTransformationStories(stories);
+  }, [results]);
 
   useEffect(() => {
     tracker.pageview({ page_name: 'mba_results_page' });
@@ -1192,11 +1262,38 @@ const MBAResultsPage = () => {
   };
 
   // Prepare data for Recharts RadarChart with dynamic skill metadata
+  // Map 3-level system to percentages (capped at 80% max)
+  const getLevelPercentage = (level) => {
+    switch(level) {
+      case 1: return 30;  // Needs Improvement
+      case 2: return 55;  // Proficient
+      case 3: return 75;  // Strong (capped under 80%)
+      default: return 55;
+    }
+  };
+
+  // Variable baselines per skill (average candidate levels)
+  const getAverageBaseline = (skillName) => {
+    // AI literacy is relatively new - lower baseline
+    if (skillName === 'ai_literacy') return 20;
+
+    // Strategic skills - moderate baseline
+    if (skillName === 'strategic_thinking') return 45;
+    if (skillName === 'leadership') return 50;
+
+    // Role-specific skills - varying baselines
+    if (skillName.includes('data') || skillName.includes('analytics')) return 48;
+    if (skillName.includes('financial') || skillName.includes('revenue')) return 52;
+
+    // Default baseline for other skills
+    return 50;
+  };
+
   const radarData = Object.entries(skills.skills).map(([skillName, skillData]) => ({
     category: skillName,
     categoryDisplay: skillData.title || skillName.replace(/_/g, ' '),  // Use title from backend
-    user: skillData.level * 20, // Convert 1-5 scale to 0-100
-    average: 60, // Average MBA baseline at 60%
+    user: getLevelPercentage(skillData.level), // Map 3-level system (1-3) to percentages
+    average: getAverageBaseline(skillName), // Variable baseline per skill
     fullMark: 100,
     description: skillData.description || ''  // Use description from backend
   }));
@@ -1209,15 +1306,13 @@ const MBAResultsPage = () => {
           <LeftPanel score={readiness.overall_score}>
             <GreetingSection>
               <HeroGreeting>
-                {readiness.overall_score > 55
-                  ? `Hey There,\nYour Profile Has Potential`
-                  : `Let's Build your\nAI <> Business Readiness`}
+                Your AI&lt;&gt;Business
+                <br />
+                Readiness Report is Ready!
               </HeroGreeting>
               <GreetingSubtext>
                 {persona?.variant_description ||
-                  (readiness.overall_score > 55
-                    ? 'Your path to 100% career readiness starts here.'
-                    : 'You have room to grow. Follow the personalized action items below to boost your readiness.')}
+                  'You have room to grow. Follow the personalized action items below to boost your readiness.'}
               </GreetingSubtext>
               {persona?.persona_tags && persona.persona_tags.length > 0 && (
                 <TagsContainer>
@@ -1233,7 +1328,7 @@ const MBAResultsPage = () => {
                 <OliveBranch position="left" src={oliveBranchLeft} alt="" />
               )}
               <ScoreDisplay>{readiness.overall_score}%</ScoreDisplay>
-              <ScoreLabel>Your Readiness Score</ScoreLabel>
+              <ScoreLabel>Readiness Score</ScoreLabel>
               {hasOliveBranches && (
                 <OliveBranch position="right" src={oliveBranchRight} alt="" />
               )}
@@ -1258,13 +1353,25 @@ const MBAResultsPage = () => {
                       data={radarData}
                       cx="50%"
                       cy="45%"
-                      outerRadius="80%"
-                      margin={{ top: 40, right: 80, bottom: 40, left: 80 }}
+                      outerRadius={typeof window !== 'undefined' && window.innerWidth <= 768 ? "65%" : "80%"}
+                      margin={typeof window !== 'undefined' && window.innerWidth <= 768
+                        ? { top: 20, right: 30, bottom: 20, left: 30 }
+                        : { top: 40, right: 80, bottom: 40, left: 80 }}
                     >
                       <PolarGrid stroke="#e2e8f0" />
                       <PolarAngleAxis
                         dataKey="categoryDisplay"
-                        tick={{ fill: '#475569', fontSize: 14, fontWeight: 600 }}
+                        tick={{
+                          fill: '#475569',
+                          fontSize: typeof window !== 'undefined' && window.innerWidth <= 768 ? 10 : 14,
+                          fontWeight: 600
+                        }}
+                        tickFormatter={(value) => {
+                          if (typeof window !== 'undefined' && window.innerWidth <= 768) {
+                            return value.length > 12 ? value.substring(0, 10) + '...' : value;
+                          }
+                          return value;
+                        }}
                       />
                       <PolarRadiusAxis
                         angle={90}
@@ -1322,17 +1429,50 @@ const MBAResultsPage = () => {
 
                 <ChartDescription>
                   <DescriptionText>
-                    Your skills profile shows{' '}
-                    <strong>
-                      {Object.values(skills.skills).filter((s) => s.level >= 4).length}{' '}
-                      strong competencies
-                    </strong>{' '}
-                    and{' '}
-                    <strong>
-                      {Object.values(skills.skills).filter((s) => s.level <= 2).length}{' '}
-                      areas for growth
-                    </strong>
-                    . The chart above compares your current skills against the average
+                    {(() => {
+                      const strongCount = Object.values(skills.skills).filter((s) => s.level >= 3).length;
+                      const needsImprovementCount = Object.values(skills.skills).filter((s) => s.level === 1).length;
+
+                      if (strongCount > 0 && needsImprovementCount > 0) {
+                        // Show both
+                        return (
+                          <>
+                            Your skills profile shows{' '}
+                            <strong>
+                              {strongCount} {strongCount === 1 ? 'strong skill' : 'strong skills'}
+                            </strong>{' '}
+                            and{' '}
+                            <strong>
+                              {needsImprovementCount} {needsImprovementCount === 1 ? 'area' : 'areas'} needing improvement
+                            </strong>.
+                          </>
+                        );
+                      } else if (strongCount > 0) {
+                        // Only strong skills
+                        return (
+                          <>
+                            Your skills profile shows{' '}
+                            <strong>
+                              {strongCount} {strongCount === 1 ? 'strong skill' : 'strong skills'}
+                            </strong>.
+                          </>
+                        );
+                      } else if (needsImprovementCount > 0) {
+                        // Only areas needing improvement
+                        return (
+                          <>
+                            Your skills profile shows{' '}
+                            <strong>
+                              {needsImprovementCount} {needsImprovementCount === 1 ? 'area' : 'areas'} needing improvement
+                            </strong>.
+                          </>
+                        );
+                      } else {
+                        // All proficient (no strong, no gaps)
+                        return <>Your skills are at a proficient level.</>;
+                      }
+                    })()}{' '}
+                    The chart above compares your current skills against the average
                     candidate profile.
                   </DescriptionText>
 
@@ -1390,22 +1530,21 @@ const MBAResultsPage = () => {
             )}
 
             {/* Industry Transformation Stories */}
-            <SectionBlock>
-              <SectionHeading>
-                How Companies Are Transforming with AI
-              </SectionHeading>
-              <SectionSubtitle>
-                Real examples of AI-driven business transformation in India
-              </SectionSubtitle>
-              <SectionDivider />
+            {transformationStories.length > 0 && (
+              <SectionBlock>
+                <SectionHeading>
+                  How Companies Are Transforming with AI
+                </SectionHeading>
+                <SectionSubtitle>
+                  Real examples of AI-driven business transformation in India
+                </SectionSubtitle>
+                <SectionDivider />
 
-              <TransformationGrid>
-                {transformationStories.map((story, index) => (
+                <TransformationGrid>
+                  {transformationStories.map((story, index) => (
                   <TransformationCard key={index}>
-                    <TransformationHeader>
-                      <CompanyLogo>{story.company.charAt(0)}</CompanyLogo>
-                      <CompanyName>{story.company}</CompanyName>
-                      <CompanyIndustry>{story.industry}</CompanyIndustry>
+                    <TransformationHeader brandColor={story.brandColor || '#F8F8F8'}>
+                      <CompanyLogo src={story.logo} alt={story.company} />
                     </TransformationHeader>
 
                     <TransformationBody>
@@ -1419,26 +1558,20 @@ const MBAResultsPage = () => {
                         <TransformationText>{story.postAI}</TransformationText>
                       </div>
 
-                      <LookingForBox>
-                        <LookingForTitle>What They're Looking For</LookingForTitle>
-                        <LookingForText>{story.lookingFor}</LookingForText>
-                      </LookingForBox>
+                      <RelevanceBox>
+                        <RelevanceTitle>Why this is relevant to you</RelevanceTitle>
+                        <RelevanceList>
+                          {story.lookingFor.split(/[.,;]/).filter(s => s.trim()).slice(0, 2).map((point, i) => (
+                            <RelevanceItem key={i}>{point.trim()}</RelevanceItem>
+                          ))}
+                        </RelevanceList>
+                      </RelevanceBox>
                     </TransformationBody>
                   </TransformationCard>
                 ))}
               </TransformationGrid>
-
-              <UpskillBanner>
-                <UpskillText>
-                  Ready to transition into these high-growth roles? Start with our
-                  personalized learning path.
-                </UpskillText>
-                <UpskillCTA onClick={handleRCBClick}>
-                  Get Your Learning Plan
-                  <ArrowRight size={16} weight="bold" />
-                </UpskillCTA>
-              </UpskillBanner>
-            </SectionBlock>
+              </SectionBlock>
+            )}
 
             {/* AI Tools */}
             {ai_tools && ai_tools.length > 0 && (
@@ -1451,14 +1584,51 @@ const MBAResultsPage = () => {
                 </SectionSubtitle>
                 <SectionDivider />
                 <ToolsGrid>
-                  {ai_tools.slice(0, 12).map((tool, index) => (
-                    <Tool key={index}>
-                      <ToolLogoPlaceholder>
-                        {tool.name.charAt(0).toUpperCase()}
-                      </ToolLogoPlaceholder>
-                      <ToolName>{tool.name}</ToolName>
-                    </Tool>
-                  ))}
+                  {ai_tools.slice(0, 9).map((tool, index) => {
+                    // Get OpenAI personalized description if available
+                    const openAITool = results.openai_content?.tool_descriptions?.find(
+                      t => t.name.toLowerCase() === tool.name.toLowerCase()
+                    );
+
+                    // Generate Brandfetch logo URL from tool name
+                    const toolDomain = tool.url
+                      ? new URL(tool.url).hostname.replace('www.', '')
+                      : `${tool.name.toLowerCase().replace(/\s+/g, '')}.com`;
+                    const logoUrl = `https://cdn.brandfetch.io/${toolDomain}/w/400`;
+
+                    // Get user role for personalization
+                    const userRole = results.meta?.role || 'pm';
+                    const roleLabel = results.meta?.role === 'pm' ? 'product management' :
+                                     results.meta?.role === 'finance' ? 'finance' :
+                                     results.meta?.role === 'sales' ? 'sales' :
+                                     results.meta?.role === 'marketing' ? 'marketing' :
+                                     results.meta?.role === 'operations' ? 'operations' :
+                                     'your role';
+
+                    // Use OpenAI personalized description or create role-specific fallback
+                    let description = openAITool?.personalized_use_case || tool.use_case;
+
+                    // Make description more personal if it's generic
+                    if (!openAITool && description && !description.toLowerCase().includes('you')) {
+                      description = `Since you're in ${roleLabel}, ${description.charAt(0).toLowerCase()}${description.slice(1)}`;
+                    }
+
+                    return (
+                      <Tool key={index}>
+                        <ToolLogo
+                          src={logoUrl}
+                          alt={tool.name}
+                          onError={(e) => {
+                            e.target.style.display = 'none';
+                          }}
+                        />
+                        <ToolContent>
+                          <ToolName>{tool.name}</ToolName>
+                          <ToolDescription>{description}</ToolDescription>
+                        </ToolContent>
+                      </Tool>
+                    );
+                  })}
                 </ToolsGrid>
               </SectionBlock>
             )}
@@ -1466,7 +1636,7 @@ const MBAResultsPage = () => {
             {/* Industry Stats */}
             {industry_stats && industry_stats.length > 0 && (
               <SectionBlock>
-                <SectionHeading>
+                <SectionHeading smaller>
                   Why Business x AI Matters Now
                 </SectionHeading>
                 <SectionSubtitle>
@@ -1474,13 +1644,56 @@ const MBAResultsPage = () => {
                 </SectionSubtitle>
                 <SectionDivider />
                 <StatsGrid>
-                  {industry_stats.slice(0, 4).map((stat, index) => (
-                    <StatCard key={index}>
-                      <StatValue>{stat.stat}</StatValue>
-                      <StatDescription>{stat.description}</StatDescription>
-                      <StatSource>{stat.source}</StatSource>
-                    </StatCard>
-                  ))}
+                  {(() => {
+                    console.log('Industry Stats Count:', industry_stats.length, industry_stats);
+                    return industry_stats.slice(0, 3).map((stat, index) => {
+                      // Extract source domain for logo (e.g., "McKinsey 2024" -> "mckinsey.com")
+                      const sourceDomainMap = {
+                        'McKinsey': 'mckinsey.com',
+                        'Gartner': 'gartner.com',
+                        'Deloitte': 'deloitte.com',
+                        'BCG': 'bcg.com',
+                        'PwC': 'pwc.com',
+                        'Forbes': 'forbes.com',
+                        'Harvard Business Review': 'hbr.org',
+                        'LinkedIn': 'linkedin.com',
+                        'World Economic Forum': 'weforum.org',
+                        'MIT': 'mit.edu',
+                        'Microsoft': 'microsoft.com'
+                      };
+
+                      // Find matching domain
+                      const sourceDomain = Object.keys(sourceDomainMap).find(key =>
+                        stat.source.includes(key)
+                      );
+                      const logoUrl = sourceDomain
+                        ? `https://cdn.brandfetch.io/${sourceDomainMap[sourceDomain]}/w/400`
+                        : null;
+
+                      console.log(`Stat ${index + 1}:`, stat.stat, 'Source:', stat.source, 'Logo URL:', logoUrl);
+
+                      return (
+                        <StatCard key={index}>
+                          <StatValue>{stat.stat}</StatValue>
+                          <StatDescription>{stat.description}</StatDescription>
+                          <StatSourceContainer>
+                            {logoUrl && (
+                              <StatSourceLogo
+                                src={logoUrl}
+                                alt={stat.source}
+                                onError={(e) => {
+                                  console.log('Logo failed to load for:', stat.source);
+                                  e.target.style.display = 'none';
+                                  e.target.parentElement.style.borderRight = 'none';
+                                }}
+                              />
+                            )}
+                            <StatSourceText>{stat.source}</StatSourceText>
+                          </StatSourceContainer>
+                        </StatCard>
+                      );
+                    });
+                  })()}
                 </StatsGrid>
               </SectionBlock>
             )}

@@ -69,6 +69,8 @@ def evaluate_mba_readiness(quiz_responses: Dict[str, Any]) -> Dict[str, Any]:
 
     # 6. Get industry stats
     industry_stats = get_industry_stats_for_role(role)
+    logger.info(f"Retrieved {len(industry_stats)} industry stats for role: {role}")
+    logger.debug(f"Industry stats: {industry_stats}")
 
     # 7. Get transformation insights
     transformation_insights = get_transformation_insights_for_role(role)

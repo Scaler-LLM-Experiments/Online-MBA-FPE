@@ -54,16 +54,21 @@ def calculate_mba_readiness_score(responses: Dict[str, Any]) -> Dict[str, Any]:
     ai_fluency_score = _calculate_ai_fluency(role, responses)
     ownership_score = _calculate_ownership(role, responses)
 
-    # Weighted overall score
-    overall_score = int(
+    # Calculate raw weighted score (0-100)
+    raw_score = (
         experience_score * SCORING_WEIGHTS['experience'] +
         role_maturity_score * SCORING_WEIGHTS['role_maturity'] +
         ai_fluency_score * SCORING_WEIGHTS['ai_fluency'] +
         ownership_score * SCORING_WEIGHTS['ownership']
     )
 
-    # Determine AI maturity level
-    maturity_level = _determine_ai_maturity(ai_fluency_score, overall_score)
+    # Cap score at 40-80% range (nobody is "perfect", everyone has room to grow)
+    # Map raw 0-100 score to 40-80 range
+    overall_score = int(40 + (raw_score * 0.40))
+    overall_score = max(40, min(80, overall_score))  # Ensure bounds
+
+    # Determine AI maturity level (use raw score for better differentiation)
+    maturity_level = _determine_ai_maturity(ai_fluency_score, raw_score)
 
     # Calculate percentile (simplified - in production, query database)
     percentile = _calculate_percentile(overall_score)
@@ -78,7 +83,7 @@ def calculate_mba_readiness_score(responses: Dict[str, Any]) -> Dict[str, Any]:
         },
         'maturity_level': maturity_level,
         'percentile': percentile,
-        'readiness_tags': _generate_readiness_tags(overall_score, maturity_level, role)
+        'readiness_tags': _generate_readiness_tags(overall_score, maturity_level, role, responses)
     }
 
 
@@ -332,60 +337,111 @@ def _determine_ai_maturity(ai_fluency: int, overall_score: int) -> str:
 
 def _calculate_percentile(overall_score: int) -> int:
     """
-    Calculate percentile based on score
+    Calculate percentile based on score (capped at 40-80% range)
     In production, this would query actual user data
     """
-    if overall_score >= 85:
-        return 95
-    elif overall_score >= 75:
+    # Adjusted for 40-80% score range
+    if overall_score >= 75:  # Top tier (75-80%)
         return 85
+    elif overall_score >= 70:
+        return 75
     elif overall_score >= 65:
-        return 70
-    elif overall_score >= 55:
+        return 65
+    elif overall_score >= 60:
         return 55
-    elif overall_score >= 45:
+    elif overall_score >= 55:
+        return 50
+    elif overall_score >= 50:
         return 40
-    else:
-        return 25
+    elif overall_score >= 45:
+        return 30
+    else:  # 40-44%
+        return 20
 
 
-def _generate_readiness_tags(score: int, maturity: str, role: str) -> List[str]:
-    """Generate descriptive tags for readiness level"""
+def _generate_readiness_tags(score: int, maturity: str, role: str, responses: Dict[str, Any]) -> List[str]:
+    """
+    Generate descriptive tags based on actual quiz responses
+    Tags should reflect user's specific strengths, not generic role labels
+    """
     tags = []
 
-    # Score-based tags
-    if score >= 80:
-        tags.append("MBA Ready")
-        tags.append("Strategic Thinker")
-    elif score >= 65:
-        tags.append("Strong Foundation")
-        tags.append("Growth Oriented")
-    elif score >= 50:
-        tags.append("Good Potential")
-        tags.append("Needs Upskilling")
-    else:
-        tags.append("Early Career")
-        tags.append("Foundation Building")
+    # Response-specific tags (max 2-3 based on answer patterns)
+    if role == 'product-manager':
+        if responses.get('pm-retention-problem') == 'resegment-cohorts':
+            tags.append("Data-Driven")
+        if responses.get('pm-roadmap-tradeoff') == 'incremental':
+            tags.append("Metrics-Focused")
+        if responses.get('pm-ai-leverage') in ['prioritization', 'impact-prediction']:
+            tags.append("AI-Powered PM")
+        if responses.get('pm-failure-reflection') == 'wrong-assumptions':
+            tags.append("Self-Aware")
+        if responses.get('pm-metrics-conflict') == 'unit-economics':
+            tags.append("Business-Minded")
 
-    # AI maturity tags
+    elif role == 'finance':
+        if responses.get('finance-metrics-conflict') == 'scenarios':
+            tags.append("Strategic Communicator")
+        if responses.get('finance-forecast-miss') in ['scenario-modeling', 'predictive-models']:
+            tags.append("Advanced Modeler")
+        if responses.get('finance-decision-speed') in ['confidence-intervals', 'ai-anomalies']:
+            tags.append("Data Scientist")
+        if responses.get('finance-leadership-weight') == 'me':
+            tags.append("Accountable Leader")
+
+    elif role == 'sales':
+        if responses.get('sales-pipeline-reality') in ['tighten-qualification', 'analyze-winloss']:
+            tags.append("Process-Oriented")
+        if responses.get('sales-ai-usage') in ['deal-risk', 'pricing-optimization']:
+            tags.append("AI-Powered Sales")
+        if responses.get('sales-target-miss') in ['icp-mismatch', 'sales-motion']:
+            tags.append("Strategic Thinker")
+        if responses.get('sales-ownership') in ['region-business', 'team-number']:
+            tags.append("Leader")
+
+    elif role == 'marketing':
+        if responses.get('marketing-conflicting-signals') in ['ltv-cac-cohort', 'revenue-attribution']:
+            tags.append("Unit Economics")
+        if responses.get('marketing-ai-application') in ['automated-optimization', 'audience-prediction']:
+            tags.append("AI-Native Marketer")
+        if responses.get('marketing-defend-metric') in ['revenue-contribution', 'ltv']:
+            tags.append("Revenue-Focused")
+        if responses.get('marketing-scale-failure') == 'funnel-leakage':
+            tags.append("Growth Hacker")
+
+    elif role == 'operations':
+        if responses.get('operations-scale-stress') in ['process-design', 'data-visibility']:
+            tags.append("Systems Thinker")
+        if responses.get('operations-ai-leverage') in ['automation', 'decision-optimization']:
+            tags.append("AI-Leveraged Ops")
+        if responses.get('operations-purpose') in ['enable-scale', 'competitive-advantage']:
+            tags.append("Strategic Partner")
+
+    elif role == 'founder':
+        if responses.get('founder-mvp-failure') in ['reframe-problem', 'pivot-icp']:
+            tags.append("Product Thinker")
+        if responses.get('founder-scale-pain') in ['pricing', 'customer-mix']:
+            tags.append("Business Fundamentals")
+        if responses.get('founder-ai-advantage') in ['insight', 'differentiation']:
+            tags.append("AI-First Founder")
+
+    # Add AI maturity tag if high
     if maturity == AIMaturityLevel.AI_NATIVE:
         tags.append("AI Native")
     elif maturity == AIMaturityLevel.AI_STRATEGIC:
         tags.append("AI Strategic")
-    elif maturity == AIMaturityLevel.AI_CAPABLE:
-        tags.append("AI Capable")
 
-    # Role-specific tags
-    role_tags = {
-        'product-manager': 'Product Leader',
-        'finance': 'Finance Professional',
-        'sales': 'Revenue Driver',
-        'marketing': 'Growth Marketer',
-        'operations': 'Operations Expert',
-        'founder': 'Entrepreneur'
-    }
-
-    if role in role_tags:
-        tags.append(role_tags[role])
+    # Add role identifier only if we don't have enough specific tags
+    if len(tags) < 2:
+        role_identifiers = {
+            'product-manager': 'Product Manager',
+            'finance': 'Finance Professional',
+            'sales': 'Sales Professional',
+            'marketing': 'Marketer',
+            'operations': 'Operations Professional',
+            'founder': 'Founder'
+        }
+        if role in role_identifiers:
+            tags.append(role_identifiers[role])
 
     return tags[:4]  # Max 4 tags

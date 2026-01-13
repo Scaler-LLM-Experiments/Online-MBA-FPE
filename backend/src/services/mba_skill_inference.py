@@ -1,9 +1,15 @@
 """
 MBA Skill Inference Engine
 Maps quiz answers to skill levels across core business competencies
+
+NEW APPROACH: Direct answer → score mapping
+- Each answer gets a score (1-5) based on quality of thinking
+- Skill levels calculated as average of all relevant question scores
+- No more "default to 3" nonsense
 """
 from typing import Dict, List, Any
 from enum import Enum
+from src.services.mba_skill_scoring_maps import QUESTION_SKILL_MAP, ANSWER_SCORES
 
 
 class SkillCategory(str, Enum):
@@ -17,12 +23,26 @@ class SkillCategory(str, Enum):
 
 
 SKILL_LEVEL_LABELS = {
-    1: "Beginner",
-    2: "Developing",
-    3: "Proficient",
-    4: "Advanced",
-    5: "Expert"
+    1: "Needs Improvement",
+    2: "Proficient",
+    3: "Strong"
 }
+
+# Map internal 1-5 scores to external 1-3 levels
+# Nobody is an "Expert" - everyone has room for growth
+def _map_score_to_level(score: int) -> int:
+    """
+    Map internal 1-5 scoring to simplified 1-3 levels:
+    - 1-2 → Level 1 (Needs Improvement)
+    - 3 → Level 2 (Proficient)
+    - 4-5 → Level 3 (Strong)
+    """
+    if score <= 2:
+        return 1
+    elif score == 3:
+        return 2
+    else:  # 4-5
+        return 3
 
 
 # Role-specific skill maps (3 universal + 3 role-specific per role)
@@ -160,7 +180,11 @@ def infer_skills_from_responses(role: str, responses: Dict[str, Any]) -> Dict[st
     """
     Infer role-specific skill levels based on quiz responses
 
-    NEW: Returns 6 skills per role (3 universal + 3 role-specific)
+    NEW APPROACH: Direct answer → score mapping
+    - Each question tests one or more skills
+    - Each answer gets a score (1-5)
+    - Skill level = average of all relevant question scores
+    - DEFAULT = 3 ONLY if no relevant questions were answered
 
     Returns:
         {
@@ -180,23 +204,53 @@ def infer_skills_from_responses(role: str, responses: Dict[str, Any]) -> Dict[st
     # Get skill list for this role (fallback to 'pm' if role not found)
     skill_names = ROLE_SKILL_MAPS.get(role, ROLE_SKILL_MAPS['pm'])
 
+    # Build reverse index: skill → [questions that test it]
+    skill_to_questions = {skill: [] for skill in skill_names}
+    for question_key, tested_skills in QUESTION_SKILL_MAP.items():
+        for skill in tested_skills:
+            if skill in skill_to_questions:
+                skill_to_questions[skill].append(question_key)
+
+    # Calculate skill levels
     skills = {}
     for skill_name in skill_names:
-        # Infer skill level using dispatcher
-        skill_level = _infer_skill(skill_name, role, responses)
+        # Find all questions that test this skill
+        relevant_questions = skill_to_questions[skill_name]
+
+        # Collect scores from answered questions
+        scores = []
+        for question_key in relevant_questions:
+            user_answer = responses.get(question_key)
+            if user_answer and question_key in ANSWER_SCORES:
+                score = ANSWER_SCORES[question_key].get(user_answer)
+                if score:
+                    scores.append(score)
+
+        # Calculate skill level
+        if scores:
+            # Average of all relevant question scores
+            avg_score = sum(scores) / len(scores)
+            internal_score = round(avg_score)  # Round to nearest integer (1-5)
+            internal_score = max(1, min(5, internal_score))  # Clamp to 1-5
+
+            # Map to simplified 3-level system
+            level = _map_score_to_level(internal_score)
+        else:
+            # Default to 2 (Proficient) ONLY if no relevant questions answered
+            level = 2
 
         # Attach metadata for frontend
         metadata = SKILL_METADATA.get(skill_name, {})
         skills[skill_name] = {
-            'level': skill_level['level'],
-            'label': skill_level['label'],
+            'level': level,
+            'label': SKILL_LEVEL_LABELS[level],
             'title': metadata.get('title', skill_name.replace('_', ' ').title()),
             'description': metadata.get('description', '')
         }
 
-    # Identify strengths (level >= 4) and gaps (level <= 2)
-    strengths = [name for name, data in skills.items() if data['level'] >= 4]
-    gaps = [name for name, data in skills.items() if data['level'] <= 2]
+    # Identify strengths (level >= 3) and gaps (level <= 1)
+    strengths = [name for name, data in skills.items() if data['level'] >= 3]
+    gaps = [name for name, data in skills.items() if data['level'] <= 1]
 
     return {
         'skills': skills,

@@ -393,11 +393,9 @@ async def evaluate_mba_readiness(request: Dict[str, Any]):
     logger.info(f"Received MBA evaluation request for role: {request.get('role')}")
 
     try:
-        # Convert camelCase/kebab-case keys to snake_case for internal processing
-        processed_request = {k.replace('-', '_'): v for k, v in request.items()}
-
-        # Evaluate
-        result = evaluate_mba_readiness(processed_request)
+        # Pass request as-is to preserve dash-case quiz question keys
+        # (skill scoring maps expect keys like 'pm-retention-problem', not 'pm_retention_problem')
+        result = evaluate_mba_readiness(request)
 
         logger.info("MBA evaluation completed successfully")
         return result

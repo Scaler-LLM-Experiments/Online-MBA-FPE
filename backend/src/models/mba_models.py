@@ -14,12 +14,12 @@ class MBAQuizRequest(BaseModel):
 
     # Role-specific responses (all optional since different roles have different questions)
     # Product Manager
-    pm_data_conflict: Optional[str] = Field(None, alias="pm-data-conflict")
-    pm_roadmap_bloat: Optional[str] = Field(None, alias="pm-roadmap-bloat")
-    pm_ai_usage: Optional[str] = Field(None, alias="pm-ai-usage")
-    pm_feature_failure: Optional[str] = Field(None, alias="pm-feature-failure")
-    pm_success_metric: Optional[str] = Field(None, alias="pm-success-metric")
-    pm_ownership: Optional[str] = Field(None, alias="pm-ownership")
+    pm_retention_problem: Optional[str] = Field(None, alias="pm-retention-problem")
+    pm_roadmap_tradeoff: Optional[str] = Field(None, alias="pm-roadmap-tradeoff")
+    pm_mvp_validation: Optional[str] = Field(None, alias="pm-mvp-validation")
+    pm_metrics_conflict: Optional[str] = Field(None, alias="pm-metrics-conflict")
+    pm_ai_leverage: Optional[str] = Field(None, alias="pm-ai-leverage")
+    pm_failure_reflection: Optional[str] = Field(None, alias="pm-failure-reflection")
 
     # Finance
     finance_metrics_conflict: Optional[str] = Field(None, alias="finance-metrics-conflict")
@@ -83,8 +83,8 @@ class ReadinessScore(BaseModel):
 
 
 class SkillLevel(BaseModel):
-    """Individual skill level"""
-    level: int = Field(..., ge=1, le=5)
+    """Individual skill level (simplified 3-level system)"""
+    level: int = Field(..., ge=1, le=3)
     label: str
     title: str = ""  # Display name for frontend
     description: str = ""  # Tooltip text for frontend

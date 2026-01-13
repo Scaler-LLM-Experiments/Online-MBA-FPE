@@ -9,21 +9,21 @@
       "maturity_variants": {
         "ai_native": {
           "badge_label": "AI-Native Product Leader",
-          "variant_description": "You're leveraging AI at a strategic level for product decisions, automation, and insights",
+          "variant_description": "You're leveraging AI strategically for product decisions, automation, and insights.",
           "persona_tags": ["AI Native", "Product Leader", "Strategic Thinker"],
           "key_strengths": ["AI-driven product strategy", "Predictive insights", "Automated decision-making"],
           "mba_fit": "Ideal candidate for AI-focused programs. You can bridge business strategy and AI implementation."
         },
         "ai_strategic": {
           "badge_label": "AI-Strategic Product Manager",
-          "variant_description": "You understand AI's potential and are beginning to use it for competitive advantage",
+          "variant_description": "You understand AI's potential and are using it for competitive advantage.",
           "persona_tags": ["AI Strategic", "Product Manager", "Growth Oriented"],
           "key_strengths": ["Data-driven decisions", "AI tool adoption", "Product-market fit thinking"],
           "mba_fit": "Strong candidate. Focus on deepening AI strategy skills for maximum impact."
         },
         "developing": {
           "badge_label": "Emerging Product Manager",
-          "variant_description": "You're building product fundamentals. Adding AI fluency will accelerate your career",
+          "variant_description": "You have strong product fundamentals. AI fluency is your next growth lever.",
           "persona_tags": ["Product Manager", "Foundation Building", "AI Curious"],
           "key_strengths": ["Product fundamentals", "Customer empathy", "Execution focus"],
           "mba_fit": "Ready with focused upskilling. Prioritize AI literacy and strategic thinking."
@@ -39,21 +39,21 @@
       "maturity_variants": {
         "ai_native": {
           "badge_label": "AI-Native Finance Leader",
-          "variant_description": "You're using AI for scenario modeling, anomaly detection, and predictive finance",
+          "variant_description": "You're using AI for scenario modeling, anomaly detection, and predictive finance.",
           "persona_tags": ["AI Native", "Finance Professional", "Strategic Analyst"],
           "key_strengths": ["AI-powered forecasting", "Scenario modeling", "Strategic allocation"],
           "mba_fit": "Top candidate. You understand finance at a strategic level with cutting-edge AI skills."
         },
         "ai_strategic": {
           "badge_label": "AI-Strategic Finance Professional",
-          "variant_description": "You're integrating AI tools into financial analysis and reporting",
+          "variant_description": "You're integrating AI tools into financial analysis and reporting.",
           "persona_tags": ["AI Strategic", "Finance Professional", "Data-Driven"],
           "key_strengths": ["Financial modeling", "AI adoption", "Analytical thinking"],
           "mba_fit": "Strong potential. Deepen AI strategy to become indispensable to leadership."
         },
         "developing": {
           "badge_label": "Emerging Finance Professional",
-          "variant_description": "You have strong finance fundamentals. AI literacy will differentiate you",
+          "variant_description": "You have strong finance fundamentals. AI literacy will set you apart.",
           "persona_tags": ["Finance Professional", "Foundation Building", "Analytical Mind"],
           "key_strengths": ["Financial fundamentals", "Excel mastery", "Attention to detail"],
           "mba_fit": "Ready with AI upskilling. Focus on strategic finance and AI tools."
@@ -69,21 +69,21 @@
       "maturity_variants": {
         "ai_native": {
           "badge_label": "AI-Native Sales Leader",
-          "variant_description": "You're using AI for deal risk analysis, pricing optimization, and predictive sales",
+          "variant_description": "You're using AI for deal risk analysis, pricing optimization, and predictive sales.",
           "persona_tags": ["AI Native", "Revenue Driver", "Strategic Seller"],
           "key_strengths": ["AI deal intelligence", "Predictive forecasting", "Revenue optimization"],
           "mba_fit": "Ideal candidate. You combine sales excellence with data-driven AI strategy."
         },
         "ai_strategic": {
           "badge_label": "AI-Strategic Sales Leader",
-          "variant_description": "You're adopting AI tools for sales efficiency and data-driven forecasting",
+          "variant_description": "You're adopting AI tools for sales efficiency and data-driven forecasting.",
           "persona_tags": ["AI Strategic", "Sales Leader", "Data-Driven"],
           "key_strengths": ["Sales forecasting", "CRM mastery", "AI tool adoption"],
           "mba_fit": "Strong potential. Deepen AI sales strategy for competitive advantage."
         },
         "developing": {
           "badge_label": "Emerging Sales Leader",
-          "variant_description": "You have strong sales fundamentals. AI fluency will unlock next-level performance",
+          "variant_description": "You have strong sales fundamentals. AI fluency will unlock your next level.",
           "persona_tags": ["Sales Leader", "Foundation Building", "Relationship Builder"],
           "key_strengths": ["Sales fundamentals", "Relationship building", "Quota achievement"],
           "mba_fit": "Ready with AI upskilling. Focus on strategic sales and predictive analytics."
@@ -99,21 +99,21 @@
       "maturity_variants": {
         "ai_native": {
           "badge_label": "AI-Native Marketing Leader",
-          "variant_description": "You're using AI for automated optimization, audience prediction, and attribution modeling",
+          "variant_description": "You're using AI for automated optimization, audience prediction, and attribution modeling.",
           "persona_tags": ["AI Native", "Growth Marketer", "Strategic Marketer"],
           "key_strengths": ["AI-powered optimization", "Audience prediction", "Revenue attribution"],
           "mba_fit": "Top candidate. You combine growth marketing with advanced AI strategy."
         },
         "ai_strategic": {
           "badge_label": "AI-Strategic Marketing Leader",
-          "variant_description": "You're integrating AI for content, creative testing, and campaign optimization",
+          "variant_description": "You're integrating AI for content, creative testing, and campaign optimization.",
           "persona_tags": ["AI Strategic", "Marketing Leader", "Data-Driven"],
           "key_strengths": ["Marketing analytics", "AI tool adoption", "Growth focus"],
           "mba_fit": "Strong candidate. Deepen AI marketing strategy for maximum ROI."
         },
         "developing": {
           "badge_label": "Emerging Marketing Leader",
-          "variant_description": "You have strong marketing fundamentals. AI will help you scale efficiently",
+          "variant_description": "You have strong marketing fundamentals. AI will help you scale faster.",
           "persona_tags": ["Marketing Leader", "Foundation Building", "Creative Thinker"],
           "key_strengths": ["Marketing fundamentals", "Campaign execution", "Creativity"],
           "mba_fit": "Ready with AI upskilling. Focus on growth marketing and AI-driven analytics."
@@ -129,21 +129,21 @@
       "maturity_variants": {
         "ai_native": {
           "badge_label": "AI-Native Operations Leader",
-          "variant_description": "You're using AI for decision optimization, automation, and operational intelligence",
+          "variant_description": "You're using AI for decision optimization, automation, and operational intelligence.",
           "persona_tags": ["AI Native", "Operations Expert", "Systems Thinker"],
           "key_strengths": ["AI-powered automation", "Decision optimization", "Operational excellence"],
           "mba_fit": "Ideal candidate. You understand operations at scale with cutting-edge AI integration."
         },
         "ai_strategic": {
           "badge_label": "AI-Strategic Operations Leader",
-          "variant_description": "You're adopting AI for forecasting, reporting, and process improvements",
+          "variant_description": "You're adopting AI for forecasting, reporting, and process improvements.",
           "persona_tags": ["AI Strategic", "Operations Leader", "Efficiency Focused"],
           "key_strengths": ["Process optimization", "AI adoption", "Data-driven operations"],
           "mba_fit": "Strong potential. Deepen AI operations strategy to become a force multiplier."
         },
         "developing": {
           "badge_label": "Emerging Operations Leader",
-          "variant_description": "You have strong operations fundamentals. AI will help you scale without headcount",
+          "variant_description": "You have strong operations fundamentals. AI lets you scale without headcount.",
           "persona_tags": ["Operations Leader", "Foundation Building", "Process Builder"],
           "key_strengths": ["Operations fundamentals", "Process execution", "Reliability focus"],
           "mba_fit": "Ready with AI upskilling. Focus on strategic operations and AI automation."
@@ -159,21 +159,21 @@
       "maturity_variants": {
         "ai_native": {
           "badge_label": "AI-Native Founder",
-          "variant_description": "You're building AI-first products and using AI for strategic insights and differentiation",
+          "variant_description": "You're building AI-first products and using AI for strategic insights and differentiation.",
           "persona_tags": ["AI Native", "Entrepreneur", "Strategic Founder"],
           "key_strengths": ["AI-driven strategy", "Product differentiation", "Strategic insights"],
           "mba_fit": "Exceptional candidate. You understand how to build AI-native businesses."
         },
         "ai_strategic": {
           "badge_label": "AI-Strategic Founder",
-          "variant_description": "You're using AI for speed, cost reduction, and operational efficiency",
+          "variant_description": "You're using AI for speed, cost reduction, and operational efficiency.",
           "persona_tags": ["AI Strategic", "Founder", "Resourceful"],
           "key_strengths": ["AI for speed", "Cost optimization", "Lean operations"],
           "mba_fit": "Strong fit. Deepen AI strategy to unlock competitive advantages."
         },
         "developing": {
           "badge_label": "Emerging Founder",
-          "variant_description": "You're building your startup. AI fluency will help you move faster with less",
+          "variant_description": "You're building your startup. AI fluency lets you move faster with less.",
           "persona_tags": ["Founder", "Foundation Building", "Problem Solver"],
           "key_strengths": ["Entrepreneurial mindset", "Customer focus", "Execution"],
           "mba_fit": "Ready with AI upskilling. Focus on using AI as your co-founder."
