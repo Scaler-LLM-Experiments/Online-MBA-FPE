@@ -2,6 +2,7 @@ CREATE TABLE IF NOT EXISTS response_cache (
     id SERIAL PRIMARY KEY,
     cache_key VARCHAR(64) NOT NULL,
     model VARCHAR(100) NOT NULL,
+    user_input JSONB,
     response_json JSONB NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -13,6 +14,7 @@ CREATE INDEX IF NOT EXISTS idx_created_at ON response_cache(created_at DESC);
 COMMENT ON TABLE response_cache IS 'Stores cached ChatGPT API responses keyed by SHA256 hash of input payload';
 COMMENT ON COLUMN response_cache.cache_key IS 'SHA256 hash of the normalized input payload';
 COMMENT ON COLUMN response_cache.model IS 'OpenAI model identifier';
+COMMENT ON COLUMN response_cache.user_input IS 'Original user input payload (for admin viewing)';
 COMMENT ON COLUMN response_cache.response_json IS 'Full JSON response from ChatGPT API';
 COMMENT ON COLUMN response_cache.created_at IS 'Timestamp when cache entry was first created';
 COMMENT ON COLUMN response_cache.updated_at IS 'Timestamp when cache entry was last updated';

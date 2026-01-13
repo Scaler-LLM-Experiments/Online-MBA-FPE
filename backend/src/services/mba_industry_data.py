@@ -40,20 +40,20 @@ def _pm_stats() -> List[Dict[str, Any]]:
     """Stats for Product Managers - Verified from McKinsey & PwC 2024"""
     return [
         {
-            'stat': '40%',
-            'description': 'Gen AI has improved product manager productivity by 40%, while halving the time to document and code',
+            'stat': '40% Productivity Boost',
+            'description': 'Gen AI has improved product manager productivity by 40%, while halving documentation time',
             'source': 'McKinsey 2024',
             'impact': 'Product managers with AI skills are delivering features 2x faster and commanding premium salaries'
         },
         {
-            'stat': '78%',
-            'description': 'Organizations now use AI in product/service development—the fastest-growing application area',
+            'stat': '78% AI Usage',
+            'description': 'Organizations now use AI in product/service development—fastest-growing application area',
             'source': 'McKinsey State of AI 2024',
             'impact': 'Companies prioritize PMs who can leverage AI in product strategy and execution'
         },
         {
-            'stat': '+43%',
-            'description': 'AI-skilled product professionals earn 43% more on average, with senior specialists reaching $250K',
+            'stat': '+43% Higher Pay',
+            'description': 'AI-skilled product professionals earn 43% more on average, with senior roles reaching $250K',
             'source': 'McKinsey & PwC 2024',
             'impact': 'AI literacy is becoming the top differentiator for PM compensation and advancement'
         }
@@ -64,20 +64,20 @@ def _finance_stats() -> List[Dict[str, Any]]:
     """Stats for Finance professionals - Verified from McKinsey, PwC & Gartner 2024"""
     return [
         {
-            'stat': '58%',
+            'stat': '58% AI Adoption',
             'description': 'Finance functions using AI in 2024—a 21 percentage point jump from 2023',
             'source': 'McKinsey State of AI 2024',
             'impact': 'Finance professionals without AI skills risk falling behind in data-driven decision making'
         },
         {
-            'stat': '+56%',
-            'description': 'AI-skilled workers earn an average 56% wage premium according to analysis of 1 billion job ads',
+            'stat': '+56% Wage Premium',
+            'description': 'AI-skilled finance workers earn an average 56% wage premium across 1 billion job postings',
             'source': 'PwC Global AI Jobs Barometer 2025',
             'impact': 'Finance roles increasingly require AI/ML fluency for competitive compensation'
         },
         {
-            'stat': '70%',
-            'description': 'Finance employees are among the most optimistic about gen AI\'s impact on their work',
+            'stat': '70% Optimistic',
+            'description': 'Finance employees are among the most optimistic about Gen AI\'s impact on their work',
             'source': 'McKinsey 2024',
             'impact': 'Early AI adopters in finance are gaining strategic influence and career acceleration'
         }
@@ -88,19 +88,19 @@ def _sales_stats() -> List[Dict[str, Any]]:
     """Stats for Sales professionals - Verified from McKinsey & PwC 2024"""
     return [
         {
-            'stat': '65%',
-            'description': 'Organizations regularly using gen AI, nearly double from 10 months ago—sales is the top use case',
+            'stat': '65% Gen AI Usage',
+            'description': 'Organizations regularly using Gen AI in sales—nearly double from 10 months ago',
             'source': 'McKinsey State of AI 2024',
             'impact': 'Sales professionals who leverage AI are closing deals faster and outperforming peers'
         },
         {
-            'stat': '+43%',
-            'description': 'Applied AI skills in sales and marketing trigger 43% average pay bumps, with senior roles at $250K+',
+            'stat': '+43% Pay Bump',
+            'description': 'Applied AI skills in sales and marketing trigger 43% average pay bumps, senior roles at $250K+',
             'source': 'McKinsey 2024',
             'impact': 'AI-powered sales analytics and automation are becoming must-have skills for career growth'
         },
         {
-            'stat': '78%',
+            'stat': '78% AI in Sales',
             'description': 'Organizations use AI in marketing and sales functions—the most common business application',
             'source': 'McKinsey State of AI 2024',
             'impact': 'Companies prioritize sales talent who can scale operations with AI tools and insights'
@@ -112,19 +112,19 @@ def _marketing_stats() -> List[Dict[str, Any]]:
     """Stats for Marketing professionals - Verified from McKinsey 2024"""
     return [
         {
-            'stat': '36%',
-            'description': 'Marketing function AI use jumped from 27% to 36% in just six months—the largest increase of any function',
+            'stat': '36% AI Adoption',
+            'description': 'Marketing function AI use jumped from 27% to 36% in just six months—largest increase of any function',
             'source': 'McKinsey State of AI 2024',
             'impact': 'Marketing teams without AI capabilities are losing competitive edge in campaign performance'
         },
         {
-            'stat': '78%',
+            'stat': '78% AI in Marketing',
             'description': 'Organizations use AI in marketing and sales—the #1 business function for AI deployment',
             'source': 'McKinsey State of AI 2024',
             'impact': 'Marketers who master AI tools are delivering 10x ROI on campaigns and content'
         },
         {
-            'stat': '+43%',
+            'stat': '+43% Higher Pay',
             'description': 'Marketing professionals with AI skills earn 43% more, with senior specialists at $250K total comp',
             'source': 'McKinsey 2024',
             'impact': 'AI-driven marketing analytics is the #1 skill employers seek in senior marketing hires'
@@ -136,19 +136,19 @@ def _operations_stats() -> List[Dict[str, Any]]:
     """Stats for Operations professionals - Verified from McKinsey 2024"""
     return [
         {
-            'stat': '+5%',
+            'stat': '+5% Revenue Boost',
             'description': 'Companies report meaningful revenue increases (over 5%) from AI in supply chain and inventory management',
             'source': 'McKinsey State of AI 2024',
             'impact': 'Operations leaders who deploy AI are driving measurable bottom-line impact'
         },
         {
-            'stat': '70%',
-            'description': 'Operations and procurement employees are most optimistic about gen AI\'s impact on their work',
+            'stat': '70% Optimistic',
+            'description': 'Operations and procurement employees are most optimistic about Gen AI\'s impact on their work',
             'source': 'McKinsey 2024',
             'impact': 'Early AI adopters in operations are gaining strategic influence and career acceleration'
         },
         {
-            'stat': '78%',
+            'stat': '78% AI in Operations',
             'description': 'Organizations use AI in service operations, following marketing and IT as top adoption areas',
             'source': 'McKinsey State of AI 2024',
             'impact': 'Operations professionals without AI fluency risk being replaced by AI-native talent'
@@ -160,20 +160,20 @@ def _founder_stats() -> List[Dict[str, Any]]:
     """Stats for Founders - Verified from Gartner, McKinsey & LinkedIn 2024"""
     return [
         {
-            'stat': '$500B',
+            'stat': '$500B AI Spending',
             'description': 'Global AI spending reached $500 billion by end of 2024, up 19% from 2023',
             'source': 'Gartner 2024',
             'impact': 'AI is the largest technology investment category—businesses without AI strategy will fall behind'
         },
         {
-            'stat': '92%',
+            'stat': '92% Plan to Invest',
             'description': 'Companies plan to increase AI investments over the next three years',
             'source': 'McKinsey State of AI 2024',
             'impact': 'Founders and executives who don\'t understand AI will struggle to compete for funding and talent'
         },
         {
-            'stat': '142x',
-            'description': 'LinkedIn members adding AI skills to profiles increased 142x, with 160% surge in non-technical professionals taking AI courses',
+            'stat': '142x Skills Growth',
+            'description': 'LinkedIn members adding AI skills to profiles increased 142x, with 160% surge in non-technical professionals',
             'source': 'Microsoft & LinkedIn Work Trend Index 2024',
             'impact': 'The workforce is rapidly upskilling—professionals without AI literacy will be left behind'
         }

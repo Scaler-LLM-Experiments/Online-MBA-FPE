@@ -100,18 +100,23 @@ The MBA readiness evaluation uses a **deterministic mapping-based approach** wit
 PostgreSQL database (`profile_cache`) contains two main tables:
 
 1. **`response_cache`** - Main caching table
-   - `response_id` (VARCHAR, PRIMARY KEY) - SHA256 hash of request payload
-   - `model` (VARCHAR) - OpenAI model used (e.g., "gpt-4o")
-   - `user_input` (JSONB) - Original request payload
+   - `id` (SERIAL, PRIMARY KEY) - Auto-incrementing primary key
+   - `cache_key` (VARCHAR(64), UNIQUE) - SHA256 hash of request payload (composite UNIQUE with model)
+   - `model` (VARCHAR(100)) - OpenAI model used (e.g., "gpt-4o")
+   - `user_input` (JSONB, nullable) - Original request payload (for admin viewing)
    - `response_json` (JSONB) - Cached OpenAI response
    - `created_at` (TIMESTAMP) - Cache entry creation time
+   - `updated_at` (TIMESTAMP) - Last update timestamp
 
 2. **`crt_quiz_responses`** - Career Roadmap Tool responses
-   - `hash_key` (VARCHAR, PRIMARY KEY) - MD5 hash of quiz responses
+   - `id` (SERIAL, PRIMARY KEY) - Auto-incrementing primary key
+   - `hash_key` (VARCHAR(32), UNIQUE) - MD5 hash of quiz responses
    - `quiz_responses` (JSONB) - Quiz response data
    - `created_at` (TIMESTAMP) - Entry creation time
 
-See `backend/init.sql` for full schema definitions.
+**Important**: The API response includes a `response_id` field which is populated with the `cache_key` value for admin access, but `response_id` is NOT a database column name.
+
+See `backend/init.sql` for complete schema definitions.
 
 ### API Routing
 
@@ -148,17 +153,49 @@ LOG_FORMAT=json                           # json | text
 
 ### Database Access (for debugging)
 
-When using Docker Compose, PostgreSQL is exposed on port 5432:
+**Local Development**: The current [docker-compose.yml](docker-compose.yml) does NOT include a PostgreSQL service. You need to run PostgreSQL separately:
 
+**Option 1 - Local PostgreSQL** (recommended for development):
 ```bash
-# Connect to database
-psql -h localhost -U postgres -d profile_cache
+# Install PostgreSQL locally (macOS)
+brew install postgresql@15
+brew services start postgresql@15
 
-# Or if you have DATABASE_URL set
-psql $DATABASE_URL
+# Create database
+createdb profile_cache
+
+# Run init script
+psql -d profile_cache -f backend/init.sql
+
+# Connect to database
+psql -d profile_cache
 
 # Clear cache for testing
-psql $DATABASE_URL -c "DELETE FROM response_cache;"
+psql -d profile_cache -c "DELETE FROM response_cache;"
+```
+
+**Option 2 - Docker PostgreSQL** (if you add postgres service to docker-compose.yml):
+```bash
+# If you add postgres service to docker-compose.yml:
+# postgres:
+#   image: postgres:15
+#   environment:
+#     POSTGRES_DB: profile_cache
+#     POSTGRES_PASSWORD: postgres
+#   ports:
+#     - "5432:5432"
+
+# Then you can use:
+docker compose exec postgres psql -U postgres -d profile_cache
+```
+
+**Connection String**: Set `DATABASE_URL` in your `.env`:
+```bash
+# Local PostgreSQL
+DATABASE_URL=postgresql://your_username@localhost:5432/profile_cache
+
+# Docker PostgreSQL (if using Option 2)
+DATABASE_URL=postgresql://postgres:postgres@postgres:5432/profile_cache
 ```
 
 ## Development Commands
@@ -242,10 +279,7 @@ npm run lint:check        # Check with zero warnings allowed
 ### Health Checks and Debugging
 
 ```bash
-# Backend health check (Docker)
-curl http://localhost:8000/career-profile-tool/api/health
-
-# Backend health check (local)
+# Backend health check
 curl http://localhost:8000/career-profile-tool/api/health
 
 # Frontend (Docker - served by Nginx on port 80)
@@ -254,13 +288,21 @@ curl http://localhost/career-profile-tool/
 # Frontend (local dev server - port 3000)
 curl http://localhost:3000/career-profile-tool/
 
-# Check database connection
-docker compose logs postgres
+# Check backend logs
+docker compose logs -f backend
 
-# Clear cache for testing
-docker compose exec postgres psql -U postgres -d profile_cache -c "DELETE FROM response_cache;"
-# Or without Docker:
-psql -h localhost -U postgres -d profile_cache -c "DELETE FROM response_cache;"
+# Check frontend logs
+docker compose logs -f frontend
+
+# Check database connection (backend logs will show connection status)
+docker compose logs backend | grep -i "cache repository"
+
+# Clear cache for testing (use your local postgres)
+psql -d profile_cache -c "DELETE FROM response_cache;"
+
+# Restart services after code changes (if not using watch mode)
+docker compose restart backend
+docker compose restart frontend
 ```
 
 ## Implementation Guidelines
@@ -343,8 +385,14 @@ Component structure:
 - **Cache not working** (tech evaluation): Check database logs, look for "Cache HIT/MISS" in backend logs
 - **JSONB validation errors**: PostgreSQL JSONB returns dict, convert to JSON string before validation
 - **Backend won't start**: Check `OPENAI_API_KEY` and `DATABASE_URL` in `.env`
+  - Verify PostgreSQL is running: `psql -d profile_cache -c "SELECT 1"`
+  - Check if `user_input` column exists: `psql -d profile_cache -c "\d response_cache"`
+- **Database connection refused**: PostgreSQL not running or wrong DATABASE_URL
+  - Start postgres: `brew services start postgresql@15` (macOS)
+  - Check connection: `psql -d profile_cache -c "SELECT 1"`
 - **MBA evaluation fails**: Check that all role-specific quiz questions are included in the request
 - **Wrong evaluation endpoint**: Use `/evaluate` for tech careers (OpenAI), `/mba/evaluate` for MBA readiness (no OpenAI)
+- **Docker containers won't start**: Check that no other services are using ports 80, 8000
 
 ## Production
 

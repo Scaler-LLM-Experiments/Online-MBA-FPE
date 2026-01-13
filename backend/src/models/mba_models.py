@@ -197,6 +197,18 @@ class OpenAIContent(BaseModel):
     generation_metadata: Dict[str, Any]
 
 
+class CareerTransition(BaseModel):
+    """Career transition/journey recommendation"""
+    title: str = Field(..., description="Target role title")
+    description: str = Field(..., description="Brief role description")
+    action_items: List[str] = Field(..., description="Milestones/steps to achieve this role")
+    card_type: str = Field(..., description="'target' for recommended, 'alternate' for alternative paths")
+    timeline: Optional[str] = Field(None, description="Timeline to achieve (e.g., '6-12 months')")
+    salary: Optional[str] = Field(None, description="Salary range (e.g., '$120k-$180k')")
+    goal: Optional[str] = Field(None, description="Career goal for this role")
+    key_focus: Optional[str] = Field(None, description="Main focus area")
+
+
 class MBAEvaluationResponse(BaseModel):
     """Complete MBA evaluation response"""
     readiness: ReadinessScore
@@ -207,6 +219,7 @@ class MBAEvaluationResponse(BaseModel):
     industry_stats: List[IndustryStat]
     transformation_insights: List[TransformationInsight]
     peer_comparison: PeerComparison
+    career_transitions: List[CareerTransition]  # NEW: Career journey recommendations
     openai_content: Optional[OpenAIContent] = None  # NEW: OpenAI-generated personalized content
     cache_status: Optional[str] = None  # NEW: 'mock' | 'hit' | 'miss' | 'disabled'
     meta: MetaData

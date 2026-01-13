@@ -42,7 +42,7 @@ const QuizContainer = styled.div`
 
 const LeftPanel = styled.div`
   width: 40%;
-  background: #fbfbfb;
+  background: #FFFCF8;
   padding: 32px 60px 60px;
   display: flex;
   flex-direction: column;
@@ -67,8 +67,9 @@ const RightPanel = styled.div`
     width: 100%;
     border-left: none;
     padding: 16px;
-    min-height: calc(100vh - 72px);
+    height: 100vh;
     padding-bottom: 90px;
+    overflow-y: auto;
   }
 `;
 
@@ -135,8 +136,8 @@ const FeaturesList = styled.div`
   gap: 12px;
   margin-bottom: 32px;
   @media (max-width: 768px) {
-    gap: 10px;
-    margin-bottom: 24px;
+    gap: 16px;
+    margin-bottom: 12px;
   }
 `;
 
@@ -146,6 +147,9 @@ const Feature = styled.div`
   gap: 12px;
   font-size: 0.9rem;
   color: #475569;
+  @media (max-width: 768px) {
+    align-items: flex-start;
+  }
 `;
 
 const IconContainer = styled.div`
@@ -169,6 +173,7 @@ const TrustBadgeSection = styled.div`
     margin-top: 8px;
     padding-top: 12px;
     padding-bottom: 12px;
+    border-top: none;
   }
 `;
 
@@ -260,6 +265,10 @@ const ChatbotContainer = styled.div`
   justify-content: flex-start;
   padding-top: 120px;
   max-width: 440px;
+  @media (max-width: 768px) {
+    padding: 0;
+    width: 100%;
+  }
 `;
 
 const slideInFromLeft = keyframes`
@@ -283,6 +292,10 @@ const ChatbotAvatar = styled.div`
   justify-content: center;
   flex-shrink: 0;
   overflow: hidden;
+  @media (max-width: 768px) {
+    width: 60px;
+    height: 60px;
+  }
 `;
 
 const BotImage = styled.img`
@@ -303,6 +316,10 @@ const ChatMessage = styled.div`
   color: #1e293b;
   line-height: 1.5;
   animation: ${slideInFromLeft} 0.6s ease-out;
+  @media (max-width: 768px) {
+    font-size: 1rem;
+    padding: 14px 16px;
+  }
   &::before {
     content: "";
     position: absolute;
@@ -339,6 +356,38 @@ const QuizContent = styled.div`
     align-items: flex-start;
     justify-content: flex-start;
   }
+`;
+
+const MobileWelcomeContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #FFFCF8;
+  overflow: hidden;
+  animation: ${fadeIn} 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  @media (max-width: 768px) {
+    margin: -16px;
+    margin-bottom: -90px;
+    height: calc(100% + 106px);
+  }
+`;
+
+const MobileWelcomeTop = styled.div`
+  padding: 24px;
+`;
+
+const MobileWelcomeCenter = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 24px 24px 24px;
+`;
+
+const MobileWelcomeBottom = styled.div`
+  padding: 0 0 90px 0;
+  position: relative;
+  z-index: 1;
 `;
 
 const TopNavigationWrapper = styled.div`
@@ -710,7 +759,7 @@ const MBAQuiz = ({ onProgressChange }) => {
         questionStartIndex={currentStep * 2}
         onAutoAdvance={handleNext}
         onChatTextChange={setChatText}
-        hideChat={true}
+        hideChat={currentStep !== 0}
       />
     );
   };
@@ -763,27 +812,27 @@ const MBAQuiz = ({ onProgressChange }) => {
         <>
           {logoSection}
           <WelcomeContent>
-            <WelcomeTitle>Business x AI MBA</WelcomeTitle>
-            <WelcomeSubtitle>Readiness Assessment</WelcomeSubtitle>
+            <WelcomeTitle>AI x Business Readiness</WelcomeTitle>
+            <WelcomeSubtitle>Free Career Assessment</WelcomeSubtitle>
             <WelcomeDescription>
-              Discover your readiness for an AI-powered business career. Get personalized insights on your strengths, growth areas, and recommended learning path.
+              Evaluate your AI readiness and get personalized insights on skills, career opportunities, and AI tools tailored to your business role.
             </WelcomeDescription>
             <FeaturesList>
               <Feature>
                 <IconContainer><ChartLine size={18} weight="regular" /></IconContainer>
-                Business + AI Skills Assessment
+                AI + Business Skills Evaluation
               </Feature>
               <Feature>
                 <IconContainer><Target size={18} weight="regular" /></IconContainer>
-                Personalized Career Roadmap
+                Career Transition Roadmap
               </Feature>
               <Feature>
                 <IconContainer><ChatCircleDots size={18} weight="regular" /></IconContainer>
-                Role-Specific Insights
+                AI Tools & Quick Wins
               </Feature>
               <Feature>
                 <IconContainer><UsersThree size={18} weight="regular" /></IconContainer>
-                Peer Benchmarking
+                Industry Transformation Insights
               </Feature>
             </FeaturesList>
           </WelcomeContent>
@@ -822,9 +871,11 @@ const MBAQuiz = ({ onProgressChange }) => {
 
   return (
     <QuizContainer>
-      <ProgressBarContainer>
-        <ProgressBarFill progress={progress} />
-      </ProgressBarContainer>
+      {!(isMobile && currentStep === 0) && (
+        <ProgressBarContainer>
+          <ProgressBarFill progress={progress} />
+        </ProgressBarContainer>
+      )}
 
       <LeftPanel>{renderLeftPanel()}</LeftPanel>
 
@@ -854,7 +905,7 @@ const MBAQuiz = ({ onProgressChange }) => {
           </TopNavigationWrapper>
         )}
 
-        {isMobile && (
+        {isMobile && currentStep !== 0 && (
           <MobileChatbotSection>
             <MobileChatbotAvatar>
               <img src={chatBot} alt="Scaler Bot" />
@@ -865,13 +916,69 @@ const MBAQuiz = ({ onProgressChange }) => {
           </MobileChatbotSection>
         )}
 
-        <QuizContent key={currentStep}>{renderContent()}</QuizContent>
+        {isMobile && currentStep === 0 ? (
+          <MobileWelcomeContainer key={currentStep}>
+            <MobileWelcomeTop>
+              <LogoContainer>
+                <Logo>
+                  <ScalerLogo />
+                </Logo>
+              </LogoContainer>
+            </MobileWelcomeTop>
+            <MobileWelcomeCenter>
+              <WelcomeTitle>AI x Business Readiness</WelcomeTitle>
+              <WelcomeSubtitle>Free Career Assessment</WelcomeSubtitle>
+              <WelcomeDescription>
+                Evaluate your AI readiness and get personalized insights on skills, career opportunities, and AI tools tailored to your business role.
+              </WelcomeDescription>
+              <FeaturesList>
+                <Feature>
+                  <IconContainer><ChartLine size={18} weight="regular" /></IconContainer>
+                  AI + Business Skills Evaluation
+                </Feature>
+                <Feature>
+                  <IconContainer><Target size={18} weight="regular" /></IconContainer>
+                  Career Transition Roadmap
+                </Feature>
+                <Feature>
+                  <IconContainer><ChatCircleDots size={18} weight="regular" /></IconContainer>
+                  AI Tools & Quick Wins
+                </Feature>
+                <Feature>
+                  <IconContainer><UsersThree size={18} weight="regular" /></IconContainer>
+                  Industry Transformation Insights
+                </Feature>
+              </FeaturesList>
+            </MobileWelcomeCenter>
+            <MobileWelcomeBottom>
+              <TrustBadgeSection>
+                <TrustBadgeTitle>Trusted by professionals from</TrustBadgeTitle>
+                <LogoTicker>
+                  <LogoTrack>
+                    {companies.map((company, index) => (
+                      <CompanyLogo key={`logo-${index}`} src={company.logo} alt={company.name} />
+                    ))}
+                    {companies.map((company, index) => (
+                      <CompanyLogo key={`logo-duplicate-${index}`} src={company.logo} alt={company.name} />
+                    ))}
+                  </LogoTrack>
+                </LogoTicker>
+              </TrustBadgeSection>
+            </MobileWelcomeBottom>
+          </MobileWelcomeContainer>
+        ) : (
+          <QuizContent key={currentStep}>{renderContent()}</QuizContent>
+        )}
       </RightPanel>
 
       {isMobile && (
         <BottomNavigation isLastStep={isLastStep}>
           <MobileNavButtonsContainer>
-            {!isLastStep ? (
+            {currentStep === 0 ? (
+              <LastStepNavButton variant="primary" onClick={handleNext} style={{ width: '100%' }}>
+                Get Started →
+              </LastStepNavButton>
+            ) : !isLastStep ? (
               <>
                 <NavButton onClick={handlePrevious} disabled={currentStep === 0}>
                   <CaretLeft size={20} weight="regular" />

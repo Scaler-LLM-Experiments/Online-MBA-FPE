@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import styled, { createGlobalStyle, keyframes } from 'styled-components';
+import Xarrow from 'react-xarrows';
 import {
   Radar,
   RadarChart,
@@ -19,7 +20,11 @@ import {
   Books,
   ChartLine,
   Sparkle,
-  Phone
+  Phone,
+  Clock,
+  CalendarBlank,
+  MapPin,
+  CheckSquare
 } from 'phosphor-react';
 import { useNavigate } from 'react-router-dom';
 import { useProfile } from '../context/ProfileContext';
@@ -695,6 +700,259 @@ const SkillLevelTag = styled.span`
   }}
 `;
 
+// CAREER TIMELINE SECTION - Copied from ProfileMatchHeroV2
+const CareerTransitionContainer = styled.div`
+  margin-bottom: 36px;
+`;
+
+const CareerTransitionTitle = styled.h3`
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 8px;
+`;
+
+const CareerTransitionSubtitle = styled.p`
+  font-size: 0.8125rem;
+  color: #64748b;
+  margin: 0 0 20px 0;
+`;
+
+const PathContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 60px;
+  margin-bottom: 24px;
+  position: relative;
+  max-width: 100%;
+  overflow: visible;
+
+  @media (max-width: 1200px) {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
+
+const MobileRolesContainer = styled.div`
+  display: none;
+
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+`;
+
+const MobileRoleCategory = styled.div`
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: ${(props) => {
+    if (props.type === 'target') return '#059669';
+    if (props.type === 'alternate') return '#64748b';
+    return '#64748b';
+  }};
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+`;
+
+const Column = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+
+  &:nth-child(2) {
+    align-items: center;
+    justify-content: flex-start;
+  }
+`;
+
+const CurrentRoleCard = styled.div`
+  background: white;
+  border: 2px solid #e2e8f0;
+  border-radius: 0;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+`;
+
+const CurrentRoleInfo = styled.div`
+  flex: 1;
+  min-width: 0;
+`;
+
+const CurrentRoleTitle = styled.div`
+  font-size: 1rem;
+  font-weight: 600;
+  color: #0f172a;
+  margin-bottom: 12px;
+`;
+
+const CurrentBadge = styled.div`
+  display: inline-block;
+  background: #e0f2fe;
+  color: #0369a1;
+  padding: 4px 10px;
+  border-radius: 0;
+  font-size: 0.7rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  width: fit-content;
+  align-self: flex-start;
+`;
+
+const CurrentRoleDetail = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.875rem;
+  color: #475569;
+  margin-bottom: 8px;
+
+  svg {
+    color: #64748b;
+    flex-shrink: 0;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+`;
+
+const CategoryCard = styled.div`
+  background: white;
+  border: 1px solid
+    ${(props) => {
+    if (props.type === 'target') return '#86efac';
+    if (props.type === 'alternate') return '#cbd5e1';
+    return '#cbd5e1';
+  }};
+  border-radius: 0;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  color: #334155;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  position: relative;
+  z-index: 10;
+  width: 180px;
+
+  svg {
+    color: ${(props) => {
+    if (props.type === 'target') return '#059669';
+    if (props.type === 'alternate') return '#64748b';
+    return '#64748b';
+  }};
+  }
+`;
+
+const CategoryLabel = styled.div`
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: ${(props) => {
+    if (props.type === 'target') return '#059669';
+    if (props.type === 'alternate') return '#64748b';
+    return '#64748b';
+  }};
+  text-align: left;
+  width: 100%;
+`;
+
+const CategoryTimeline = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #334155;
+  width: 100%;
+`;
+
+const TimelineRoleCard = styled.div`
+  background: ${(props) =>
+    props.isPriority
+      ? 'linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%)'
+      : '#ffffff'};
+  border: 1px solid ${(props) => (props.isPriority ? '#86efac' : '#e2e8f0')};
+  border-radius: 0;
+  padding: 16px;
+  display: flex;
+  gap: 10px;
+  position: relative;
+  z-index: 10;
+
+  &:not(:last-child) {
+    margin-bottom: 10px;
+  }
+
+  @media (max-width: 768px) {
+    padding: 16px;
+  }
+`;
+
+const TimelineRoleContent = styled.div`
+  flex: 1;
+`;
+
+const TimelineRoleHeader = styled.div`
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+`;
+
+const TimelineRoleTitle = styled.h4`
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+  flex: 1;
+  line-height: 1.3;
+`;
+
+const TimelineRoleDescription = styled.p`
+  font-size: 0.8125rem;
+  color: #475569;
+  line-height: 1.5;
+  margin: 8px 0 0 0;
+
+  strong {
+    color: #1e293b;
+    font-weight: 600;
+  }
+`;
+
+const TimelineSalary = styled.div`
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: transparent;
+  border: 1px solid #059669;
+  padding: 4px 10px;
+  border-radius: 0;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #059669;
+  white-space: nowrap;
+`;
+
 // TRANSFORMATION STORIES - styled to match
 const TransformationGrid = styled.div`
   display: grid;
@@ -714,7 +972,7 @@ const TransformationCard = styled.div`
 `;
 
 const TransformationHeader = styled.div`
-  background: ${props => props.brandColor || '#F8F8F8'};
+  background: #01031F;
   padding: 24px;
   text-align: center;
 `;
@@ -749,6 +1007,33 @@ const TransformationText = styled.div`
   margin-bottom: 16px;
 `;
 
+const TransformationList = styled.ul`
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+`;
+
+const TransformationListItem = styled.li`
+  font-size: 0.875rem;
+  color: #1e293b;
+  line-height: 1.5;
+  padding-left: 20px;
+  position: relative;
+
+  &::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: #64748b;
+    font-size: 1.1rem;
+    font-weight: bold;
+    top: -1px;
+  }
+`;
+
 const RelevanceBox = styled.div`
   background: #FFF6ED;
   border: 1px solid #FED7AA;
@@ -776,18 +1061,20 @@ const RelevanceList = styled.ul`
 `;
 
 const RelevanceItem = styled.li`
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   color: #1e293b;
-  line-height: 1.5;
-  padding-left: 16px;
+  line-height: 1.6;
+  padding-left: 20px;
   position: relative;
 
   &::before {
     content: '•';
     position: absolute;
-    left: 4px;
+    left: 0;
     color: #C2410D;
-    font-size: 0.75rem;
+    font-size: 1.25rem;
+    font-weight: bold;
+    top: -2px;
   }
 `;
 
@@ -1009,6 +1296,19 @@ const getSkillLevelTag = (level) => {
   }
 };
 
+// Helper function to map role keys to display labels
+const getRoleDisplayLabel = (roleKey) => {
+  const roleMapping = {
+    'pm': 'Product / Program / Project Manager',
+    'finance': 'Finance / Business Analyst',
+    'sales': 'Sales / Growth / Revenue',
+    'marketing': 'Marketing / Brand / Performance Marketing',
+    'operations': 'Operations / Supply Chain / Strategy',
+    'founder': 'Startup Founder / Entrepreneur'
+  };
+  return roleMapping[roleKey] || roleKey;
+};
+
 const MBAResultsPage = () => {
   const navigate = useNavigate();
   const { quizResponses } = useProfile();
@@ -1044,93 +1344,37 @@ const MBAResultsPage = () => {
   const [loadingStep, setLoadingStep] = useState(0);
   const [transformationStories, setTransformationStories] = useState([]);
 
-  // Select 3 random companies based on user's role and use OpenAI content if available
+  // Use OpenAI transformation stories directly (no fallback)
   useEffect(() => {
     if (!results) return;
 
-    // Map quiz role values to JSON keys
-    const roleMapping = {
-      'pm': 'product-manager',
-      'finance': 'finance',
-      'sales': 'sales',
-      'marketing': 'marketing',
-      'operations': 'operations',
-      'founder': 'founder'
-    };
-
-    const userRole = results.meta?.role || 'pm';
-    const mappedRole = roleMapping[userRole] || 'product-manager';
-    const roleCompanies = transformationCompaniesData[mappedRole] || [];
-
-    console.log('User role:', userRole, '→ Mapped role:', mappedRole, '→ Companies found:', roleCompanies.length);
-
-    // Pick 3 random companies
-    const shuffled = [...roleCompanies].sort(() => Math.random() - 0.5);
-    const selectedCompanies = shuffled.slice(0, 3);
-
-    // Get OpenAI transformation stories if available
+    // Get OpenAI transformation stories - these are already personalized
     const openAIStories = results.openai_content?.transformation_stories || [];
 
-    // Only use OpenAI stories if we have them - match by company name/domain
-    const stories = selectedCompanies.map((company) => {
-      // Try to find matching OpenAI story by company name
-      const openAIStory = openAIStories.find(story =>
-        story.company_name?.toLowerCase().includes(company.name.toLowerCase()) ||
-        company.name.toLowerCase().includes(story.company_name?.toLowerCase())
-      );
+    // Map OpenAI stories to frontend format with company logos
+    const stories = openAIStories.map((story) => {
+      // Find company details from transformationCompaniesData to get logo
+      let companyDetails = null;
+      Object.values(transformationCompaniesData).forEach((roleCompanies) => {
+        const found = roleCompanies.find(
+          (c) => c.name.toLowerCase() === story.company.toLowerCase()
+        );
+        if (found) companyDetails = found;
+      });
 
-      // Generate role-based fallback content
-      const getRoleBasedFallback = (role) => {
-        const fallbacks = {
-          'product-manager': {
-            preAI: 'Traditional product development with manual user research, static roadmaps, and quarterly release cycles.',
-            postAI: 'AI-powered product insights, dynamic prioritization, and data-driven decision making enable 2x faster feature delivery.',
-            lookingFor: 'Product roles now require AI fluency to design intelligent features. Companies seek PMs who understand ML capabilities and can translate AI into product value.'
-          },
-          'finance': {
-            preAI: 'Manual financial analysis, spreadsheet-based forecasting, and monthly reporting cycles with limited predictive insights.',
-            postAI: 'Real-time financial intelligence with AI-powered forecasting, automated reporting, and predictive analytics for strategic planning.',
-            lookingFor: 'Finance professionals need AI skills for predictive modeling and automation. Organizations prioritize candidates who can leverage AI for strategic financial decisions.'
-          },
-          'sales': {
-            preAI: 'Generic outreach, manual lead scoring, intuition-based forecasting, and limited personalization at scale.',
-            postAI: 'AI-driven lead intelligence, predictive deal scoring, and hyper-personalized outreach enable 3x higher conversion rates.',
-            lookingFor: 'Sales roles increasingly require data fluency and AI tool proficiency. Top performers use AI for deal intelligence and personalized engagement at scale.'
-          },
-          'marketing': {
-            preAI: 'Manual campaign management, limited A/B testing, generic messaging, and unclear attribution across channels.',
-            postAI: 'AI-powered content generation, real-time optimization, predictive targeting, and full-funnel attribution drive 10x ROI.',
-            lookingFor: 'Marketing requires AI skills for audience targeting and campaign optimization. Companies seek marketers who master AI tools for content and analytics.'
-          },
-          'operations': {
-            preAI: 'Reactive problem-solving, manual process management, and limited visibility into operational bottlenecks.',
-            postAI: 'Predictive operations with AI-driven optimization, automated workflows, and self-improving systems reduce costs by 20%.',
-            lookingFor: 'Operations roles need AI for predictive analytics and process automation. Organizations value professionals who design self-optimizing systems.'
-          },
-          'founder': {
-            preAI: 'Building products required large teams, slow iteration cycles, and significant capital investment.',
-            postAI: 'AI enables solo founders to build at scale, iterate daily, and compete with well-funded teams using AI-native approaches.',
-            lookingFor: 'Founders need AI fluency to build efficiently and compete. The biggest opportunities are in AI-first businesses with speed as a competitive moat.'
-          }
-        };
-        return fallbacks[role] || fallbacks['founder'];
-      };
-
-      const fallback = getRoleBasedFallback(mappedRole);
-
+      // Use OpenAI content directly (no fallback)
       return {
-        company: company.name,
-        industry: company.industry,
-        domain: company.domain,
-        logo: company.logoUrl,
-        brandColor: company.backgroundColor,
-        preAI: openAIStory?.transformation_narrative?.split('After AI:')?.[0]?.replace('Before AI:', '')?.trim() || fallback.preAI,
-        postAI: openAIStory?.transformation_narrative?.split('After AI:')?.[1]?.trim() || fallback.postAI,
-        lookingFor: openAIStory?.relevance_to_user || fallback.lookingFor
+        company: story.company,
+        industry: companyDetails?.industry || '',
+        domain: companyDetails?.domain || '',
+        logo: companyDetails?.logoUrl || '',
+        brandColor: '#01031F', // Fixed background color
+        preAI: story.before_ai,
+        postAI: story.after_ai,
+        lookingFor: story.relevance_to_user
       };
     });
 
-    console.log('Transformation stories generated:', stories.length, stories);
     setTransformationStories(stories);
   }, [results]);
 
@@ -1496,6 +1740,225 @@ const MBAResultsPage = () => {
               </RadialChartWrapper>
             </SectionBlock>
 
+            {/* Career Journey Section */}
+            {results.career_transitions && results.career_transitions.length > 0 && (
+              <CareerTransitionContainer>
+                <CareerTransitionTitle>Career Journey</CareerTransitionTitle>
+                <CareerTransitionSubtitle>
+                  Personalized role recommendations based on your career goals and Business x AI aspirations
+                </CareerTransitionSubtitle>
+                <SectionDivider />
+
+                {/* Desktop Layout - 3 columns with arrows */}
+                <PathContainer>
+                  {/* Column 1: Current Role */}
+                  <Column>
+                    <CurrentRoleCard id="current-role-mba">
+                      <CurrentBadge>You are here</CurrentBadge>
+                      <CurrentRoleInfo>
+                        <CurrentRoleTitle>
+                          {getRoleDisplayLabel(quizResponses?.currentRole) || 'Your Current Role'}
+                        </CurrentRoleTitle>
+                        <CurrentRoleDetail>
+                          <CalendarBlank size={18} weight="regular" />
+                          <span>{quizResponses?.experience || '0'} years of experience</span>
+                        </CurrentRoleDetail>
+                      </CurrentRoleInfo>
+                    </CurrentRoleCard>
+                  </Column>
+
+                  {/* Column 2: Path Labels */}
+                  <Column>
+                    {results.career_transitions.slice(0, 3).map((transition, index) => {
+                      const cardType = index === 0 ? 'target' : 'alternate';
+                      const label = index === 0 ? 'Recommended Path' : `Alternative Path ${index}`;
+
+                      return (
+                        <CategoryCard
+                          key={index}
+                          type={cardType}
+                          id={`timeline-mba-${index}`}
+                        >
+                          <CategoryLabel type={cardType}>{label}</CategoryLabel>
+                        </CategoryCard>
+                      );
+                    })}
+                  </Column>
+
+                  {/* Column 3: Target Role Cards */}
+                  <Column>
+                    {results.career_transitions.slice(0, 3).map((transition, index) => {
+                      const isPrimary = index === 0;
+
+                      return (
+                        <TimelineRoleCard
+                          key={index}
+                          id={`role-mba-${index}`}
+                          isPriority={isPrimary}
+                        >
+                          {transition.salary && (
+                            <TimelineSalary>{transition.salary}</TimelineSalary>
+                          )}
+                          <TimelineRoleContent>
+                            <TimelineRoleHeader>
+                              <TimelineRoleTitle>{transition.title}</TimelineRoleTitle>
+                            </TimelineRoleHeader>
+
+                            {transition.description && (
+                              <TimelineRoleDescription style={{ fontStyle: 'italic', marginBottom: '12px' }}>
+                                {transition.description}
+                              </TimelineRoleDescription>
+                            )}
+
+                            {transition.goal && (
+                              <TimelineRoleDescription
+                                style={{
+                                  display: 'flex',
+                                  alignItems: 'flex-start',
+                                  marginBottom: '12px',
+                                  fontWeight: '600'
+                                }}
+                              >
+                                <Target
+                                  size={16}
+                                  weight="regular"
+                                  color="#059669"
+                                  style={{ marginRight: '6px', marginTop: '2px', flexShrink: 0 }}
+                                />
+                                <span>{transition.goal}</span>
+                              </TimelineRoleDescription>
+                            )}
+
+                            {transition.action_items && transition.action_items.length > 0 && (
+                              <>
+                                <TimelineRoleDescription style={{ fontWeight: '600', marginBottom: '8px' }}>
+                                  Milestones:
+                                </TimelineRoleDescription>
+                                {transition.action_items.map((item, itemIndex) => (
+                                  <TimelineRoleDescription
+                                    key={itemIndex}
+                                    style={{
+                                      display: 'flex',
+                                      alignItems: 'flex-start',
+                                      marginBottom: '6px'
+                                    }}
+                                  >
+                                    <CheckCircle
+                                      size={14}
+                                      weight="fill"
+                                      color="#10b981"
+                                      style={{ marginRight: '8px', marginTop: '3px', flexShrink: 0 }}
+                                    />
+                                    <span style={{ fontSize: '0.95rem' }}>{item}</span>
+                                  </TimelineRoleDescription>
+                                ))}
+                              </>
+                            )}
+
+                            {transition.key_focus && (
+                              <TimelineRoleDescription
+                                style={{ display: 'flex', alignItems: 'flex-start' }}
+                              >
+                                <MapPin
+                                  size={16}
+                                  weight="regular"
+                                  color="#64748b"
+                                  style={{ marginRight: '6px', marginTop: '2px', flexShrink: 0 }}
+                                />
+                                <span>
+                                  <strong>Key Focus:</strong> {transition.key_focus}
+                                </span>
+                              </TimelineRoleDescription>
+                            )}
+                          </TimelineRoleContent>
+                        </TimelineRoleCard>
+                      );
+                    })}
+                  </Column>
+
+                  {/* Arrows connecting the columns */}
+                  {typeof window !== 'undefined' && (
+                    <>
+                      {results.career_transitions.slice(0, 3).map((_, index) => (
+                        <React.Fragment key={`arrows-mba-${index}`}>
+                          <Xarrow
+                            start="current-role-mba"
+                            end={`timeline-mba-${index}`}
+                            color={index === 0 ? '#a7f3d0' : index === 1 ? '#bfdbfe' : '#e9d5ff'}
+                            strokeWidth={6}
+                            curveness={0.8}
+                            headSize={0}
+                            path="smooth"
+                            zIndex={1}
+                          />
+                          <Xarrow
+                            start={`timeline-mba-${index}`}
+                            end={`role-mba-${index}`}
+                            color={index === 0 ? '#a7f3d0' : index === 1 ? '#bfdbfe' : '#e9d5ff'}
+                            strokeWidth={6}
+                            curveness={0.6}
+                            startAnchor="right"
+                            endAnchor="left"
+                            headSize={0}
+                            path="smooth"
+                            zIndex={1}
+                          />
+                        </React.Fragment>
+                      ))}
+                    </>
+                  )}
+                </PathContainer>
+
+                {/* Mobile Layout - Collapsible cards without arrows */}
+                <MobileRolesContainer>
+                  {results.career_transitions.slice(0, 3).map((transition, index) => {
+                    const isPrimary = index === 0;
+                    const categoryType = index === 0 ? 'target' : 'alternate';
+                    const label = index === 0 ? 'Target Role' : `Alternative Path ${index}`;
+
+                    return (
+                      <div key={index}>
+                        <MobileRoleCategory type={categoryType}>
+                          <Clock size={14} weight="bold" />
+                          {label}: {transition.timeline || '6-12 months'}
+                        </MobileRoleCategory>
+                        <TimelineRoleCard isPriority={isPrimary}>
+                          {transition.salary && (
+                            <TimelineSalary>{transition.salary}</TimelineSalary>
+                          )}
+                          <TimelineRoleContent>
+                            <TimelineRoleHeader>
+                              <TimelineRoleTitle>{transition.title}</TimelineRoleTitle>
+                            </TimelineRoleHeader>
+                            {transition.description && (
+                              <TimelineRoleDescription style={{ fontStyle: 'italic' }}>
+                                {transition.description}
+                              </TimelineRoleDescription>
+                            )}
+                            {transition.key_focus && (
+                              <TimelineRoleDescription
+                                style={{ display: 'flex', alignItems: 'flex-start' }}
+                              >
+                                <MapPin
+                                  size={16}
+                                  weight="regular"
+                                  color="#64748b"
+                                  style={{ marginRight: '6px', marginTop: '2px', flexShrink: 0 }}
+                                />
+                                <span>
+                                  <strong>Key Focus:</strong> {transition.key_focus}
+                                </span>
+                              </TimelineRoleDescription>
+                            )}
+                          </TimelineRoleContent>
+                        </TimelineRoleCard>
+                      </div>
+                    );
+                  })}
+                </MobileRolesContainer>
+              </CareerTransitionContainer>
+            )}
+
             {/* Quick Wins */}
             {quick_wins && quick_wins.length > 0 && (
               <SectionBlock>
@@ -1550,18 +2013,26 @@ const MBAResultsPage = () => {
                     <TransformationBody>
                       <div>
                         <TransformationLabel>Before AI</TransformationLabel>
-                        <TransformationText>{story.preAI}</TransformationText>
+                        <TransformationList>
+                          {story.preAI.split(' | ').filter(s => s.trim()).map((point, i) => (
+                            <TransformationListItem key={i}>{point.trim()}</TransformationListItem>
+                          ))}
+                        </TransformationList>
                       </div>
 
                       <div>
                         <TransformationLabel>After AI</TransformationLabel>
-                        <TransformationText>{story.postAI}</TransformationText>
+                        <TransformationList>
+                          {story.postAI.split(' | ').filter(s => s.trim()).map((point, i) => (
+                            <TransformationListItem key={i}>{point.trim()}</TransformationListItem>
+                          ))}
+                        </TransformationList>
                       </div>
 
                       <RelevanceBox>
                         <RelevanceTitle>Why this is relevant to you</RelevanceTitle>
                         <RelevanceList>
-                          {story.lookingFor.split(/[.,;]/).filter(s => s.trim()).slice(0, 2).map((point, i) => (
+                          {story.lookingFor.split(' | ').filter(s => s.trim()).map((point, i) => (
                             <RelevanceItem key={i}>{point.trim()}</RelevanceItem>
                           ))}
                         </RelevanceList>
@@ -1584,10 +2055,10 @@ const MBAResultsPage = () => {
                 </SectionSubtitle>
                 <SectionDivider />
                 <ToolsGrid>
-                  {ai_tools.slice(0, 9).map((tool, index) => {
+                  {ai_tools.slice(0, 10).map((tool, index) => {
                     // Get OpenAI personalized description if available
                     const openAITool = results.openai_content?.tool_descriptions?.find(
-                      t => t.name.toLowerCase() === tool.name.toLowerCase()
+                      t => t.tool_name?.toLowerCase() === tool.name?.toLowerCase()
                     );
 
                     // Generate Brandfetch logo URL from tool name
@@ -1645,7 +2116,6 @@ const MBAResultsPage = () => {
                 <SectionDivider />
                 <StatsGrid>
                   {(() => {
-                    console.log('Industry Stats Count:', industry_stats.length, industry_stats);
                     return industry_stats.slice(0, 3).map((stat, index) => {
                       // Extract source domain for logo (e.g., "McKinsey 2024" -> "mckinsey.com")
                       const sourceDomainMap = {
@@ -1670,8 +2140,6 @@ const MBAResultsPage = () => {
                         ? `https://cdn.brandfetch.io/${sourceDomainMap[sourceDomain]}/w/400`
                         : null;
 
-                      console.log(`Stat ${index + 1}:`, stat.stat, 'Source:', stat.source, 'Logo URL:', logoUrl);
-
                       return (
                         <StatCard key={index}>
                           <StatValue>{stat.stat}</StatValue>
@@ -1682,7 +2150,6 @@ const MBAResultsPage = () => {
                                 src={logoUrl}
                                 alt={stat.source}
                                 onError={(e) => {
-                                  console.log('Logo failed to load for:', stat.source);
                                   e.target.style.display = 'none';
                                   e.target.parentElement.style.borderRight = 'none';
                                 }}

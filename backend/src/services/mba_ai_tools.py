@@ -42,7 +42,7 @@ def get_ai_tools_for_role(role: str, skill_gaps: List[str]) -> List[Dict[str, An
 
     # Role-specific tools
     role_tools_map = {
-        'product-manager': _pm_ai_tools,
+        'pm': _pm_ai_tools,
         'finance': _finance_ai_tools,
         'sales': _sales_ai_tools,
         'marketing': _marketing_ai_tools,
@@ -64,7 +64,7 @@ def get_ai_tools_for_role(role: str, skill_gaps: List[str]) -> List[Dict[str, An
             seen.add(tool['name'])
             unique_tools.append(tool)
 
-    return unique_tools[:6]  # Max 6 tools
+    return unique_tools[:10]  # Max 10 tools
 
 
 def _pm_ai_tools() -> List[Dict[str, Any]]:

@@ -33,7 +33,7 @@ const PageContainer = styled.div`
 
 const LeftPanel = styled.div`
   width: 40%;
-  background: #fbfbfb;
+  background: #FFFCF8;
   padding: 32px 60px 60px;
   display: flex;
   flex-direction: column;
@@ -280,7 +280,7 @@ const MobileWelcomeScreen = styled.div`
     max-height: 100vh;
     overflow: hidden;
     padding: 20px 20px 140px;
-    background: #fbfbfb;
+    background: #FFFCF8;
   }
 `;
 
@@ -498,35 +498,35 @@ const AuthSplitPage = () => {
               </Logo>
             </LogoContainer>
             <WelcomeContent>
-              <WelcomeTitle>Free Profile Evaluation</WelcomeTitle>
-              <WelcomeSubtitle>Tech Career Assessment in 2 mins</WelcomeSubtitle>
+              <WelcomeTitle>AI x Business Readiness</WelcomeTitle>
+              <WelcomeSubtitle>Free Career Assessment</WelcomeSubtitle>
               <WelcomeDescription>
-                Get a comprehensive evaluation of your profile for tech roles. Discover your strengths, identify gaps, and receive personalized recommendations to accelerate your career growth.
+                Evaluate your AI readiness and get personalized insights on skills, career opportunities, and AI tools tailored to your business role.
               </WelcomeDescription>
               <FeaturesList>
                 <Feature>
                   <IconContainer>
                     <ChartLine size={18} weight="regular" />
                   </IconContainer>
-                  Profile Strength Analysis
+                  AI + Business Skills Evaluation
                 </Feature>
                 <Feature>
                   <IconContainer>
                     <Target size={18} weight="regular" />
                   </IconContainer>
-                  Skill Gap Assessment
+                  Career Transition Roadmap
                 </Feature>
                 <Feature>
                   <IconContainer>
                     <ChatCircleDots size={18} weight="regular" />
                   </IconContainer>
-                  Career Readiness Timeline
+                  AI Tools & Quick Wins
                 </Feature>
                 <Feature>
                   <IconContainer>
                     <UsersThree size={18} weight="regular" />
                   </IconContainer>
-                  Peer Comparison
+                  Industry Transformation Insights
                 </Feature>
               </FeaturesList>
             </WelcomeContent>
@@ -581,35 +581,35 @@ const AuthSplitPage = () => {
         </LogoContainer>
 
         <WelcomeContent>
-          <WelcomeTitle>Free Profile Evaluation</WelcomeTitle>
-          <WelcomeSubtitle>Tech Career Assessment in 2 mins</WelcomeSubtitle>
+          <WelcomeTitle>AI x Business Readiness</WelcomeTitle>
+          <WelcomeSubtitle>Free Career Assessment</WelcomeSubtitle>
           <WelcomeDescription>
-            Get a comprehensive evaluation of your profile for tech roles. Discover your strengths, identify gaps, and receive personalized recommendations to accelerate your career growth.
+            Evaluate your AI readiness and get personalized insights on skills, career opportunities, and AI tools tailored to your business role.
           </WelcomeDescription>
           <FeaturesList>
             <Feature>
               <IconContainer>
                 <ChartLine size={18} weight="regular" />
               </IconContainer>
-                Profile Strength Analysis
+                AI + Business Skills Evaluation
             </Feature>
             <Feature>
               <IconContainer>
                 <Target size={18} weight="regular" />
               </IconContainer>
-                Skill Gap Assessment
+                Career Transition Roadmap
             </Feature>
             <Feature>
               <IconContainer>
                 <ChatCircleDots size={18} weight="regular" />
               </IconContainer>
-                Career Readiness Timeline
+                AI Tools & Quick Wins
             </Feature>
             <Feature>
               <IconContainer>
                 <UsersThree size={18} weight="regular" />
               </IconContainer>
-                Peer Comparison
+                Industry Transformation Insights
             </Feature>
           </FeaturesList>
         </WelcomeContent>

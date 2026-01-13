@@ -36,7 +36,7 @@ import {
   Target,
   ChartBar
 } from 'phosphor-react';
-import scalerBot from '../../assets/scaler-bot.png';
+import scalerBot from '../../assets/ChatBot.png';
 import tracker from '../../utils/tracker';
 
 const fadeIn = keyframes`
@@ -86,8 +86,8 @@ const Header = styled.div`
 `;
 
 const BotAvatar = styled.div`
-  width: 56px;
-  height: 56px;
+  width: 88px;
+  height: 88px;
   border-radius: 0;
   background: transparent;
   display: flex;
@@ -157,10 +157,10 @@ const QuestionNumberBubble = styled.span`
 const QuestionsContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 48px;
+  gap: 64px;
 
   @media (max-width: 768px) {
-    gap: 32px;
+    gap: 48px;
   }
 `;
 
@@ -168,6 +168,15 @@ const QuestionGroup = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
+`;
+
+const ScenarioLabel = styled.div`
+  font-size: 0.625rem;
+  font-weight: 700;
+  color: #64748b;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: -4px;
 `;
 
 const QuestionLabel = styled.div`
@@ -452,6 +461,7 @@ const GroupedQuestionScreen = ({
       <QuestionsContainer>
         {questions.map((question, questionIndex) => (
           <QuestionGroup key={question.id} data-question-index={questionIndex}>
+            {question.isScenario && <ScenarioLabel>Scenario-Based Question</ScenarioLabel>}
             <QuestionLabel>{question.question}</QuestionLabel>
             <OptionsRow>
               {question.options.map((option) => {

@@ -1,0 +1,494 @@
+{
+  "product-manager": [
+    {
+      "name": "Netflix",
+      "industry": "Entertainment",
+      "domain": "netflix.com",
+      "logoUrl": "https://cdn.brandfetch.io/ideQwN5lBE/theme/light/logo.svg?c=1bxr7gxzdn6mzgbjzpm3kmpnhxbr1yfVuU6",
+      "primaryColor": "#E50914",
+      "backgroundColor": "#E50914"
+    },
+    {
+      "name": "Spotify",
+      "industry": "Music Streaming",
+      "domain": "spotify.com",
+      "logoUrl": "https://cdn.brandfetch.io/id20mQyGeY/w/2048/h/561/theme/light/logo.png?c=1bxr7gxzdn6mzgbjzpm3kmpnhxbr1yfVuU6",
+      "primaryColor": "#1ED760",
+      "backgroundColor": "#1ED760"
+    },
+    {
+      "name": "Notion",
+      "industry": "Productivity",
+      "domain": "notion.so",
+      "logoUrl": "https://cdn.brandfetch.io/idPYUoikV7/theme/light/logo.svg?c=1bxr7gxzdn6mzgbjzpm3kmpnhxbr1yfVuU6",
+      "primaryColor": "#E16259",
+      "backgroundColor": "#E16259"
+    },
+    {
+      "name": "Figma",
+      "industry": "Design",
+      "domain": "figma.com",
+      "logoUrl": "https://cdn.brandfetch.io/idZHcZ_i7F/theme/light/logo.svg?c=1bxr7gxzdn6mzgbjzpm3kmpnhxbr1yfVuU6",
+      "primaryColor": "#0D99FF",
+      "backgroundColor": "#0D99FF"
+    },
+    {
+      "name": "Miro",
+      "industry": "Collaboration",
+      "domain": "miro.com",
+      "logoUrl": "https://cdn.brandfetch.io/idAnDTFapY/theme/light/logo.svg?c=1bxr7gxzdn6mzgbjzpm3kmpnhxbr1yfVuU6",
+      "primaryColor": "#FFDD33",
+      "backgroundColor": "#FFDD33"
+    },
+    {
+      "name": "Atlassian",
+      "industry": "Enterprise Software",
+      "domain": "atlassian.com",
+      "logoUrl": "https://cdn.brandfetch.io/idlQIwGMOK/theme/light/logo.svg?c=1bxr7gxzdn6mzgbjzpm3kmpnhxbr1yfVuU6",
+      "primaryColor": "#172b4d",
+      "backgroundColor": "#172b4d"
+    },
+    {
+      "name": "Slack",
+      "industry": "Communication",
+      "domain": "slack.com",
+      "logoUrl": "https://cdn.brandfetch.io/idJ_HhtG0Z/w/1600/h/572/theme/light/logo.png?c=1bxr7gxzdn6mzgbjzpm3kmpnhxbr1yfVuU6",
+      "primaryColor": "#611F69",
+      "backgroundColor": "#611F69"
+    },
+    {
+      "name": "Zoom",
+      "industry": "Video Conferencing",
+      "domain": "zoom.us",
+      "logoUrl": "https://cdn.brandfetch.io/id3aO4Szj3/theme/light/logo.svg?c=1bxr7gxzdn6mzgbjzpm3kmpnhxbr1yfVuU6",
+      "primaryColor": "#00031F",
+      "backgroundColor": "#00031F"
+    },
+    {
+      "name": "CRED",
+      "industry": "Fintech",
+      "domain": "cred.club",
+      "logoUrl": "https://cdn.brandfetch.io/id27bJP5LK/w/98/h/132/theme/light/logo.png?c=1bxr7gxzdn6mzgbjzpm3kmpnhxbr1yfVuU6",
+      "primaryColor": "#0f0f0f",
+      "backgroundColor": "#0f0f0f"
+    },
+    {
+      "name": "Zerodha",
+      "industry": "Stock Trading",
+      "domain": "zerodha.com",
+      "logoUrl": "https://cdn.brandfetch.io/idZmHUWU0C/w/400/h/400/theme/dark/icon.jpeg?c=1bxr7gxzdn6mzgbjzpm3kmpnhxbr1yfVuU6",
+      "primaryColor": "#424242",
+      "backgroundColor": "#424242"
+    }
+  ],
+  "finance": [
+    {
+      "name": "HDFC Bank",
+      "industry": "Banking",
+      "domain": "hdfcbank.com",
+      "logoUrl": "https://cdn.brandfetch.io/idxQAAj1t_/theme/dark/logo.svg?c=1bxr7gxzdn6mzgbjzpm3kmpnhxbr1yfVuU6",
+      "primaryColor": "#F8F8F8",
+      "backgroundColor": "#F8F8F8"
+    },
+    {
+      "name": "ICICI Bank",
+      "industry": "Banking",
+      "domain": "icicibank.com",
+      "logoUrl": "https://cdn.brandfetch.io/idJHpX8apR/theme/light/logo.svg?c=1bxr7gxzdn6mzgbjzpm3kmpnhxbr1yfVuU6",
+      "primaryColor": "#000000",
+      "backgroundColor": "#000000"
+    },
+    {
+      "name": "Goldman Sachs",
+      "industry": "Investment Banking",
+      "domain": "goldmansachs.com",
+      "logoUrl": "https://cdn.brandfetch.io/id7L59h6d0/theme/light/logo.svg?c=1bxr7gxzdn6mzgbjzpm3kmpnhxbr1yfVuU6",
+      "primaryColor": "#7297C5",
+      "backgroundColor": "#7297C5"
+    },
+    {
+      "name": "JPMorgan",
+      "industry": "Investment Banking",
+      "domain": "jpmorgan.com",
+      "logoUrl": "https://cdn.brandfetch.io/id86doDUIr/theme/light/logo.svg?c=1bxr7gxzdn6mzgbjzpm3kmpnhxbr1yfVuU6",
+      "primaryColor": "#936845",
+      "backgroundColor": "#936845"
+    },
+    {
+      "name": "Paytm",
+      "industry": "Payments",
+      "domain": "paytm.com",
+      "logoUrl": "https://cdn.brandfetch.io/idRNBjXRVq/theme/light/logo.svg?c=1bxr7gxzdn6mzgbjzpm3kmpnhxbr1yfVuU6",
+      "primaryColor": "#002970",
+      "backgroundColor": "#002970"
+    },
+    {
+      "name": "Razorpay",
+      "industry": "Payments",
+      "domain": "razorpay.com",
+      "logoUrl": "https://cdn.brandfetch.io/idHc4m3b7C/theme/light/logo.svg?c=1bxr7gxzdn6mzgbjzpm3kmpnhxbr1yfVuU6",
+      "primaryColor": "#02042b",
+      "backgroundColor": "#02042b"
+    },
+    {
+      "name": "PhonePe",
+      "industry": "Fintech",
+      "domain": "phonepe.com",
+      "logoUrl": "https://cdn.brandfetch.io/idcE0OdG8i/w/400/h/400/theme/dark/icon.jpeg?c=1bxr7gxzdn6mzgbjzpm3kmpnhxbr1yfVuU6",
+      "primaryColor": "#361968",
+      "backgroundColor": "#361968"
+    },
+    {
+      "name": "Stripe",
+      "industry": "Payments",
+      "domain": "stripe.com",
+      "logoUrl": "https://cdn.brandfetch.io/idxAg10C0L/theme/light/logo.svg?c=1bxr7gxzdn6mzgbjzpm3kmpnhxbr1yfVuU6",
+      "primaryColor": "#635BFF",
+      "backgroundColor": "#635BFF"
+    },
+    {
+      "name": "Coinbase",
+      "industry": "Crypto",
+      "domain": "coinbase.com",
+      "logoUrl": "https://cdn.brandfetch.io/idwDWo4ONQ/theme/light/logo.svg?c=1bxr7gxzdn6mzgbjzpm3kmpnhxbr1yfVuU6",
+      "primaryColor": "#0052FF",
+      "backgroundColor": "#0052FF"
+    },
+    {
+      "name": "ClearTax",
+      "industry": "Tax Tech",
+      "domain": "cleartax.in",
+      "logoUrl": "https://cdn.brandfetch.io/id6kT_j2v-/w/400/h/400/theme/dark/icon.jpeg?c=1bxr7gxzdn6mzgbjzpm3kmpnhxbr1yfVuU6",
+      "primaryColor": "#8b5c3e",
+      "backgroundColor": "#8b5c3e"
+    }
+  ],
+  "sales": [
+    {
+      "name": "Salesforce",
+      "industry": "CRM",
+      "domain": "salesforce.com",
+      "logoUrl": "https://cdn.brandfetch.io/idVE84WdIN/theme/dark/logo.svg?c=1bxr7gxzdn6mzgbjzpm3kmpnhxbr1yfVuU6",
+      "primaryColor": "#032e61",
+      "backgroundColor": "#032e61"
+    },
+    {
+      "name": "HubSpot",
+      "industry": "Marketing & Sales",
+      "domain": "hubspot.com",
+      "logoUrl": "https://cdn.brandfetch.io/idRt0LuzRf/theme/light/logo.svg?c=1bxr7gxzdn6mzgbjzpm3kmpnhxbr1yfVuU6",
+      "primaryColor": "#1F1F1F",
+      "backgroundColor": "#1F1F1F"
+    },
+    {
+      "name": "Freshworks",
+      "industry": "SaaS",
+      "domain": "freshworks.com",
+      "logoUrl": "https://cdn.brandfetch.io/idxPQTrv97/theme/light/logo.svg?c=1bxr7gxzdn6mzgbjzpm3kmpnhxbr1yfVuU6",
+      "primaryColor": "#0b1320",
+      "backgroundColor": "#0b1320"
+    },
+    {
+      "name": "Zoho",
+      "industry": "Business Software",
+      "domain": "zoho.com",
+      "logoUrl": "https://cdn.brandfetch.io/idssig0_jY/w/400/h/400/theme/dark/icon.jpeg?c=1bxr7gxzdn6mzgbjzpm3kmpnhxbr1yfVuU6",
+      "primaryColor": "#F60014",
+      "backgroundColor": "#F60014"
+    },
+    {
+      "name": "Gong",
+      "industry": "Revenue Intelligence",
+      "domain": "gong.io",
+      "logoUrl": "https://cdn.brandfetch.io/idHyhmcKvT/theme/light/logo.svg?c=1bxr7gxzdn6mzgbjzpm3kmpnhxbr1yfVuU6",
+      "primaryColor": "#3E0075",
+      "backgroundColor": "#3E0075"
+    },
+    {
+      "name": "Airbnb",
+      "industry": "Travel",
+      "domain": "airbnb.com",
+      "logoUrl": "https://cdn.brandfetch.io/idkuvXnjOH/theme/light/logo.svg?c=1bxr7gxzdn6mzgbjzpm3kmpnhxbr1yfVuU6",
+      "primaryColor": "#FF385C",
+      "backgroundColor": "#FF385C"
+    },
+    {
+      "name": "Uber",
+      "industry": "Mobility",
+      "domain": "uber.com",
+      "logoUrl": "https://cdn.brandfetch.io/ididNbiiOd/theme/light/logo.svg?c=1bxr7gxzdn6mzgbjzpm3kmpnhxbr1yfVuU6",
+      "primaryColor": "#000000",
+      "backgroundColor": "#000000"
+    },
+    {
+      "name": "Ola",
+      "industry": "Mobility",
+      "domain": "ola.com",
+      "logoUrl": "https://cdn.brandfetch.io/idUDDV_ygk/w/820/h/336/theme/dark/logo.png?c=1bxr7gxzdn6mzgbjzpm3kmpnhxbr1yfVuU6",
+      "primaryColor": "#191919",
+      "backgroundColor": "#191919"
+    },
+    {
+      "name": "Booking.com",
+      "industry": "Travel",
+      "domain": "booking.com",
+      "logoUrl": "https://cdn.brandfetch.io/id9mEmLNcV/theme/light/logo.svg?c=1bxr7gxzdn6mzgbjzpm3kmpnhxbr1yfVuU6",
+      "primaryColor": "#0071C2",
+      "backgroundColor": "#0071C2"
+    },
+    {
+      "name": "MakeMyTrip",
+      "industry": "Travel",
+      "domain": "makemytrip.com",
+      "logoUrl": "https://cdn.brandfetch.io/idC6eY3m41/theme/dark/logo.svg?c=1bxr7gxzdn6mzgbjzpm3kmpnhxbr1yfVuU6",
+      "primaryColor": "#008CFF",
+      "backgroundColor": "#008CFF"
+    }
+  ],
+  "marketing": [
+    {
+      "name": "Google",
+      "industry": "Tech & Advertising",
+      "domain": "google.com",
+      "logoUrl": "https://cdn.brandfetch.io/id6O2oGzv-/theme/light/logo.svg?c=1bxr7gxzdn6mzgbjzpm3kmpnhxbr1yfVuU6",
+      "primaryColor": "#4285F4",
+      "backgroundColor": "#4285F4"
+    },
+    {
+      "name": "Meta",
+      "industry": "Social Media",
+      "domain": "meta.com",
+      "logoUrl": "https://cdn.brandfetch.io/idWvz5T3V7/w/400/h/400/theme/dark/icon.png?c=1bxr7gxzdn6mzgbjzpm3kmpnhxbr1yfVuU6",
+      "primaryColor": "#1C1E21",
+      "backgroundColor": "#1C1E21"
+    },
+    {
+      "name": "Amazon",
+      "industry": "E-commerce",
+      "domain": "amazon.com",
+      "logoUrl": "https://cdn.brandfetch.io/idawOgYOsG/theme/light/logo.svg?c=1bxr7gxzdn6mzgbjzpm3kmpnhxbr1yfVuU6",
+      "primaryColor": "#FF9900",
+      "backgroundColor": "#FF9900"
+    },
+    {
+      "name": "Flipkart",
+      "industry": "E-commerce",
+      "domain": "flipkart.com",
+      "logoUrl": "https://cdn.brandfetch.io/idWdImNSUt/theme/light/logo.svg?c=1bxr7gxzdn6mzgbjzpm3kmpnhxbr1yfVuU6",
+      "primaryColor": "#1C41D6",
+      "backgroundColor": "#1C41D6"
+    },
+    {
+      "name": "Meesho",
+      "industry": "Social Commerce",
+      "domain": "meesho.com",
+      "logoUrl": "https://cdn.brandfetch.io/idyeTDctmi/w/200/h/64/theme/dark/logo.png?c=1bxr7gxzdn6mzgbjzpm3kmpnhxbr1yfVuU6",
+      "primaryColor": "#2c1560",
+      "backgroundColor": "#2c1560"
+    },
+    {
+      "name": "Swiggy",
+      "industry": "Food Delivery",
+      "domain": "swiggy.com",
+      "logoUrl": "https://cdn.brandfetch.io/ideeTxiKQK/w/5902/h/1911/theme/light/logo.png?c=1bxr7gxzdn6mzgbjzpm3kmpnhxbr1yfVuU6",
+      "primaryColor": "#000000",
+      "backgroundColor": "#000000"
+    },
+    {
+      "name": "Zomato",
+      "industry": "Food Tech",
+      "domain": "zomato.com",
+      "logoUrl": "https://cdn.brandfetch.io/idEql8nEWn/theme/light/logo.svg?c=1bxr7gxzdn6mzgbjzpm3kmpnhxbr1yfVuU6",
+      "primaryColor": "#D94148",
+      "backgroundColor": "#D94148"
+    },
+    {
+      "name": "Blinkit",
+      "industry": "Quick Commerce",
+      "domain": "blinkit.com",
+      "logoUrl": "https://cdn.brandfetch.io/idqFC5Rk0D/theme/light/logo.svg?c=1bxr7gxzdn6mzgbjzpm3kmpnhxbr1yfVuU6",
+      "primaryColor": "#0C831F",
+      "backgroundColor": "#0C831F"
+    },
+    {
+      "name": "Mailchimp",
+      "industry": "Email Marketing",
+      "domain": "mailchimp.com",
+      "logoUrl": "https://cdn.brandfetch.io/idMvnv36a4/theme/dark/logo.svg?c=1bxr7gxzdn6mzgbjzpm3kmpnhxbr1yfVuU6",
+      "primaryColor": "#231E15",
+      "backgroundColor": "#231E15"
+    },
+    {
+      "name": "Canva",
+      "industry": "Design Platform",
+      "domain": "canva.com",
+      "logoUrl": "https://cdn.brandfetch.io/id9mVQlyB1/theme/light/logo.svg?c=1bxr7gxzdn6mzgbjzpm3kmpnhxbr1yfVuU6",
+      "primaryColor": "#992BFF",
+      "backgroundColor": "#992BFF"
+    }
+  ],
+  "operations": [
+    {
+      "name": "UPS",
+      "industry": "Logistics",
+      "domain": "ups.com",
+      "logoUrl": "https://cdn.brandfetch.io/id5aN1Q7um/theme/light/logo.svg?c=1bxr7gxzdn6mzgbjzpm3kmpnhxbr1yfVuU6",
+      "primaryColor": "#FFC400",
+      "backgroundColor": "#FFC400"
+    },
+    {
+      "name": "FedEx",
+      "industry": "Logistics",
+      "domain": "fedex.com",
+      "logoUrl": "https://cdn.brandfetch.io/idVIIZH-LB/w/400/h/400/theme/dark/icon.jpeg?c=1bxr7gxzdn6mzgbjzpm3kmpnhxbr1yfVuU6",
+      "primaryColor": "#FF6200",
+      "backgroundColor": "#FF6200"
+    },
+    {
+      "name": "DHL",
+      "industry": "Logistics",
+      "domain": "dhl.com",
+      "logoUrl": "https://cdn.brandfetch.io/idv0ZbfQqf/w/200/h/200/theme/dark/icon.jpeg?c=1bxr7gxzdn6mzgbjzpm3kmpnhxbr1yfVuU6",
+      "primaryColor": "#D40511",
+      "backgroundColor": "#D40511"
+    },
+    {
+      "name": "Maersk",
+      "industry": "Shipping",
+      "domain": "maersk.com",
+      "logoUrl": "https://cdn.brandfetch.io/idAL0Ob3aS/w/400/h/400/theme/dark/icon.jpeg?c=1bxr7gxzdn6mzgbjzpm3kmpnhxbr1yfVuU6",
+      "primaryColor": "#42B0D5",
+      "backgroundColor": "#42B0D5"
+    },
+    {
+      "name": "Walmart",
+      "industry": "Retail",
+      "domain": "walmart.com",
+      "logoUrl": "https://cdn.brandfetch.io/walmart.com/w/400",
+      "primaryColor": "#F8F8F8",
+      "backgroundColor": "#F8F8F8"
+    },
+    {
+      "name": "Target",
+      "industry": "Retail",
+      "domain": "target.com",
+      "logoUrl": "https://cdn.brandfetch.io/target.com/w/400",
+      "primaryColor": "#F8F8F8",
+      "backgroundColor": "#F8F8F8"
+    },
+    {
+      "name": "Shopify",
+      "industry": "E-commerce Platform",
+      "domain": "shopify.com",
+      "logoUrl": "https://cdn.brandfetch.io/shopify.com/w/400",
+      "primaryColor": "#F8F8F8",
+      "backgroundColor": "#F8F8F8"
+    },
+    {
+      "name": "Delhivery",
+      "industry": "Logistics",
+      "domain": "delhivery.com",
+      "logoUrl": "https://cdn.brandfetch.io/delhivery.com/w/400",
+      "primaryColor": "#F8F8F8",
+      "backgroundColor": "#F8F8F8"
+    },
+    {
+      "name": "Dunzo",
+      "industry": "Quick Commerce",
+      "domain": "dunzo.com",
+      "logoUrl": "https://cdn.brandfetch.io/dunzo.com/w/400",
+      "primaryColor": "#F8F8F8",
+      "backgroundColor": "#F8F8F8"
+    },
+    {
+      "name": "BigBasket",
+      "industry": "Grocery Delivery",
+      "domain": "bigbasket.com",
+      "logoUrl": "https://cdn.brandfetch.io/bigbasket.com/w/400",
+      "primaryColor": "#F8F8F8",
+      "backgroundColor": "#F8F8F8"
+    }
+  ],
+  "founder": [
+    {
+      "name": "Microsoft",
+      "industry": "Technology",
+      "domain": "microsoft.com",
+      "logoUrl": "https://cdn.brandfetch.io/microsoft.com/w/400",
+      "primaryColor": "#F8F8F8",
+      "backgroundColor": "#F8F8F8"
+    },
+    {
+      "name": "Apple",
+      "industry": "Technology",
+      "domain": "apple.com",
+      "logoUrl": "https://cdn.brandfetch.io/apple.com/w/400",
+      "primaryColor": "#F8F8F8",
+      "backgroundColor": "#F8F8F8"
+    },
+    {
+      "name": "Tesla",
+      "industry": "Electric Vehicles",
+      "domain": "tesla.com",
+      "logoUrl": "https://cdn.brandfetch.io/tesla.com/w/400",
+      "primaryColor": "#F8F8F8",
+      "backgroundColor": "#F8F8F8"
+    },
+    {
+      "name": "OpenAI",
+      "industry": "AI Research",
+      "domain": "openai.com",
+      "logoUrl": "https://cdn.brandfetch.io/openai.com/w/400",
+      "primaryColor": "#F8F8F8",
+      "backgroundColor": "#F8F8F8"
+    },
+    {
+      "name": "Stripe",
+      "industry": "Payments",
+      "domain": "stripe.com",
+      "logoUrl": "https://cdn.brandfetch.io/stripe.com/w/400",
+      "primaryColor": "#F8F8F8",
+      "backgroundColor": "#F8F8F8"
+    },
+    {
+      "name": "Razorpay",
+      "industry": "Payments",
+      "domain": "razorpay.com",
+      "logoUrl": "https://cdn.brandfetch.io/razorpay.com/w/400",
+      "primaryColor": "#F8F8F8",
+      "backgroundColor": "#F8F8F8"
+    },
+    {
+      "name": "Postman",
+      "industry": "API Platform",
+      "domain": "postman.com",
+      "logoUrl": "https://cdn.brandfetch.io/postman.com/w/400",
+      "primaryColor": "#F8F8F8",
+      "backgroundColor": "#F8F8F8"
+    },
+    {
+      "name": "Hasura",
+      "industry": "GraphQL",
+      "domain": "hasura.io",
+      "logoUrl": "https://cdn.brandfetch.io/hasura.io/w/400",
+      "primaryColor": "#F8F8F8",
+      "backgroundColor": "#F8F8F8"
+    },
+    {
+      "name": "BrowserStack",
+      "industry": "Testing",
+      "domain": "browserstack.com",
+      "logoUrl": "https://cdn.brandfetch.io/browserstack.com/w/400",
+      "primaryColor": "#F8F8F8",
+      "backgroundColor": "#F8F8F8"
+    },
+    {
+      "name": "Chargebee",
+      "industry": "Billing",
+      "domain": "chargebee.com",
+      "logoUrl": "https://cdn.brandfetch.io/chargebee.com/w/400",
+      "primaryColor": "#F8F8F8",
+      "backgroundColor": "#F8F8F8"
+    }
+  ]
+}
