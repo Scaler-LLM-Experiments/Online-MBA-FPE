@@ -133,9 +133,9 @@ const LoadingIcon = styled.div`
   justify-content: center;
   width: 48px;
   height: 48px;
-  background: #f1f5f9;
-  border: 1px solid #e2e8f0;
-  color: #c71f69;
+  background: #fafaf9;
+  border: 1px solid #e7e5e4;
+  color: #D55D26;
   flex-shrink: 0;
 `;
 

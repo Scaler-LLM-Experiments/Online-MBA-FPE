@@ -9,7 +9,7 @@ import {
 import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
-import chatBot from '../../assets/ChatBot.png';
+import chatBot from '../../assets/Agent.png';
 import { ReactComponent as ScalerLogo } from '../../assets/scaler-logo.svg';
 import { useProfile } from '../../context/ProfileContext';
 import tracker from '../../utils/tracker';
@@ -59,7 +59,7 @@ const RightPanel = styled.div`
   background: #ffffff;
   padding: 32px;
   min-height: 100vh;
-  border-left: 1px solid #e2e8f0;
+  border-left: 1px solid #e7e5e4;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -111,7 +111,7 @@ const WelcomeTitle = styled.h1`
 const WelcomeSubtitle = styled.h2`
   font-size: 1.25rem;
   font-weight: 600;
-  color: #c71f69;
+  color: #D55D26;
   margin-bottom: 24px;
   @media (max-width: 768px) {
     font-size: 1.1rem;
@@ -121,7 +121,7 @@ const WelcomeSubtitle = styled.h2`
 
 const WelcomeDescription = styled.p`
   font-size: 1rem;
-  color: #475569;
+  color: #57534e;
   line-height: 1.7;
   margin-bottom: 32px;
   @media (max-width: 768px) {
@@ -146,7 +146,7 @@ const Feature = styled.div`
   align-items: center;
   gap: 12px;
   font-size: 0.9rem;
-  color: #475569;
+  color: #57534e;
   @media (max-width: 768px) {
     align-items: flex-start;
   }
@@ -156,19 +156,19 @@ const IconContainer = styled.div`
   width: 32px;
   height: 32px;
   border-radius: 0;
-  background: #f1f5f9;
-  border: 1px solid #e2e8f0;
+  background: #fafaf9;
+  border: 1px solid #e7e5e4;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  color: #c71f69;
+  color: #D55D26;
 `;
 
 const TrustBadgeSection = styled.div`
   margin-top: auto;
   padding-top: 40px;
-  border-top: 1px solid #e2e8f0;
+  border-top: 1px solid #e7e5e4;
   @media (max-width: 768px) {
     margin-top: 8px;
     padding-top: 12px;
@@ -180,7 +180,7 @@ const TrustBadgeSection = styled.div`
 const TrustBadgeTitle = styled.div`
   font-size: 0.75rem;
   font-weight: 600;
-  color: #64748b;
+  color: #78716c;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-bottom: 20px;
@@ -246,14 +246,14 @@ const ProgressBarContainer = styled.div`
   left: 0;
   right: 0;
   height: 4px;
-  background: #e2e8f0;
+  background: #e7e5e4;
   z-index: 300;
   display: block;
 `;
 
 const ProgressBarFill = styled.div`
   height: 100%;
-  background: #0041ca;
+  background: #D55D26;
   transition: width 0.3s ease;
   width: ${(props) => props.progress}%;
 `;
@@ -414,7 +414,7 @@ const DesktopNavigation = styled.div`
 const BackButton = styled.button`
   background: white;
   color: #1e293b;
-  border: 2px solid #e2e8f0;
+  border: 2px solid #e7e5e4;
   padding: 10px 20px;
   border-radius: 0;
   cursor: pointer;
@@ -426,8 +426,8 @@ const BackButton = styled.button`
   font-weight: 600;
   font-size: 0.9rem;
   &:hover {
-    background: #f8fafc;
-    border-color: #cbd5e1;
+    background: #fafaf9;
+    border-color: #d6d3d1;
   }
   &:disabled {
     opacity: 0.3;
@@ -438,7 +438,7 @@ const BackButton = styled.button`
 const NextButton = styled.button`
   background: white;
   color: #1e293b;
-  border: 2px solid #e2e8f0;
+  border: 2px solid #e7e5e4;
   padding: 10px 20px;
   border-radius: 0;
   cursor: pointer;
@@ -450,8 +450,8 @@ const NextButton = styled.button`
   font-weight: 600;
   font-size: 0.9rem;
   &:hover {
-    background: #f8fafc;
-    border-color: #cbd5e1;
+    background: #fafaf9;
+    border-color: #d6d3d1;
   }
   &:disabled {
     opacity: 0.3;
@@ -462,7 +462,7 @@ const NextButton = styled.button`
 const LastStepNavButton = styled.button`
   background: ${(props) => (props.variant === 'primary' ? '#D70666' : 'white')};
   color: ${(props) => (props.variant === 'primary' ? 'white' : '#1e293b')};
-  border: 2px solid ${(props) => (props.variant === 'primary' ? '#D70666' : '#e2e8f0')};
+  border: 2px solid ${(props) => (props.variant === 'primary' ? '#D70666' : '#e7e5e4')};
   padding: ${(props) => (props.variant === 'primary' ? '14px 24px' : '14px 16px')};
   border-radius: 0;
   font-weight: 700;
@@ -479,7 +479,7 @@ const LastStepNavButton = styled.button`
   gap: 6px;
   &:hover {
     background: ${(props) => (props.variant === 'primary' ? '#b8044d' : '#f8fafc')};
-    border-color: ${(props) => (props.variant === 'primary' ? '#b8044d' : '#cbd5e1')};
+    border-color: ${(props) => (props.variant === 'primary' ? '#b8044d' : '#d6d3d1')};
   }
   &:disabled {
     opacity: 0.4;
@@ -498,11 +498,11 @@ const Dot = styled.div`
   width: ${(props) => (props.active ? '24px' : '8px')};
   height: 8px;
   border-radius: 0;
-  background: ${(props) => (props.active ? '#64748b' : '#cbd5e1')};
+  background: ${(props) => (props.active ? '#78716c' : '#d6d3d1')};
   transition: all 0.3s ease;
   cursor: ${(props) => (props.active ? 'default' : 'pointer')};
   &:hover {
-    background: ${(props) => (props.active ? '#64748b' : '#94a3b8')};
+    background: ${(props) => (props.active ? '#78716c' : '#a8a29e')};
   }
 `;
 
@@ -581,7 +581,7 @@ const BottomNavigation = styled.div`
   left: 0;
   right: 0;
   background: white;
-  border-top: 1px solid #e2e8f0;
+  border-top: 1px solid #e7e5e4;
   padding: 16px 20px;
   display: none;
   z-index: 100;
@@ -603,7 +603,7 @@ const MobileNavButtonsContainer = styled.div`
 const NavButton = styled.button`
   background: white;
   color: #1e293b;
-  border: 2px solid #e2e8f0;
+  border: 2px solid #e7e5e4;
   padding: 14px 24px;
   border-radius: 0;
   font-weight: 600;
@@ -616,8 +616,8 @@ const NavButton = styled.button`
   justify-content: center;
   gap: 6px;
   &:hover {
-    background: #f8fafc;
-    border-color: #cbd5e1;
+    background: #fafaf9;
+    border-color: #d6d3d1;
   }
   &:disabled {
     opacity: 0.4;

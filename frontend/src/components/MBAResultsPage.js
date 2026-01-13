@@ -115,10 +115,10 @@ const LoadingIcon = styled.div`
   justify-content: center;
   width: 48px;
   height: 48px;
-  background: #f1f5f9;
+  background: #fafaf9;
   border-radius: 0;
-  border: 1px solid #e2e8f0;
-  color: #c71f69;
+  border: 1px solid #e7e5e4;
+  color: #D55D26;
   flex-shrink: 0;
 `;
 
@@ -132,7 +132,7 @@ const LoadingText = styled.div`
 const ProgressBarContainer = styled.div`
   width: 100%;
   height: 8px;
-  background: #e2e8f0;
+  background: #e7e5e4;
   border-radius: 0;
   overflow: hidden;
   margin-top: 24px;
@@ -140,7 +140,7 @@ const ProgressBarContainer = styled.div`
 
 const ProgressBarFill = styled.div`
   height: 100%;
-  background: linear-gradient(90deg, #c71f69 0%, #e11d48 100%);
+  background: linear-gradient(90deg, #D55D26 0%, #ea580c 100%);
   transition: width 0.3s ease;
   width: ${(props) => props.progress}%;
 `;
@@ -156,7 +156,7 @@ const LoadingSubtext = styled.div`
 const HeroContainer = styled.div`
   background: white;
   border-radius: 0;
-  border: 1px solid #e2e8f0;
+  border: 1px solid #e7e5e4;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
   margin-bottom: 48px;
   display: flex;
@@ -330,7 +330,7 @@ const ScoreLabel = styled.div`
   font-size: 0.875rem;
   font-weight: 600;
   margin-bottom: 16px;
-  color: #cbd5e1;
+  color: #d6d3d1;
   text-transform: uppercase;
   letter-spacing: 1px;
 
@@ -404,7 +404,7 @@ const SectionSubtitle = styled.p`
 
 const SectionDivider = styled.div`
   height: 1px;
-  background: #e2e8f0;
+  background: #e7e5e4;
   margin-bottom: 20px;
 `;
 
@@ -436,7 +436,7 @@ const QuickWinItem = styled.div`
 `;
 
 const QuickWinNumber = styled.div`
-  background: #f1f5f9;
+  background: #fafaf9;
   color: #1e293b;
   width: 64px;
   height: 64px;
@@ -447,7 +447,7 @@ const QuickWinNumber = styled.div`
   font-size: 1.5rem;
   font-weight: 700;
   flex-shrink: 0;
-  border: 2px solid #e2e8f0;
+  border: 2px solid #e7e5e4;
   position: relative;
 
   &::after {
@@ -458,7 +458,7 @@ const QuickWinNumber = styled.div`
     transform: translateY(-50%);
     width: 104px;
     height: 2px;
-    background: #e2e8f0;
+    background: #e7e5e4;
   }
 
   @media (max-width: 768px) {
@@ -478,7 +478,7 @@ const QuickWinSpacer = styled.div`
 const QuickWinCard = styled.div`
   flex: 1;
   background: white;
-  border: 1px solid #e2e8f0;
+  border: 1px solid #e7e5e4;
   border-radius: 0;
   padding: 16px;
 
@@ -536,7 +536,7 @@ const ToolsGrid = styled.div`
 
 const Tool = styled.div`
   background: white;
-  border: 1px solid #e2e8f0;
+  border: 1px solid #e7e5e4;
   display: flex;
   align-items: flex-start;
   gap: 12px;
@@ -621,7 +621,7 @@ const DescriptionText = styled.p`
   margin-bottom: 24px;
 
   strong {
-    color: #c71f69;
+    color: #D55D26;
     font-weight: 600;
   }
 `;
@@ -638,7 +638,7 @@ const SkillSummaryItem = styled.div`
   align-items: center;
   padding: 12px 16px;
   background: #f8fafc;
-  border: 1px solid #e2e8f0;
+  border: 1px solid #e7e5e4;
   border-radius: 0;
 `;
 
@@ -654,7 +654,7 @@ const SkillSummaryLevel = styled.div`
   color: #64748b;
 
   span {
-    color: #c71f69;
+    color: #D55D26;
     font-weight: 700;
     margin-left: 8px;
   }
@@ -683,8 +683,8 @@ const SkillLevelTag = styled.span`
         `;
       case 'proficient':
         return `
-          background-color: #dbeafe;
-          color: #1e40af;
+          background-color: #fff4ed;
+          color: #D55D26;
         `;
       case 'strong':
         return `
@@ -693,8 +693,8 @@ const SkillLevelTag = styled.span`
         `;
       default:
         return `
-          background-color: #f1f5f9;
-          color: #475569;
+          background-color: #fafaf9;
+          color: #57534e;
         `;
     }
   }}
@@ -753,7 +753,7 @@ const MobileRoleCategory = styled.div`
   text-transform: uppercase;
   letter-spacing: 0.5px;
   color: ${(props) => {
-    if (props.type === 'target') return '#059669';
+    if (props.type === 'target') return '#D55D26';
     if (props.type === 'alternate') return '#64748b';
     return '#64748b';
   }};
@@ -777,7 +777,7 @@ const Column = styled.div`
 
 const CurrentRoleCard = styled.div`
   background: white;
-  border: 2px solid #e2e8f0;
+  border: 2px solid #e7e5e4;
   border-radius: 0;
   padding: 20px;
   display: flex;
@@ -834,9 +834,9 @@ const CategoryCard = styled.div`
   background: white;
   border: 1px solid
     ${(props) => {
-    if (props.type === 'target') return '#86efac';
-    if (props.type === 'alternate') return '#cbd5e1';
-    return '#cbd5e1';
+    if (props.type === 'target') return '#fed7aa';
+    if (props.type === 'alternate') return '#d6d3d1';
+    return '#d6d3d1';
   }};
   border-radius: 0;
   padding: 12px 16px;
@@ -853,7 +853,7 @@ const CategoryCard = styled.div`
 
   svg {
     color: ${(props) => {
-    if (props.type === 'target') return '#059669';
+    if (props.type === 'target') return '#D55D26';
     if (props.type === 'alternate') return '#64748b';
     return '#64748b';
   }};
@@ -866,7 +866,7 @@ const CategoryLabel = styled.div`
   text-transform: uppercase;
   letter-spacing: 0.5px;
   color: ${(props) => {
-    if (props.type === 'target') return '#059669';
+    if (props.type === 'target') return '#D55D26';
     if (props.type === 'alternate') return '#64748b';
     return '#64748b';
   }};
@@ -887,9 +887,9 @@ const CategoryTimeline = styled.div`
 const TimelineRoleCard = styled.div`
   background: ${(props) =>
     props.isPriority
-      ? 'linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%)'
+      ? 'linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%)'
       : '#ffffff'};
-  border: 1px solid ${(props) => (props.isPriority ? '#86efac' : '#e2e8f0')};
+  border: 1px solid ${(props) => (props.isPriority ? '#fed7aa' : '#e7e5e4')};
   border-radius: 0;
   padding: 16px;
   display: flex;
@@ -944,12 +944,12 @@ const TimelineSalary = styled.div`
   top: 12px;
   right: 12px;
   background: transparent;
-  border: 1px solid #059669;
+  border: 1px solid #D55D26;
   padding: 4px 10px;
   border-radius: 0;
   font-size: 0.75rem;
   font-weight: 700;
-  color: #059669;
+  color: #D55D26;
   white-space: nowrap;
 `;
 
@@ -965,14 +965,14 @@ const TransformationGrid = styled.div`
 `;
 
 const TransformationCard = styled.div`
-  border: 1px solid #e2e8f0;
+  border: 1px solid #e7e5e4;
   border-radius: 0;
   background: white;
   overflow: hidden;
 `;
 
 const TransformationHeader = styled.div`
-  background: #01031F;
+  background: #1c1917;
   padding: 24px;
   text-align: center;
 `;
@@ -1096,7 +1096,7 @@ const StatsGrid = styled.div`
 
 const StatCard = styled.div`
   background: white;
-  border: 1px solid #e2e8f0;
+  border: 1px solid #e7e5e4;
   border-radius: 0;
   padding: 20px;
   display: flex;
@@ -1124,7 +1124,7 @@ const StatSourceContainer = styled.div`
   gap: 12px;
   padding-top: 16px;
   margin-top: 16px;
-  border-top: 1px solid #e2e8f0;
+  border-top: 1px solid #e7e5e4;
 `;
 
 const StatSourceLogo = styled.img`
@@ -1133,7 +1133,7 @@ const StatSourceLogo = styled.img`
   object-fit: contain;
   flex-shrink: 0;
   padding-right: 12px;
-  border-right: 1px solid #e2e8f0;
+  border-right: 1px solid #e7e5e4;
 `;
 
 const StatSourceText = styled.div`
@@ -1368,7 +1368,7 @@ const MBAResultsPage = () => {
         industry: companyDetails?.industry || '',
         domain: companyDetails?.domain || '',
         logo: companyDetails?.logoUrl || '',
-        brandColor: '#01031F', // Fixed background color
+        brandColor: '#1c1917', // Fixed background color
         preAI: story.before_ai,
         postAI: story.after_ai,
         lookingFor: story.relevance_to_user
@@ -1608,7 +1608,7 @@ const MBAResultsPage = () => {
                         ? { top: 20, right: 30, bottom: 20, left: 30 }
                         : { top: 40, right: 80, bottom: 40, left: 80 }}
                     >
-                      <PolarGrid stroke="#e2e8f0" />
+                      <PolarGrid stroke="#e7e5e4" />
                       <PolarAngleAxis
                         dataKey="categoryDisplay"
                         tick={{
@@ -1634,26 +1634,26 @@ const MBAResultsPage = () => {
                       <Radar
                         name="Avg. Candidate"
                         dataKey="average"
-                        stroke="#94a3b8"
-                        fill="#94a3b8"
+                        stroke="#a8a29e"
+                        fill="#a8a29e"
                         fillOpacity={0.1}
                         strokeWidth={2}
                         strokeDasharray="5 5"
-                        dot={{ fill: '#94a3b8', r: 4 }}
-                        activeDot={{ fill: '#60a5fa', r: 7 }}
+                        dot={{ fill: '#a8a29e', r: 4 }}
+                        activeDot={{ fill: '#D55D26', r: 7 }}
                       />
 
                       {/* User's skills (filled area) */}
                       <Radar
                         name="My Skills"
                         dataKey="user"
-                        stroke="#3B82F6"
-                        fill="#3B82F6"
+                        stroke="#D55D26"
+                        fill="#D55D26"
                         fillOpacity={0.5}
                         strokeWidth={2}
-                        dot={{ fill: '#3B82F6', r: 5 }}
+                        dot={{ fill: '#D55D26', r: 5 }}
                         activeDot={{
-                          fill: '#1e40af',
+                          fill: '#D55D26',
                           r: 8,
                           strokeWidth: 2,
                           stroke: '#fff'
@@ -1828,7 +1828,7 @@ const MBAResultsPage = () => {
                                 <Target
                                   size={16}
                                   weight="regular"
-                                  color="#059669"
+                                  color="#D55D26"
                                   style={{ marginRight: '6px', marginTop: '2px', flexShrink: 0 }}
                                 />
                                 <span>{transition.goal}</span>
@@ -1852,7 +1852,7 @@ const MBAResultsPage = () => {
                                     <CheckCircle
                                       size={14}
                                       weight="fill"
-                                      color="#10b981"
+                                      color="#D55D26"
                                       style={{ marginRight: '8px', marginTop: '3px', flexShrink: 0 }}
                                     />
                                     <span style={{ fontSize: '0.95rem' }}>{item}</span>

@@ -20,7 +20,7 @@ import {
   MapPin,
   CheckSquare
 } from 'phosphor-react';
-import chatBot from '../../assets/ChatBot.png';
+import chatBot from '../../assets/Agent.png';
 import oliveBranchLeft from '../../assets/Left-Olive-Branch.png';
 import oliveBranchRight from '../../assets/Right-Olive-branch.png';
 import PeerComparisonCard from './PeerComparisonCard';
@@ -477,7 +477,7 @@ const QuickWinIcon = styled.div`
 `;
 
 const QuickWinNumber = styled.div`
-  background: #f1f5f9;
+  background: #fafaf9;
   color: #1e293b;
   width: 64px;
   height: 64px;
@@ -846,12 +846,12 @@ const MatchBadge = styled.div`
   background: ${(props) => {
     if (props.match >= 80) return '#dcfce7';
     if (props.match >= 60) return '#fef3c7';
-    return '#f1f5f9';
+    return '#fafaf9';
   }};
   color: ${(props) => {
     if (props.match >= 80) return '#15803d';
     if (props.match >= 60) return '#a16207';
-    return '#475569';
+    return '#57534e';
   }};
   padding: 3px 8px;
   border-radius: 0;

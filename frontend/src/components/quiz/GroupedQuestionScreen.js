@@ -36,7 +36,7 @@ import {
   Target,
   ChartBar
 } from 'phosphor-react';
-import scalerBot from '../../assets/ChatBot.png';
+import scalerBot from '../../assets/Agent.png';
 import tracker from '../../utils/tracker';
 
 const fadeIn = keyframes`
@@ -173,7 +173,7 @@ const QuestionGroup = styled.div`
 const ScenarioLabel = styled.div`
   font-size: 0.625rem;
   font-weight: 700;
-  color: #64748b;
+  color: #78716c;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   margin-bottom: -4px;
@@ -202,9 +202,9 @@ const OptionsRow = styled.div`
 `;
 
 const OptionPill = styled.button`
-  background: ${props => props.selected ? '#E3EEFF' : '#FFFFFF'};
-  color: ${props => props.selected ? '#0041CA' : '#1e293b'};
-  border: 2px solid ${props => props.selected ? '#0041CA' : '#e2e8f0'};
+  background: ${props => props.selected ? '#fff4ed' : '#FFFFFF'};
+  color: ${props => props.selected ? '#D55D26' : '#1e293b'};
+  border: 2px solid ${props => props.selected ? '#D55D26' : '#e7e5e4'};
   border-radius: 0;
   padding: 12px 16px;
   font-size: 0.875rem;
@@ -218,14 +218,14 @@ const OptionPill = styled.button`
   width: 100%;
 
   &:hover {
-    border-color: #0041CA;
-    background: ${props => props.selected ? '#E3EEFF' : '#FFFFFF'};
+    border-color: #D55D26;
+    background: ${props => props.selected ? '#fff4ed' : '#FFFFFF'};
   }
 
   &:focus {
     outline: none;
-    border-color: #0041CA;
-    box-shadow: 0 0 0 3px rgba(0, 65, 202, 0.1);
+    border-color: #D55D26;
+    box-shadow: 0 0 0 3px rgba(213, 93, 38, 0.1);
   }
 
   &:active {
@@ -238,8 +238,8 @@ const OptionIconWrapper = styled.div`
   width: 32px;
   height: 32px;
   border-radius: 0;
-  background: ${props => props.selected ? '#0041CA' : '#f1f5f9'};
-  color: ${props => props.selected ? 'white' : '#64748b'};
+  background: ${props => props.selected ? '#D55D26' : '#fef8f6'};
+  color: ${props => props.selected ? 'white' : '#78716c'};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -262,7 +262,7 @@ const OptionText = styled.div`
 `;
 
 const CheckIcon = styled.div`
-  color: #0041CA;
+  color: #D55D26;
   display: flex;
   align-items: center;
   opacity: ${props => props.selected ? 1 : 0};

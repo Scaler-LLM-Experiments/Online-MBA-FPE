@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState, useCallback } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { ReactComponent as ScalerLogo } from '../../assets/scaler-logo.svg';
-import chatBot from '../../assets/ChatBot.png';
+import chatBot from '../../assets/Agent.png';
 import { AuthFlow } from './index';
 import {
   ChartLine,
@@ -154,13 +154,13 @@ const IconContainer = styled.div`
   width: 32px;
   height: 32px;
   border-radius: 0;
-  background: #f1f5f9;
-  border: 1px solid #e2e8f0;
+  background: #fafaf9;
+  border: 1px solid #e7e5e4;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  color: #c71f69;
+  color: #D55D26;
 `;
 
 const TrustBadgeSection = styled.div`

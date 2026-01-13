@@ -211,7 +211,7 @@ const TextCTAButton = styled.button`
 
 const SegmentedControl = styled.div`
   display: flex;
-  background: #f1f5f9;
+  background: #fafaf9;
   border-radius: 6px;
   padding: 3px;
   gap: 2px;
@@ -245,7 +245,7 @@ const ProgressBarContainer = styled.div`
 
 const ProgressBarFill = styled.div`
   height: 100%;
-  background: #0041ca;
+  background: #D55D26;
   transition: width 0.3s ease;
   width: ${(props) => props.width}%;
 `;
@@ -263,7 +263,7 @@ const StickyWrapper = styled.div`
 `;
 
 const CSATBanner = styled.button`
-  background: #472472;
+  background: #292524;
   padding: 12px;
   display: flex;
   align-items: center;
@@ -279,11 +279,11 @@ const CSATBanner = styled.button`
   pointer-events: ${(props) => (props.isVisible ? 'auto' : 'none')};
 
   &:hover {
-    background: #5a2e8a;
+    background: #44403c;
   }
 
   &:active {
-    background: #3a1d5e;
+    background: #1c1917;
   }
 
   @media (max-width: 768px) {
