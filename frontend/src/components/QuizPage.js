@@ -49,14 +49,13 @@ function QuizPage({ onProgressChange }) {
 
   useEffect(() => {
     if (evaluationResults) {
-
-      navigate(getPathWithQueryParams('/results'), { replace: true });
+      navigate(getPathWithQueryParams('/mba-results'), { replace: true });
     } else {
       trackVisit();
     }
   }, [evaluationResults, navigate]);
 
-  // Using MBAQuiz for Business x AI MBA assessment
+  // Using MBAQuiz for business <> AI MBA assessment
   return <MBAQuiz onProgressChange={onProgressChange} />;
 }
 

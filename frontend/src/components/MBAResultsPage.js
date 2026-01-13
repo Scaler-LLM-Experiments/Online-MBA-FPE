@@ -94,7 +94,7 @@ const LoadingContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 400px;
+  min-height: 50vh;
   max-width: 600px;
   margin: 0 auto;
   padding: 40px 20px;
@@ -1105,10 +1105,10 @@ const StatCard = styled.div`
 `;
 
 const StatValue = styled.div`
-  font-size: 1.5rem;
+  font-size: 1rem;
   font-weight: 700;
   color: #1e293b;
-  margin-bottom: 12px;
+  margin-bottom: 2px;
 `;
 
 const StatDescription = styled.div`
@@ -1263,7 +1263,7 @@ const CustomTooltip = ({ active, payload, position }) => {
     const tooltipX = position?.x || 0;
     const tooltipY = position?.y || 0;
 
-    const horizontalOffset = 28;
+    const horizontalOffset = 32;
     const verticalOffset = -30;
 
     return (
@@ -1322,7 +1322,7 @@ const MBAResultsPage = () => {
     {
       icon: <MagnifyingGlass size={28} weight="bold" />,
       text: 'Analyzing your profile...',
-      subtext: 'Evaluating your Business x AI readiness'
+      subtext: 'Evaluating your Business <> AI readiness'
     },
     {
       icon: <CheckCircle size={28} weight="bold" />,
@@ -1414,6 +1414,7 @@ const MBAResultsPage = () => {
           });
         }, 1500);
 
+        // Send API request immediately (don't wait for timer)
         const payload = {
           role: quizResponses.currentRole,
           experience: quizResponses.experience,
@@ -1421,16 +1422,21 @@ const MBAResultsPage = () => {
           ...quizResponses
         };
 
-        const response = await apiRequest(
-          'POST',
-          '/career-profile-tool/api/mba/evaluate',
-          payload
-        );
+        // API call and minimum 5-second timer run in parallel
+        const [response] = await Promise.all([
+          apiRequest(
+            'POST',
+            '/career-profile-tool/api/mba/evaluate',
+            payload
+          ),
+          new Promise(resolve => setTimeout(resolve, 5000)) // Minimum 5 seconds
+        ]);
 
         clearInterval(progressInterval);
         clearInterval(stepInterval);
         setLoadingProgress(100);
 
+        // Show results after both API and timer complete
         setTimeout(() => {
           setResults(response);
           setLoading(false);
@@ -1550,7 +1556,7 @@ const MBAResultsPage = () => {
           <LeftPanel score={readiness.overall_score}>
             <GreetingSection>
               <HeroGreeting>
-                Your AI&lt;&gt;Business
+                Your Business {'<>'} AI
                 <br />
                 Readiness Report is Ready!
               </HeroGreeting>
@@ -1745,7 +1751,7 @@ const MBAResultsPage = () => {
               <CareerTransitionContainer>
                 <CareerTransitionTitle>Career Journey</CareerTransitionTitle>
                 <CareerTransitionSubtitle>
-                  Personalized role recommendations based on your career goals and Business x AI aspirations
+                  Personalized role recommendations based on your career goals and Business {'<>'} AI aspirations
                 </CareerTransitionSubtitle>
                 <SectionDivider />
 
@@ -2051,7 +2057,7 @@ const MBAResultsPage = () => {
                   AI Tools & Technologies to Learn
                 </SectionHeading>
                 <SectionSubtitle>
-                  Master these tools to enhance your Business x AI skillset
+                  Master these tools to enhance your Business {'<>'} AI skillset
                 </SectionSubtitle>
                 <SectionDivider />
                 <ToolsGrid>
@@ -2108,7 +2114,7 @@ const MBAResultsPage = () => {
             {industry_stats && industry_stats.length > 0 && (
               <SectionBlock>
                 <SectionHeading smaller>
-                  Why Business x AI Matters Now
+                  Why Business {'<>'} AI Matters Now
                 </SectionHeading>
                 <SectionSubtitle>
                   The data speaks for itself - AI is reshaping careers

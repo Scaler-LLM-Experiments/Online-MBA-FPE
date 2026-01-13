@@ -1,4 +1,4 @@
-// Configuration for Business x AI MBA Quiz
+// Configuration for Business <> AI MBA Quiz
 import React from 'react';
 import {
   Briefcase,

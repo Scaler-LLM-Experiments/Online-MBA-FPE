@@ -430,14 +430,14 @@ const NavigationBar = ({
         <CSATBanner
           isVisible={showCSATBanner}
           onClick={handleFeedbackClick}
-          data-tally-open="m6XrjY"
+          data-tally-open="vGDYbD"
           data-tally-layout="modal"
           data-tally-width="600"
           data-tally-emoji-text="👋"
           data-tally-emoji-animation="wave"
         >
           <CSATContent>
-            <CSATText>How was your profile evaluation experience?</CSATText>
+            <CSATText>How satisfied are you with the evaluation experience?</CSATText>
             <CSATLink>Share your feedback</CSATLink>
           </CSATContent>
         </CSATBanner>

@@ -498,7 +498,7 @@ const AuthSplitPage = () => {
               </Logo>
             </LogoContainer>
             <WelcomeContent>
-              <WelcomeTitle>AI x Business Readiness</WelcomeTitle>
+              <WelcomeTitle>Business {'<>'} AI Readiness</WelcomeTitle>
               <WelcomeSubtitle>Free Career Assessment</WelcomeSubtitle>
               <WelcomeDescription>
                 Evaluate your AI readiness and get personalized insights on skills, career opportunities, and AI tools tailored to your business role.
@@ -508,7 +508,7 @@ const AuthSplitPage = () => {
                   <IconContainer>
                     <ChartLine size={18} weight="regular" />
                   </IconContainer>
-                  AI + Business Skills Evaluation
+                  Business + AI Skills Evaluation
                 </Feature>
                 <Feature>
                   <IconContainer>
@@ -581,7 +581,7 @@ const AuthSplitPage = () => {
         </LogoContainer>
 
         <WelcomeContent>
-          <WelcomeTitle>AI x Business Readiness</WelcomeTitle>
+          <WelcomeTitle>Business {'<>'} AI Readiness</WelcomeTitle>
           <WelcomeSubtitle>Free Career Assessment</WelcomeSubtitle>
           <WelcomeDescription>
             Evaluate your AI readiness and get personalized insights on skills, career opportunities, and AI tools tailored to your business role.
@@ -591,7 +591,7 @@ const AuthSplitPage = () => {
               <IconContainer>
                 <ChartLine size={18} weight="regular" />
               </IconContainer>
-                AI + Business Skills Evaluation
+                Business + AI Skills Evaluation
             </Feature>
             <Feature>
               <IconContainer>
