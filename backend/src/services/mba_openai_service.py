@@ -109,9 +109,9 @@ GENERATE THE FOLLOWING:
 
 1. TRANSFORMATION STORIES (3 companies):
 For each company in companies_to_analyze:
-- before_ai: EXACTLY 2 bullet points separated by " | ". Each point 8-12 words. Describe how they operated before AI. Format: "point one | point two"
-- after_ai: EXACTLY 2 bullet points separated by " | ". Each point 8-12 words with specific metrics/outcomes. Format: "point one | point two"
-- relevance_to_user: EXACTLY 2 bullet points separated by " | ". Each point 6-10 words. Why this matters for user's role/goal. Format: "point one | point two"
+- before_ai: 2-3 sentences (50-70 words). Describe the PROBLEM they faced before AI. Be specific about what was broken, inefficient, or limiting their growth. Paint a clear picture of the challenge. Format as bullet points separated by " | ".
+- after_ai: 2-3 sentences (50-70 words). Explain HOW AI solved the problem and the specific RESULTS/METRICS they achieved. Show the transformation clearly with concrete outcomes (e.g., "reduced costs by 40%", "increased conversion by 3x"). Format as bullet points separated by " | ".
+- relevance_to_user: 2-3 sentences (50-70 words). Explain WHY this story matters for THIS specific user based on their role, experience level, career goal, and quiz responses. Connect the story directly to their situation (e.g., "Since you're a PM struggling with prioritization...", "As a finance professional aiming for senior roles..."). Make it deeply personalized. Format as bullet points separated by " | ".
 
 2. TOOL DESCRIPTIONS ({len(tools)} tools):
 For each tool in tools_to_personalize:
@@ -121,9 +121,9 @@ For each tool in tools_to_personalize:
 3. QUICK WINS (5 items):
 Actionable steps based on skill gaps and career goal:
 - title: 3-5 words ONLY (punchy, action-oriented)
-- description: 1-2 sentences ONLY (max 25 words). Tell them exactly what to do.
+- description: 3-5 sentences (100-150 words). Be verbose and highly personalized. Explain WHY this specific win is recommended for THIS user based on their role, experience, career goal, and skill gaps. Reference their specific context (e.g., "Since you're a founder looking to scale...", "As a PM transitioning to AI leadership..."). Provide step-by-step guidance on exactly what to do and how it addresses their needs.
 - timeline: Realistic estimate (e.g., "2-3 weeks", "1 month")
-- impact: 1 sentence ONLY (max 15 words). Specific, measurable outcome.
+- impact: 2-3 sentences (40-50 words). Specific, measurable outcomes that connect directly to their career goal. Explain how this quick win will help them progress toward their target role or address their identified skill gaps. Be concrete about the career benefits.
 - priority: "must-have", "recommended", or "nice-to-have"
 
 4. CAREER PATHS (3 roles):
@@ -142,11 +142,11 @@ TONE: Professional, motivational, actionable. Focus on concrete steps and realis
 WRITING STYLE: Sharp, crisp, scannable. No fluff. Users should be able to quickly scan and understand the value. Use specific metrics and concrete examples whenever possible.
 
 CRITICAL WORD LIMITS (DO NOT EXCEED):
-- before_ai: 2 bullets, each 8-12 words
-- after_ai: 2 bullets, each 8-12 words
-- relevance_to_user: 2 bullets, each 6-10 words
+- before_ai: 50-70 words (2-3 sentences describing the problem), format as bullet points with " | "
+- after_ai: 50-70 words (2-3 sentences with specific metrics/results), format as bullet points with " | "
+- relevance_to_user: 50-70 words (2-3 sentences deeply personalized to user's situation), format as bullet points with " | "
 - tool descriptions: Max 25 words for use_case, max 15 words for why_it_helps
-- quick wins: Max 25 words for description, max 15 words for impact
+- quick wins: 100-150 words for description (3-5 sentences, highly personalized), 40-50 words for impact (2-3 sentences with career benefits)
 - career paths: Max 25 words for description, max 10 words per action_item
 
 OUTPUT: Return JSON matching the structure exactly."""

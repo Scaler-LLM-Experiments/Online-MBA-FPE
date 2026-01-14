@@ -1311,7 +1311,7 @@ const getRoleDisplayLabel = (roleKey) => {
 
 const MBAResultsPage = () => {
   const navigate = useNavigate();
-  const { quizResponses } = useProfile();
+  const { quizResponses, setLoadingResults } = useProfile();
   const { open: openCallbackModal } = useRequestCallback();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -1384,6 +1384,7 @@ const MBAResultsPage = () => {
     const fetchEvaluation = async () => {
       try {
         setLoading(true);
+        setLoadingResults(true); // Set global loading state
         setError(null);
 
         if (!quizResponses || !quizResponses.currentRole) {
@@ -1440,16 +1441,18 @@ const MBAResultsPage = () => {
         setTimeout(() => {
           setResults(response);
           setLoading(false);
+          setLoadingResults(false); // Clear global loading state
         }, 500);
       } catch (err) {
         console.error('Failed to fetch MBA evaluation:', err);
         setError('Failed to load your evaluation. Please try again.');
         setLoading(false);
+        setLoadingResults(false); // Clear global loading state
       }
     };
 
     fetchEvaluation();
-  }, [quizResponses, navigate]);
+  }, [quizResponses, navigate, setLoadingResults]);
 
   const handleRCBClick = useCallback(() => {
     tracker.click({

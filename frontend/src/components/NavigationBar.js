@@ -107,6 +107,11 @@ const TextReEvaluateButton = styled.button`
     opacity: 0.8;
   }
 
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
   @media (max-width: 768px) {
     display: none;
   }
@@ -176,6 +181,16 @@ const IconButton = styled.button`
   &:hover {
     background: #b30158;
     color: white;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+
+    &:hover {
+      background: transparent;
+      color: #b30158;
+    }
   }
 
   @media (max-width: 768px) {
@@ -341,7 +356,7 @@ const NavigationBar = ({
 }) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { resetProfile, evaluationResults } = useProfile();
+  const { resetProfile, evaluationResults, isLoadingResults } = useProfile();
   const { open: openCallbackModal } = useRequestCallback();
 
   const showProgress =
@@ -486,10 +501,10 @@ const NavigationBar = ({
           <NavActions>
             {isResultsPage && (
               <>
-                <TextReEvaluateButton onClick={handleReEvaluate}>
+                <TextReEvaluateButton onClick={handleReEvaluate} disabled={isLoadingResults}>
                   Re-evaluate
                 </TextReEvaluateButton>
-                <IconButton onClick={handleReEvaluate} title="Re-evaluate">
+                <IconButton onClick={handleReEvaluate} title="Re-evaluate" disabled={isLoadingResults}>
                   <ArrowClockwise size={20} weight="bold" />
                 </IconButton>
               </>

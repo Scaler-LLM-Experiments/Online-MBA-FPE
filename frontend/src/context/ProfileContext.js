@@ -38,7 +38,10 @@ const defaultState = {
   },
 
   // Evaluation results
-  evaluationResults: null
+  evaluationResults: null,
+
+  // Loading state for results page
+  isLoadingResults: false
 };
 
 const persistedState = loadStateFromStorage();
@@ -115,7 +118,13 @@ const profileReducer = (state, action) => {
         ...state,
         evaluationResults: action.payload
       };
-    
+
+    case 'SET_LOADING_RESULTS':
+      return {
+        ...state,
+        isLoadingResults: action.payload
+      };
+
     case 'RESET_PROFILE':
       return defaultState;
 
@@ -162,6 +171,10 @@ export const ProfileProvider = ({ children }) => {
     dispatch({ type: 'SET_EVALUATION_RESULTS', payload: results });
   }, [dispatch]);
 
+  const setLoadingResults = useCallback((isLoading) => {
+    dispatch({ type: 'SET_LOADING_RESULTS', payload: isLoading });
+  }, [dispatch]);
+
   const resetProfile = useCallback(() => {
     isResetting.current = true;
     localStorage.removeItem('scalerProfileState');
@@ -180,8 +193,9 @@ export const ProfileProvider = ({ children }) => {
     clearQuizResponses,
     setGoals,
     setEvaluationResults,
+    setLoadingResults,
     resetProfile
-  }), [state, setBackground, setQuizResponse, addQAPair, clearQuizResponses, setGoals, setEvaluationResults, resetProfile]);
+  }), [state, setBackground, setQuizResponse, addQAPair, clearQuizResponses, setGoals, setEvaluationResults, setLoadingResults, resetProfile]);
 
   return (
     <ProfileContext.Provider value={value}>
