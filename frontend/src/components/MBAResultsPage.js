@@ -1890,7 +1890,7 @@ const MBAResultsPage = () => {
                           <Xarrow
                             start="current-role-mba"
                             end={`timeline-mba-${index}`}
-                            color={index === 0 ? '#a7f3d0' : index === 1 ? '#bfdbfe' : '#e9d5ff'}
+                            color={index === 0 ? 'rgba(213, 93, 38, 0.6)' : index === 1 ? '#bfdbfe' : '#e9d5ff'}
                             strokeWidth={6}
                             curveness={0.8}
                             headSize={0}
@@ -1900,7 +1900,7 @@ const MBAResultsPage = () => {
                           <Xarrow
                             start={`timeline-mba-${index}`}
                             end={`role-mba-${index}`}
-                            color={index === 0 ? '#a7f3d0' : index === 1 ? '#bfdbfe' : '#e9d5ff'}
+                            color={index === 0 ? 'rgba(213, 93, 38, 0.6)' : index === 1 ? '#bfdbfe' : '#e9d5ff'}
                             strokeWidth={6}
                             curveness={0.6}
                             startAnchor="right"

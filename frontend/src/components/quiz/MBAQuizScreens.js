@@ -32,7 +32,7 @@ import {
 // Screen 1: Current Role/Background
 export const MBA_INTAKE_SCREEN_1 = {
   id: 'current-role',
-  initialChatText: "Welcome! Let's understand your professional background to personalize your MBA readiness assessment.",
+  initialChatText: "Welcome! Let's understand your professional background to personalize your Business <> AI assessment.",
   questions: [
     {
       id: 'currentRole',
